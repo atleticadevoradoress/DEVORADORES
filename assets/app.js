@@ -35,10 +35,13 @@ const dialog=$('#detail-dialog');let returnFocus;function show(html,cls=''){if(!
 let category='todos';const normalize=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();function filterEvents(){let total=0;$$('#events > div').forEach(c=>{const visible=(category==='todos'||c.dataset.category===category)&&normalize(c.dataset.title).includes(normalize($('#event-search').value));c.hidden=!visible;if(visible)total++});$('#empty-events').hidden=total>0}function selected(buttons,current){buttons.forEach(b=>{b.classList.toggle('selected',b===current);b.setAttribute('aria-pressed',b===current)})}
 $$('[data-filter]').forEach(b=>b.onclick=()=>{category=b.dataset.filter;selected($$('[data-filter]'),b);filterEvents()});$('#event-search')?.addEventListener('input',filterEvents);
 $$('[data-product-filter]').forEach(b=>b.onclick=()=>{selected($$('[data-product-filter]'),b);$$('#products > article').forEach(c=>c.hidden=b.dataset.productFilter!=='todos'&&c.dataset.category!==b.dataset.productFilter)});
-/* ============ SACOLA ============ */
+/* ============ CARRINHO ============ */
+/* true: o carrinho começa VAZIO toda vez que uma página é carregada/recarregada. Troque para false para o carrinho ficar salvo entre páginas. */
+const LIMPAR_AO_CARREGAR=true;
 let cart=[];
-try{const raw=JSON.parse(localStorage.getItem('devoradores-cart')||'[]');cart=(Array.isArray(raw)?raw:[]).map(x=>{const p=Number.isInteger(x?.id)&&products[x.id];return p&&{id:x.id,cor:x.cor??p.capa,size:x.size,qty:x.qty??1}}).filter(x=>x&&Object.hasOwn(products[x.id].cores,x.cor)&&products[x.id].tamanhos.includes(x.size)&&Number.isInteger(x.qty)&&x.qty>=1&&x.qty<=99)}catch{}
-function count(){const n=cart.reduce((t,x)=>t+x.qty,0),c=$('#cart-count');c.textContent=n>99?'99+':n;c.hidden=n===0;$('#cart-open').setAttribute('aria-label',n?`Abrir sacola (${n} ${n===1?'item':'itens'})`:'Abrir sacola')}count();
+if(LIMPAR_AO_CARREGAR){try{localStorage.removeItem('devoradores-cart')}catch{}}
+else try{const raw=JSON.parse(localStorage.getItem('devoradores-cart')||'[]');cart=(Array.isArray(raw)?raw:[]).map(x=>{const p=Number.isInteger(x?.id)&&products[x.id];return p&&{id:x.id,cor:x.cor??p.capa,size:x.size,qty:x.qty??1}}).filter(x=>x&&Object.hasOwn(products[x.id].cores,x.cor)&&products[x.id].tamanhos.includes(x.size)&&Number.isInteger(x.qty)&&x.qty>=1&&x.qty<=99)}catch{}
+function count(){const n=cart.reduce((t,x)=>t+x.qty,0),c=$('#cart-count');c.textContent=n>99?'99+':n;c.hidden=n===0;$('#cart-open').dataset.tip=n?`Seu carrinho · ${n} ${n===1?'item':'itens'}`:'Seu carrinho';$('#cart-open').setAttribute('aria-label',n?`Abrir carrinho (${n} ${n===1?'item':'itens'})`:'Abrir carrinho')}count();
 function persist(){try{localStorage.setItem('devoradores-cart',JSON.stringify(cart))}catch{}count()}
 
 /* Cards da loja: mostram a cor definida em "capa" de cada produto. */
@@ -50,7 +53,7 @@ function openProduct(id){
   let cor=p.capa,size=p.tamanhos.length===1?p.tamanhos[0]:null;
   const colors=multi?`<fieldset class="pm-field"><legend>Cor: <b id="pm-cor-name">${COR[cor][0]}</b></legend><div class="swatches">${keys.map(k=>`<button type="button" class="swatch${k===cor?' selected':''}" data-cor="${k}" style="background:${COR[k][1]}" title="${COR[k][0]}" aria-label="${COR[k][0]}" aria-pressed="${k===cor}"></button>`).join('')}</div></fieldset>`:'';
   const sizes=`<fieldset class="pm-field"><legend>Tamanho</legend><div class="sizes">${p.tamanhos.map(s=>`<button type="button" class="size-btn${s===size?' selected':''}" data-size="${s}" aria-pressed="${s===size}">${s}</button>`).join('')}</div></fieldset>`;
-  show(`<div class="pm"><div class="pm-media"><img id="pm-img" src="${imgOf(p,cor)}" alt="${p.nome}${multi?' – '+COR[cor][0]:''}"></div><div class="pm-info"><p class="eyebrow">Coleção Devoradores</p><h2>${p.nome}</h2><p class="pm-price">${money(p.preco)}</p><p>${p.desc}</p>${colors}${sizes}<div class="pm-field"><label for="pm-qty">Quantidade</label><div class="qty"><button type="button" id="qty-minus" aria-label="Diminuir quantidade">−</button><input id="pm-qty" type="number" min="1" max="${max}" value="1" inputmode="numeric"><button type="button" id="qty-plus" aria-label="Aumentar quantidade">+</button></div></div><p class="pm-error" id="pm-error" role="alert"></p><button class="button" id="add-product" type="button">Adicionar à sacola</button></div></div>`,'product-dialog');
+  show(`<div class="pm"><div class="pm-media"><img id="pm-img" src="${imgOf(p,cor)}" alt="${p.nome}${multi?' – '+COR[cor][0]:''}"></div><div class="pm-info"><p class="eyebrow">Coleção Devoradores</p><h2>${p.nome}</h2><p class="pm-price">${money(p.preco)}</p><p>${p.desc}</p>${colors}${sizes}<div class="pm-field"><label for="pm-qty">Quantidade</label><div class="qty"><button type="button" id="qty-minus" aria-label="Diminuir quantidade">−</button><input id="pm-qty" type="number" min="1" max="${max}" value="1" inputmode="numeric"><button type="button" id="qty-plus" aria-label="Aumentar quantidade">+</button></div></div><p class="pm-error" id="pm-error" role="alert"></p><button class="button" id="add-product" type="button">Adicionar ao carrinho</button></div></div>`,'product-dialog');
 
   const img=$('#pm-img'),qtyInput=$('#pm-qty'),error=$('#pm-error');
   const clampQty=v=>Math.min(max,Math.max(1,Number.parseInt(v,10)||1));
@@ -77,19 +80,19 @@ function openProduct(id){
   $('#qty-plus').onclick=()=>{qtyInput.value=clampQty(Number(qtyInput.value)+1)};
   qtyInput.onchange=()=>{qtyInput.value=clampQty(qtyInput.value)};
 
-  /* Adicionar à sacola */
+  /* Adicionar ao carrinho */
   $('#add-product').onclick=()=>{
     if(!size){error.textContent='Selecione um tamanho para continuar.';sizeButtons[0]?.focus();return}
     const qty=clampQty(qtyInput.value),found=cart.find(x=>x.id===id&&x.cor===cor&&x.size===size);
     if(found)found.qty=Math.min(99,found.qty+qty);else cart.push({id,cor,size,qty});
     persist();close();
-    $('#toast').textContent=`${p.nome} (${multi?COR[cor][0]+', ':''}${size}) × ${qty} adicionado à sacola.`;
+    $('#toast').textContent=`${p.nome} (${multi?COR[cor][0]+', ':''}${size}) × ${qty} adicionado ao carrinho.`;
     setTimeout(()=>$('#toast').textContent='',3500);
   };
 }
 $$('[data-product]').forEach(b=>b.onclick=()=>openProduct(Number(b.dataset.product)));
 
-/* ============ VENDAS, SACOLA E PAGAMENTO ============ */
+/* ============ VENDAS, CARRINHO E PAGAMENTO ============ */
 const SALES_OPEN_AT=new Date('2026-10-17T00:00:00-03:00');
 const salesOpen=()=>Date.now()>=SALES_OPEN_AT.getTime();
 const WHATS='5517996454466';
@@ -100,15 +103,34 @@ const totalsHtml=()=>`<div class="cart-sum"><div><span>Subtotal (itens)</span><s
 const itemLabel=x=>{const p=products[x.id],multi=Object.keys(p.cores).length>1;return `${x.qty}x ${p.nome} (${multi?COR[x.cor][0]+', ':''}${x.size}) — ${money(p.preco*x.qty)}`};
 function orderLink(nome,forma){const t=`Olá! Gostaria de fazer um pedido na loja Devoradores.\n\nNome: ${nome}\n\nItens:\n${cart.map(x=>'- '+itemLabel(x)).join('\n')}\n\nSubtotal (itens): ${money(cartSubtotal())}\nTaxa: ${money(TAXA)}\nTotal: ${money(cartTotal())}\nPagamento: ${forma}`;return `https://wa.me/${WHATS}?text=${encodeURIComponent(t)}`}
 
+const ICO={
+  shield:'<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
+  badge:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.78 4 4 0 0 1 0-6.74Z"/><path fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m9 12 2 2 4-4"/></svg>',
+  trash:'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M10 11v6M14 11v6"/></svg>',
+  cart:'<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>'
+};
+/* Selo de confiança: o pagamento é feito na página oficial da InfinitePay (cartão e Pix não passam pelo site). */
+const trustHtml=(full)=>`<div class="trust-box"><span class="trust-icon">${ICO.shield}</span><div><p class="trust-title">Pagamento seguro com a InfinitePay <span class="verified-pill">${ICO.badge}Checkout oficial</span></p><p class="trust-text">Você paga na página oficial da InfinitePay. Os dados do seu cartão não passam por este site.</p>${full?'<ul class="trust-points"><li>Pix</li><li>Cartão em até 12x</li><li>Confirmação automática</li></ul>':''}</div></div>`;
 function showCart(){
-    const rows=cart.map((x,i)=>{const p=products[x.id],multi=Object.keys(p.cores).length>1;return `<div class="cart-row"><img src="${imgOf(p,x.cor)}" alt=""><div><b>${p.nome}</b><p>${multi?'Cor: '+COR[x.cor][0]+' · ':''}Tamanho: ${x.size} · Qtd: ${x.qty} · ${money(p.preco*x.qty)}</p></div><button class="text-button" data-remove="${i}" aria-label="Remover ${p.nome}">Remover</button></div>`}).join('');
-  show(`<p class="eyebrow">Loja Devoradores</p><h2>Sua sacola</h2>${cart.length?rows+totalsHtml():'<p>Sua sacola está vazia. Explore a coleção na loja.</p>'}<div class="cart-actions">${cart.length?`<button class="button" id="checkout-btn" type="button">Finalizar compra ↗</button>`:''}<a class="button outline" href="loja.html">${cart.length?'Continuar comprando':'Ir para a loja'}</a></div>`,'cart-dialog');
+  const n=cart.reduce((t,x)=>t+x.qty,0);
+  if(!cart.length){
+    show(`<p class="eyebrow">Loja Devoradores</p><div class="cart-empty"><span class="cart-empty-icon">${ICO.cart}</span><h2>Seu carrinho está vazio</h2><p>Explore a coleção e adicione seus itens favoritos.</p></div><div class="cart-cta"><a class="button" href="loja.html">Ir para a loja</a></div>`,'cart-dialog');
+    return;
+  }
+  const rows=cart.map((x,i)=>{const p=products[x.id],multi=Object.keys(p.cores).length>1;
+    return `<li class="cart-item"><img class="cart-thumb" src="${imgOf(p,x.cor)}" alt=""><div class="cart-info"><b class="cart-name">${p.nome}</b><div class="cart-meta">${multi?`<span class="chip">${COR[x.cor][0]}</span>`:''}${x.size!=='Único'?`<span class="chip">Tam. ${x.size}</span>`:''}<span class="chip">Qtd. ${x.qty}</span></div></div><div class="cart-side"><b class="cart-price">${money(p.preco*x.qty)}</b>${x.qty>1?`<span class="cart-unit">${money(p.preco)} cada</span>`:''}<button class="cart-remove" type="button" data-remove="${i}" aria-label="Remover ${p.nome}">Remover</button></div></li>`}).join('');
+  show(`<p class="eyebrow">Loja Devoradores</p><div class="cart-title"><h2>Seu carrinho</h2><span class="count-pill">${n} ${n===1?'item':'itens'}</span></div><ul class="cart-list">${rows}</ul>${totalsHtml()}${trustHtml(false)}<div class="cart-cta"><button class="button" id="checkout-btn" type="button">Finalizar compra ↗</button><div class="cart-secondary"><a class="button outline" href="loja.html">Continuar comprando</a><button class="clear-btn" id="clear-cart" type="button">${ICO.trash}<span>Limpar carrinho</span></button></div></div>`,'cart-dialog');
   $$('[data-remove]').forEach(b=>b.onclick=()=>{cart.splice(Number(b.dataset.remove),1);persist();showCart()});
-  $('#checkout-btn')?.addEventListener('click',showCheckout);
+  $('#checkout-btn').addEventListener('click',showCheckout);
+  const clr=$('#clear-cart');let t;
+  clr.onclick=()=>{
+    if(!clr.classList.contains('confirm')){clr.classList.add('confirm');clr.querySelector('span').textContent='Confirmar: limpar tudo?';t=setTimeout(()=>{clr.classList.remove('confirm');clr.querySelector('span').textContent='Limpar carrinho'},4000);return}
+    clearTimeout(t);cart=[];persist();showCart();
+  };
 }
 function showCheckout(){
   if(!cart.length)return showCart();
-  show(`<p class="eyebrow">Finalizar compra</p><h2>Seus dados e pagamento</h2><label for="co-name">Nome completo<input id="co-name" autocomplete="name" maxlength="100" placeholder="Seu nome"></label>${totalsHtml()}<p class="pay-info">Você escolhe <b>Pix</b> ou <b>cartão de crédito</b> (em até 12x) na próxima tela, em ambiente seguro da InfinitePay.</p><p class="pm-error" id="co-error" role="alert"></p><div class="cart-actions"><button class="button" id="co-next" type="button">Pagar ↗</button><button class="text-button" id="co-back" type="button">Voltar à sacola</button></div><p class="small"><button class="text-button" id="co-whats" type="button">Prefere combinar o pagamento pelo WhatsApp?</button></p>`,'cart-dialog');
+  show(`<p class="eyebrow">Finalizar compra</p><div class="cart-title"><h2>Seus dados e pagamento</h2></div><label for="co-name">Nome completo<input id="co-name" autocomplete="name" maxlength="100" placeholder="Seu nome"></label>${totalsHtml()}${trustHtml(true)}<p class="pm-error" id="co-error" role="alert"></p><div class="cart-cta"><button class="button" id="co-next" type="button">Pagar com Pix ou cartão ↗</button><div class="cart-secondary"><button class="text-button" id="co-back" type="button">← Voltar ao carrinho</button><button class="text-button" id="co-whats" type="button">Combinar pelo WhatsApp</button></div></div>`,'cart-dialog');
   $('#co-back').onclick=showCart;
   const pedirNome=()=>{const nome=$('#co-name').value.trim();if(nome.length<3){$('#co-error').textContent='Informe seu nome para continuar.';$('#co-name').focus();return null}return nome};
   $('#co-next').onclick=()=>{const nome=pedirNome();if(nome)payOnline(nome)};
@@ -123,7 +145,7 @@ async function payOnline(nome){
     if(!r.ok||!d.url)throw new Error(d.erro||'Falha');
     location.href=d.url;
   }catch(e){
-    btn.disabled=false;btn.textContent='Pagar ↗';
+    btn.disabled=false;btn.textContent='Pagar com Pix ou cartão ↗';
     err.textContent='Não foi possível abrir o pagamento agora. Tente de novo ou combine pelo WhatsApp.';
   }
 }
@@ -143,7 +165,7 @@ function showOther(nome){
     cart=[];persist();
     const forma=metodo==='pix'?'Pix':metodo==='credit_card'?'cartão de crédito':'';
     const link=/^https:\/\//.test(receipt)?`<a class="button outline" href="${receipt.replace(/"/g,'&quot;')}" target="_blank" rel="noopener noreferrer">Ver comprovante ↗</a>`:'';
-    show(`<div class="pay-status"><svg class="pay-check" viewBox="0 0 80 80" role="img" aria-label="Pagamento concluído"><circle class="pay-check-circle" cx="40" cy="40" r="36"/><path class="pay-check-mark" d="M23 41l12 12 23-26"/></svg><h2>Pagamento concluído!</h2><p>Recebemos o seu pedido${forma?' pago via '+forma:''}. A atlética entra em contato para combinar a retirada.</p><div class="cart-actions">${link}<button class="button" id="pay-close" type="button">Fechar</button></div></div>`,'cart-dialog pay-dialog');
+    show(`<div class="pay-status"><svg class="pay-check" viewBox="0 0 80 80" role="img" aria-label="Pagamento concluído"><circle class="pay-check-circle" cx="40" cy="40" r="36"/><path class="pay-check-mark" d="M23 41l12 12 23-26"/></svg><h2>Pagamento concluído!</h2><p>Recebemos o seu pedido${forma?' pago via '+forma:''}. A atlética entra em contato para combinar a retirada.</p><p class="pay-verified"><span class="verified-pill">${ICO.badge}Confirmado pela InfinitePay</span></p><div class="cart-actions">${link}<button class="button" id="pay-close" type="button">Fechar</button></div></div>`,'cart-dialog pay-dialog');
     $('#pay-close').onclick=close;
   };
   const falha=msg=>{show(`<div class="pay-status"><h2>Não conseguimos confirmar</h2><p>${msg} Se você já pagou, fale com a atlética pelo WhatsApp informando o código <b>${order.replace(/[^\w-]/g,'').slice(0,40)}</b>.</p><div class="cart-actions"><a class="button" href="https://wa.me/${WHATS}" target="_blank" rel="noopener noreferrer">Falar no WhatsApp ↗</a><button class="text-button" id="pay-close" type="button">Fechar</button></div></div>`,'cart-dialog pay-dialog');$('#pay-close').onclick=close};

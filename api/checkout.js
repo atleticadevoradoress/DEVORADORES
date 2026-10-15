@@ -5,6 +5,7 @@ const { randomUUID } = require('node:crypto');
 const HANDLE = process.env.INFINITEPAY_HANDLE; // sua InfiniteTag, sem o $
 const SITE = process.env.SITE_URL || 'https://devoradores.vercel.app';
 const TAXA = 5; // igual ao TAXA do assets/app.js
+const COR = { verde: 'Verde', preto: 'Preto', branco: 'Branco', offwhite: 'Off-white', pretobranco: 'Preto e branco', unico: '' };
 
 // MESMA ORDEM do array "products" em assets/app.js — [nome, preço em reais]
 const PRODUTOS = [
@@ -21,7 +22,7 @@ module.exports = async (req, res) => {
 
   const { nome, itens } = req.body || {};
   if (!Array.isArray(itens) || !itens.length || itens.length > 30)
-    return res.status(400).json({ erro: 'Sacola inválida' });
+    return res.status(400).json({ erro: 'Carrinho inválido' });
 
   const items = [];
   for (const x of itens) {
@@ -32,7 +33,12 @@ module.exports = async (req, res) => {
     items.push({
       quantity: qty,
       price: Math.round(p[1] * 100), // centavos
-      description: `${p[0]} (${String(x.cor || '').slice(0, 20)}, ${String(x.size || '').slice(0, 10)})`
+      description: (() => {
+        const cor = COR[x.cor] || '';
+        const tam = String(x.size || '').slice(0, 10);
+        const det = [cor, tam === 'Único' ? '' : tam].filter(Boolean).join(', ');
+        return det ? `${p[0]} (${det})` : p[0];
+      })()
     });
   }
   items.push({ quantity: 1, price: TAXA * 100, description: 'Taxa do pedido' });
