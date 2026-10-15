@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Devoradores: a atlética de Nutrição da Unifev. Conheça a atlética, o curso, os eventos e a loja."
+    />
+    <title>Início | Devoradores</title>
+    <link rel="icon" href="assets/logo.png" type="image/png" />
+    <link rel="stylesheet" href="assets/layout-final.css?v=22" />
+    <link rel="stylesheet" href="assets/extras.css?v=1" />
+    <style>
+      /* Keep the character at full banner height; the WebM has transparent side margins. */
+      .hero-banner video#animated-mascot {
+        width: auto;
+        height: 100%;
+        max-width: none;
+        flex-shrink: 0;
+        object-fit: contain;
+        background: transparent;
+        pointer-events: none;
+      }
+    </style>
+    <script src="components/site-header.js"></script><script src="components/site-footer.js"></script><script defer src="assets/app.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Pular para o conteúdo</a>
+    <site-header></site-header>
+    <main id="main" class="home-full-width">
+      <section
+        class="hero hero-banner"
+        aria-label="Alimentamos sonhos, devoramos limites."
+      >
+        <img
+          class="slogan-banner"
+          src="assets/background/topo.png"
+          alt="Alimentamos sonhos, devoramos limites. — slogan em verde e amarelo, com rachados verdes à direita"
+          width="2021"
+          height="778"
+          fetchpriority="high"
+        />
+        <div class="mascot-animation">
+          <video
+            id="animated-mascot"
+            class="hero-image"
+            autoplay
+            loop
+            muted
+            playsinline
+            preload="auto"
+            aria-label="Mascote crocodilo dos Devoradores animado"
+            width="1280"
+            height="720"
+          >
+            <source src="assets/devoradores-transparente.webm" type="video/webm" />
+          </video>
+        </div>
+      </section>
+      <div class="ribbon">
+        ESPORTE <span>•</span> UNIÃO <span>•</span> NUTRIÇÃO
+        <span>•</span> DEVORADORES
+      </div>
+      <div class="content-container">
+      <section>
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Encontre sua próxima experiência</p>
+            <h2>A faculdade também acontece aqui.</h2>
+          </div>
+        </div>
+        <div class="grid three experience-grid">
+          <article class="card">
+            <img
+              class=""
+              src="assets/calouros.png"
+              alt="Integração dos calouros"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Na agenda</span>
+              <h3>Integração dos calouros</h3>
+              <p>
+                Novas histórias e conexões. Conheça nossa agenda.
+              </p>
+              <a class="button outline" href="eventos.html"
+                >Ver eventos <span aria-hidden="true">↗</span></a
+              >
+            </div>
+          </article>
+          <article class="card">
+            <img
+              class=""
+              src="assets/nutricao.png"
+              alt="Conhecimento que transforma"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Universo Nutri</span>
+              <h3>Conhecimento que transforma</h3>
+              <p>
+                Explore o curso, a profissão e as experiências da graduação.
+              </p>
+              <a class="button outline" href="nutri.html"
+                >Explorar <span aria-hidden="true">↗</span></a
+              >
+            </div>
+          </article>
+          <article class="card">
+            <img src="assets/eventos.png" alt="Eventos dos Devoradores" loading="lazy" />
+            <div class="card-body">
+              <span class="tag">Eventos</span>
+              <h3>Viva os Devoradores</h3>
+              <p>Confira os eventos e participe dos encontros da nossa atlética.</p>
+              <a class="button outline" href="eventos.html">Ver eventos <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="callout">
+        <div>
+          <p class="eyebrow">Loja Devoradores</p>
+          <h2>Vista esse orgulho.</h2>
+          <p>Uma coleção com a nossa identidade.</p>
+          <a class="button" href="loja.html"
+            >Conhecer a loja <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <img
+          class=""
+          src="assets/camiseta.png"
+          alt="Camiseta esportiva Devoradores"
+          loading="lazy"
+        />
+      </section>
+      </div>
+
+      <section class="ex-sec ex-sec--tint" aria-labelledby="sobre-title">
+        <div class="ex-wrap ex-split-light">
+          <div class="ex-head">
+            <p class="ex-eyebrow">Sobre os Devoradores</p>
+            <h2 id="sobre-title">A atlética da <em>Nutrição.</em></h2>
+            <p class="ex-lead">
+              A A.A.A.N.U.V reúne estudantes de Nutrição em torno do esporte, dos eventos e da
+              amizade. Aqui você encontra a agenda, conhece a diretoria, descobre o universo do
+              curso e veste a camisa na nossa loja.
+            </p>
+            <div class="ex-actions"><a class="ex-btn" href="atletica.html">Conheça a atlética <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></a></div>
+          </div>
+          <div class="ex-cards ex-cards--3s">
+            <article class="ex-card"><span class="ex-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span><h3>Esporte</h3><p>Vôlei, futsal, basquete e corrida: modalidades para competir ou só se divertir.</p></article>
+            <article class="ex-card"><span class="ex-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><h3>União</h3><p>Calouros e veteranos no mesmo time, dentro e fora da sala de aula.</p></article>
+            <article class="ex-card"><span class="ex-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/></svg></span><h3>Nutrição</h3><p>Orgulho do curso e conteúdo para quem estuda ou quer conhecer a profissão.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="ex-sec" aria-labelledby="proximo-title">
+        <div class="ex-wrap">
+          <div class="ex-banner">
+            <div>
+              <p class="ex-eyebrow">Próximo evento · 07/11</p>
+              <h2 id="proximo-title">Hallowgreen da MEDVOTU</h2>
+              <p data-sales-note data-open="Festa temática de Halloween com ingressos à venda. Garanta o seu pela atlética.">Festa temática de Halloween. Vendas de ingressos liberadas em 17/10.</p>
+            </div>
+            <a class="ex-btn" href="eventos.html#agenda">Ver detalhes <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+    <site-footer></site-footer>
+    <dialog id="detail-dialog">
+      <button class="close" aria-label="Fechar janela">×</button>
+      <div id="detail-content"></div>
+    </dialog>
+    <div id="toast" role="status" aria-live="polite"></div>
+  <button class="cart-fab" id="cart-open" type="button" aria-label="Abrir sacola"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-badge" id="cart-count" hidden>0</span></button></body>
+</html>

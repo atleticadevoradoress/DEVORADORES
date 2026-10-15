@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Loja Devoradores: camisetas, moletons, jaquetas e acessórios da atlética de Nutrição."
+    />
+    <title>Loja | Devoradores</title>
+    <link rel="icon" href="assets/logo.png" type="image/png" />
+    <link rel="stylesheet" href="assets/layout-final.css?v=22" />
+    <script src="components/site-header.js"></script><script src="components/site-footer.js"></script><script defer src="assets/app.js"></script>
+    <style>
+      /* Filtros no topo da loja */
+      .shop-layout{display:block}
+      .shop-toolbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+      .toolbar-label{font-size:11px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;color:var(--green)}
+      .shop-toolbar .chips{margin:0}
+      .shop-intro .small{margin:0}
+      /* Área da imagem do produto: 360 x 240 (proporção 3:2), imagem inteira sem cortes */
+      .shop-layout .product>img{width:100%;height:auto;aspect-ratio:360/240;object-fit:contain;object-position:center;background:#f3f6f2}
+      @media(max-width:780px){.shop-toolbar{gap:10px;margin-bottom:20px;padding-bottom:16px}}
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Pular para o conteúdo</a>
+    <site-header></site-header>
+    <main id="main">
+      <section class="shop-intro">
+        <p class="atl-eyebrow">Coleção Devoradores</p>
+        <h1>Vista o orgulho de ser <em>Devoradores.</em></h1>
+      </section>
+      <section class="shop-layout">
+        <div class="shop-toolbar" role="group" aria-label="Filtrar produtos por categoria">
+          <span class="toolbar-label">Categoria</span>
+          <div class="chips">
+            <button class="chip selected" data-product-filter="todos" aria-pressed="true">Todos</button>
+            <button class="chip" data-product-filter="roupas" aria-pressed="false">Roupas</button>
+            <button class="chip" data-product-filter="acessorios" aria-pressed="false">Acessórios</button>
+          </div>
+        </div>
+        <div class="grid three" id="products">
+          <article class="card product" data-category="roupas">
+            <img
+              class=""
+              src="assets/loja/polo/verde.png"
+              alt="Polo Devoradores"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Roupas</span>
+              <h3>Polo Devoradores</h3>
+              <p class="price">R$ 80,00</p>
+              <button class="button" data-product="0">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-category="roupas">
+            <img
+              class=""
+              src="assets/loja/oversize/verde.png"
+              alt="Camiseta Oversize"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Roupas</span>
+              <h3>Camiseta Oversize</h3>
+              <p class="price">R$ 60,00</p>
+              <button class="button" data-product="1">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-category="roupas">
+            <img
+              class=""
+              src="assets/loja/camiseta_time/verde.png"
+              alt="Camiseta Time"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Roupas</span>
+              <h3>Camiseta Time</h3>
+              <p class="price">R$ 50,00</p>
+              <button class="button" data-product="2">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-category="roupas">
+            <img
+              class=""
+              src="assets/loja/camiseta_esportiva/cam_esportiva2.png"
+              alt="Camiseta Esportiva 2"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Roupas</span>
+              <h3>Camiseta Esportiva 2</h3>
+              <p class="price">R$ 50,00</p>
+              <button class="button" data-product="3">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-category="roupas">
+            <img
+              class=""
+              src="assets/loja/top/top.png"
+              alt="Top esportivo"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Roupas</span>
+              <h3>Top esportivo</h3>
+              <p class="price">R$ 45,00</p>
+              <button class="button" data-product="4">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-category="roupas">
+            <img
+              class=""
+              src="assets/loja/abada/verde.png"
+              alt="Abadá"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Roupas</span>
+              <h3>Abadá</h3>
+              <p class="price">R$ 45,00</p>
+              <button class="button" data-product="5">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-category="roupas">
+            <img
+              class=""
+              src="assets/loja/moletom/verde.png"
+              alt="Moletom"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Roupas</span>
+              <h3>Moletom</h3>
+              <p class="price">R$ 150,00</p>
+              <button class="button" data-product="6">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-category="roupas">
+            <img
+              class=""
+              src="assets/loja/moletom_y2k/verde.png"
+              alt="Moletom Y2K"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Roupas</span>
+              <h3>Moletom Y2K</h3>
+              <p class="price">R$ 165,00</p>
+              <button class="button" data-product="7">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-category="roupas">
+            <img
+              class=""
+              src="assets/loja/jaqueta/verde.png"
+              alt="Jaqueta"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Roupas</span>
+              <h3>Jaqueta</h3>
+              <p class="price">R$ 180,00</p>
+              <button class="button" data-product="8">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-category="roupas">
+            <img
+              class=""
+              src="assets/loja/short/verde.png"
+              alt="Short esportivo"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Roupas</span>
+              <h3>Short esportivo</h3>
+              <p class="price">R$ 50,00</p>
+              <button class="button" data-product="9">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-category="roupas">
+            <img
+              class=""
+              src="assets/loja/short_feminino/verde.png"
+              alt="Short feminino esportivo"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Roupas</span>
+              <h3>Short feminino esportivo</h3>
+              <p class="price">R$ 50,00</p>
+              <button class="button" data-product="10">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-category="roupas">
+            <img
+              class=""
+              src="assets/loja/calca/verde.png"
+              alt="Calça"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Roupas</span>
+              <h3>Calça</h3>
+              <p class="price">R$ 65,00</p>
+              <button class="button" data-product="11">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-category="acessorios">
+            <img
+              class=""
+              src="assets/loja/chaveiro.png"
+              alt="Chaveiro"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Acessórios</span>
+              <h3>Chaveiro</h3>
+              <p class="price">R$ 6,00</p>
+              <button class="button" data-product="12">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-category="acessorios">
+            <img
+              class=""
+              src="assets/loja/copo/verde.png"
+              alt="Copo"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Acessórios</span>
+              <h3>Copo</h3>
+              <p class="price">R$ 45,00</p>
+              <button class="button" data-product="13">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-category="acessorios">
+            <img
+              class=""
+              src="assets/loja/tirante/verde.png"
+              alt="Tirante"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Acessórios</span>
+              <h3>Tirante</h3>
+              <p class="price">R$ 15,00</p>
+              <button class="button" data-product="14">Ver produto ↗</button>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+    <site-footer></site-footer>
+    <dialog id="detail-dialog">
+      <button class="close" aria-label="Fechar janela">×</button>
+      <div id="detail-content"></div>
+    </dialog>
+    <div id="toast" role="status" aria-live="polite"></div>
+  <button class="cart-fab" id="cart-open" type="button" aria-label="Abrir sacola"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-badge" id="cart-count" hidden>0</span></button></body>
+</html>

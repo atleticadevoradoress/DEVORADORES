@@ -1,0 +1,74 @@
+DEVORADORES — PROTÓTIPO HTML MULTIPÁGINAS
+
+COMO ABRIR
+1. Extraia todo o ZIP, mantendo a pasta assets junto às páginas.
+2. Abra index.html no navegador. Não precisa instalar programas ou pacotes.
+3. Use o menu para navegar pelas seis páginas.
+
+PÁGINAS
+index.html — Início
+atletica.html — A Atlética
+nutri.html — Universo Nutri
+eventos.html — Eventos
+loja.html — Loja
+contato.html — Contato
+
+RECURSOS
+Layout responsivo, menu móvel, botão flutuante da sacola (canto inferior direito, com a quantidade de itens), filtros e busca de eventos, leitura de conteúdos em janelas, filtros da loja e sacola de demonstração. Os itens da sacola podem ficar salvos no navegador quando ele permitir armazenamento local. Nenhuma compra ou pagamento é realizado. O formulário valida os campos e exibe uma mensagem local, sem enviar ou armazenar a mensagem.
+
+IMAGENS
+Ilustrações fictícias em SVG incluídas no projeto; o mascote foi fornecido pelo usuário. Não há dependência de imagens, fontes ou bibliotecas externas. Os eventos, modalidades e produtos são exemplos ilustrativos.
+
+PERSONALIZAÇÃO
+Edite o texto diretamente nos HTML; cores e layout em assets/layout-final.css; catálogo da loja e interações em assets/app.js. Substitua os SVG e mascote mantendo os nomes, ou atualize seus caminhos no HTML e JS.
+
+ANTES DE PUBLICAR
+Adicione informações oficiais sobre a atlética e o curso, contatos reais, fontes dos conteúdos, regras e datas dos eventos e fotos autorizadas. Para operar uma loja e enviar mensagens será necessário conectar serviços reais de catálogo, pedidos, pagamento e formulário.
+
+Tecnologias: HTML5, CSS3 e JavaScript nativo. Sem processo de build.
+
+LOGO E MASCOTE ATUALIZADOS
+Emblema enviado aplicado nos cabeçalhos, rodapés e ícone das seis páginas.
+Vídeo fornecido: 240 quadros, 10 segundos. Fundo removido quadro a quadro e animação preservada no arquivo assets/mascote-loop.webp, com transparência e loop infinito. WebP animado funciona nos navegadores atuais, como Chrome, Edge, Firefox e Safari.
+A página inicial usa essa animação no lugar da imagem estática. Um botão permite parar a animação, exibindo um quadro fixo, e reproduzir novamente desde o início. A preferência do sistema por reduzir movimentos é respeitada.
+
+
+LOJA: MODAL "VER PRODUTO"
+Ao clicar em "Ver produto ↗", abre uma janela com a foto, descrição, preço, seleção de cor, tamanho e quantidade. Ao escolher uma cor, a foto troca para a do arquivo daquela cor; só aparecem as cores que existem na pasta do produto (assets/loja/<produto>/).
+Catálogo: bloco "CATÁLOGO DA LOJA" no início de assets/app.js. Para cada produto: pasta, capa (cor mostrada no card da loja), cores (arquivos existentes), tamanhos, preço e descrição. A ordem deve ser a mesma dos cards em loja.html.
+Para adicionar uma cor: coloque a foto na pasta do produto e inclua-a em "cores". Para mudar a cor do card: troque o valor de "capa" e o src da imagem do card em loja.html.
+A sacola agora guarda cor, tamanho e quantidade de cada item.
+
+
+NOTÍCIAS DA UNIFEV
+A página noticias.html consulta o filtro Nutrição e uma busca complementar no portal da Unifev ao abrir. A lista inicial e o cache armazenam apenas textos e endereços das imagens. Capas e fotos são carregadas diretamente da Unifev; não há imagens das reportagens no pacote local.
+Todos os cards abrem o mesmo modal com título, data, resumo e galeria. As fotos são consultadas quando o usuário abre a notícia, com cache de endereços durante a navegação. O botão Ler reportagem completa na Unifev abre a publicação original.
+A consulta depende do acesso e do formato do portal da Unifev. Se a galeria não puder ser carregada, o modal mantém o resumo, a capa disponível e o link para a fonte.
+
+
+LIMPEZA
+Removidos arquivos que nenhuma página usa: style.css, data.json, noticias-unifev.json, mascote-vivo.webp e os PNGs originais da pasta gestao (as páginas usam as versões -web.jpg).
+
+
+COMPONENTES (TOPO E RODAPÉ)
+A pasta components/ guarda o topo e o rodapé, que aparecem em todas as páginas:
+  components/site-header.js — topo e menu (a lista de links fica no início do arquivo)
+  components/site-footer.js — rodapé
+Em cada página, o topo é só <site-header></site-header> e o rodapé <site-footer></site-footer>, com os dois <script> no <head>.
+Para mudar um link do menu, o Instagram ou o texto do rodapé, edite UM arquivo e todas as páginas mudam.
+Para criar uma página nova: copie os dois <script> do <head> e as duas tags acima. A página atual é destacada no menu automaticamente.
+Funciona abrindo o index.html direto no navegador, sem servidor.
+
+
+PAGAMENTO COM INFINITEPAY (PIX E CARTÃO)
+Fluxo: sacola > "Pagar" > checkout da InfinitePay (Pix ou cartão em até 12x) > volta para loja.html > o modal confirma o pagamento e mostra o check animado "Pagamento concluído!".
+Arquivos novos (funções da Vercel, pasta api/):
+  api/checkout.js — cria o link de pagamento. Os PREÇOS ficam neste arquivo (lista PRODUTOS, mesma ordem de assets/app.js). Ao mudar preço ou adicionar produto, altere os dois.
+  api/verificar.js — confirma com a InfinitePay se o pagamento foi aprovado antes de mostrar o check.
+  api/webhook.js — recebe o aviso de pagamento da InfinitePay (aparece nos logs da Vercel e em Vendas no app).
+CONFIGURAÇÃO (uma vez):
+  1. No app InfinitePay: Vendas > Checkout > Configurações > Habilitar Checkout Integrado.
+  2. Na Vercel: Settings > Environment Variables > INFINITEPAY_HANDLE = sua InfiniteTag (sem o $). Depois faça um novo deploy.
+  3. Opcional: SITE_URL (padrão https://devoradores.vercel.app).
+O site agora precisa ser publicado na Vercel (as funções não rodam abrindo o index.html direto no computador).
+O botão "combinar pelo WhatsApp" continua como alternativa. O Pix estático antigo e o qrcode.js foram removidos.
