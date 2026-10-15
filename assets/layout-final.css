@@ -270,3 +270,17 @@ dialog.cart-dialog{width:min(560px,calc(100% - 28px))}
   header>.header-inner,header.is-scrolled>.header-inner{padding-left:12px;padding-right:12px}
   header .menu-toggle{padding:4px 9px;font-size:20px}
 }
+
+/* ===== Pagamento: retorno do checkout (confirmando / concluído) ===== */
+.pay-info{margin:4px 0 10px;font-size:14px;color:var(--muted)}
+.pay-status{text-align:center;padding:10px 0 4px}
+.pay-status h2{margin:14px 0 8px}
+.pay-status .cart-actions{justify-content:center}
+.pay-spinner{width:56px;height:56px;margin:8px auto 0;border:5px solid var(--line);border-top-color:var(--green);border-radius:50%;animation:pay-spin .8s linear infinite}
+@keyframes pay-spin{to{transform:rotate(360deg)}}
+.pay-check{width:112px;height:112px;display:block;margin:6px auto 0;animation:pay-pop .5s .55s ease-out both}
+.pay-check-circle{fill:var(--pale);stroke:var(--green);stroke-width:4;stroke-linecap:round;stroke-dasharray:226;stroke-dashoffset:226;transform:rotate(-90deg);transform-origin:50% 50%;animation:pay-draw .6s ease-out forwards}
+.pay-check-mark{fill:none;stroke:var(--green);stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:pay-draw .4s .5s ease-out forwards}
+@keyframes pay-draw{to{stroke-dashoffset:0}}
+@keyframes pay-pop{0%{transform:scale(1)}50%{transform:scale(1.12)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.pay-spinner{animation-duration:2s}.pay-check,.pay-check-circle,.pay-check-mark{animation:none;stroke-dashoffset:0}}

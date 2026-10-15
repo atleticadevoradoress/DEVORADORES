@@ -93,17 +93,10 @@ $$('[data-product]').forEach(b=>b.onclick=()=>openProduct(Number(b.dataset.produ
 const SALES_OPEN_AT=new Date('2026-10-17T00:00:00-03:00');
 const salesOpen=()=>Date.now()>=SALES_OPEN_AT.getTime();
 const WHATS='5517996454466';
-/* PIX da loja: o QR Code e o "copia e cola" são gerados com o valor do pedido. */
-const PIX={chave:'oanarita93@gmail.com',nome:'Devoradores',cidade:'Votuporanga'};
 const TAXA=5; /* taxa fixa por pedido, mostrada no subtotal */
-const crc16=s=>{let c=0xFFFF;for(let i=0;i<s.length;i++){c^=s.charCodeAt(i)<<8;for(let j=0;j<8;j++)c=(c&0x8000)?((c<<1)^0x1021)&0xFFFF:(c<<1)&0xFFFF}return c.toString(16).toUpperCase().padStart(4,'0')};
-const tlv=(id,v)=>id+String(v.length).padStart(2,'0')+v;
-const ascii=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\x20-\x7E]/g,'');
-function pixCode(valor){const k=PIX.chave.trim();if(!k)return '';const conta=tlv('00','br.gov.bcb.pix')+tlv('01',k);const base=tlv('00','01')+tlv('26',conta)+tlv('52','0000')+tlv('53','986')+tlv('54',valor.toFixed(2))+tlv('58','BR')+tlv('59',ascii(PIX.nome).slice(0,25).toUpperCase())+tlv('60',ascii(PIX.cidade).slice(0,15).toUpperCase())+tlv('62',tlv('05','***'))+'6304';return base+crc16(base)}
 const cartSubtotal=()=>cart.reduce((n,x)=>n+products[x.id].preco*x.qty,0);
 const cartTotal=()=>cartSubtotal()+(cart.length?TAXA:0);
 const totalsHtml=()=>`<div class="cart-sum"><div><span>Subtotal (itens)</span><span>${money(cartSubtotal())}</span></div><div><span>Taxa</span><span>${money(TAXA)}</span></div><div class="cart-total"><span>Total</span><b>${money(cartTotal())}</b></div></div>`;
-const loadQR=()=>window.qrcode?Promise.resolve():new Promise((ok,fail)=>{const s=document.createElement('script');s.src='assets/qrcode.js';s.onload=ok;s.onerror=fail;document.head.appendChild(s)});
 const itemLabel=x=>{const p=products[x.id],multi=Object.keys(p.cores).length>1;return `${x.qty}x ${p.nome} (${multi?COR[x.cor][0]+', ':''}${x.size}) — ${money(p.preco*x.qty)}`};
 function orderLink(nome,forma){const t=`Olá! Gostaria de fazer um pedido na loja Devoradores.\n\nNome: ${nome}\n\nItens:\n${cart.map(x=>'- '+itemLabel(x)).join('\n')}\n\nSubtotal (itens): ${money(cartSubtotal())}\nTaxa: ${money(TAXA)}\nTotal: ${money(cartTotal())}\nPagamento: ${forma}`;return `https://wa.me/${WHATS}?text=${encodeURIComponent(t)}`}
 
@@ -115,22 +108,48 @@ function showCart(){
 }
 function showCheckout(){
   if(!cart.length)return showCart();
-  show(`<p class="eyebrow">Finalizar compra</p><h2>Seus dados e pagamento</h2><label for="co-name">Nome completo<input id="co-name" autocomplete="name" maxlength="100" placeholder="Seu nome"></label><fieldset class="pay-methods"><legend>Forma de pagamento</legend><label class="pay-option"><input type="radio" name="pay" value="pix" checked><span><b>Pix</b><small>Código “copia e cola” com o valor do pedido.</small></span></label><label class="pay-option"><input type="radio" name="pay" value="outra"><span><b>Outra forma de pagamento</b><small>Combine direto com a atlética pelo WhatsApp.</small></span></label></fieldset>${totalsHtml()}<p class="pm-error" id="co-error" role="alert"></p><div class="cart-actions"><button class="button" id="co-next" type="button">Continuar ↗</button><button class="text-button" id="co-back" type="button">Voltar à sacola</button></div>`,'cart-dialog');
+  show(`<p class="eyebrow">Finalizar compra</p><h2>Seus dados e pagamento</h2><label for="co-name">Nome completo<input id="co-name" autocomplete="name" maxlength="100" placeholder="Seu nome"></label>${totalsHtml()}<p class="pay-info">Você escolhe <b>Pix</b> ou <b>cartão de crédito</b> (em até 12x) na próxima tela, em ambiente seguro da InfinitePay.</p><p class="pm-error" id="co-error" role="alert"></p><div class="cart-actions"><button class="button" id="co-next" type="button">Pagar ↗</button><button class="text-button" id="co-back" type="button">Voltar à sacola</button></div><p class="small"><button class="text-button" id="co-whats" type="button">Prefere combinar o pagamento pelo WhatsApp?</button></p>`,'cart-dialog');
   $('#co-back').onclick=showCart;
-  $('#co-next').onclick=()=>{const nome=$('#co-name').value.trim();if(nome.length<3){$('#co-error').textContent='Informe seu nome para continuar.';$('#co-name').focus();return}
-    const forma=document.querySelector('input[name="pay"]:checked').value;forma==='pix'?showPix(nome):showOther(nome)};
+  const pedirNome=()=>{const nome=$('#co-name').value.trim();if(nome.length<3){$('#co-error').textContent='Informe seu nome para continuar.';$('#co-name').focus();return null}return nome};
+  $('#co-next').onclick=()=>{const nome=pedirNome();if(nome)payOnline(nome)};
+  $('#co-whats').onclick=()=>{const nome=pedirNome();if(nome)showOther(nome)};
 }
-function showPix(nome){
-  const total=cartTotal(),code=pixCode(total);
-  show(`<p class="eyebrow">Pagamento via Pix</p><h2>Total: ${money(total)}</h2>${totalsHtml()}${code?`<p>Escaneie o QR Code com o app do seu banco ou copie o código abaixo (Pix copia e cola). O valor já vai preenchido.</p><div class="pix-qr" id="pix-qr" role="img" aria-label="QR Code Pix no valor de ${money(total)}"><span class="small">Gerando QR Code…</span></div><textarea id="pix-code" readonly rows="4" aria-label="Código Pix copia e cola">${code}</textarea><button class="button outline" id="pix-copy" type="button">Copiar código Pix</button><p class="small">Chave Pix (e-mail): ${PIX.chave}</p>`:'<p>Envie o pedido pelo WhatsApp e a atlética responde com os dados para o pagamento por Pix.</p>'}<p>Depois de pagar, envie o pedido e o comprovante pelo WhatsApp da atlética para confirmar a compra.</p><div class="cart-actions"><a class="button" href="${orderLink(nome,'Pix')}" target="_blank" rel="noopener noreferrer">Enviar pedido pelo WhatsApp ↗</a><button class="text-button" id="co-back" type="button">Voltar</button></div>`,'cart-dialog');
-  $('#co-back').onclick=showCheckout;
-  if(code)loadQR().then(()=>{const q=qrcode(0,'M');q.addData(code);q.make();const box=$('#pix-qr');if(box)box.innerHTML=q.createSvgTag({cellSize:4,margin:4,scalable:true})}).catch(()=>{const box=$('#pix-qr');if(box)box.innerHTML='<span class="small">Não foi possível gerar o QR Code. Use o código abaixo.</span>'});
-  $('#pix-copy')?.addEventListener('click',async()=>{const t=$('#pix-code').value;try{await navigator.clipboard.writeText(t)}catch{$('#pix-code').select();document.execCommand('copy')}$('#pix-copy').textContent='Código copiado!'});
+/* Cria o link de pagamento no servidor (api/checkout.js) e leva o cliente ao checkout da InfinitePay (Pix ou cartão). */
+async function payOnline(nome){
+  const btn=$('#co-next'),err=$('#co-error');btn.disabled=true;btn.textContent='Abrindo pagamento…';err.textContent='';
+  try{
+    const r=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome,itens:cart.map(x=>({id:x.id,cor:x.cor,size:x.size,qty:x.qty}))})});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok||!d.url)throw new Error(d.erro||'Falha');
+    location.href=d.url;
+  }catch(e){
+    btn.disabled=false;btn.textContent='Pagar ↗';
+    err.textContent='Não foi possível abrir o pagamento agora. Tente de novo ou combine pelo WhatsApp.';
+  }
 }
 function showOther(nome){
   show(`<p class="eyebrow">Outra forma de pagamento</p><h2>Combine com a atlética</h2><p>Envie o seu pedido pelo WhatsApp e a atlética combina o pagamento com você.</p>${totalsHtml()}<div class="cart-actions"><a class="button" href="${orderLink(nome,'a combinar')}" target="_blank" rel="noopener noreferrer">Enviar pedido pelo WhatsApp ↗</a><button class="text-button" id="co-back" type="button">Voltar</button></div>`,'cart-dialog');
   $('#co-back').onclick=showCheckout;
 }
+/* Volta do checkout: a InfinitePay devolve o cliente com ?order_nsu=...&slug=...&transaction_nsu=...
+   O servidor confirma o pagamento (api/verificar.js) e o modal mostra o check animado. */
+(()=>{
+  const q=new URLSearchParams(location.search),order=q.get('order_nsu'),slug=q.get('slug'),tx=q.get('transaction_nsu');
+  if(!order||!slug||!tx)return;
+  const receipt=q.get('receipt_url')||'',metodo=q.get('capture_method');
+  history.replaceState(null,'',location.pathname); /* limpa a URL para um refresh não repetir */
+  show('<div class="pay-status"><div class="pay-spinner" aria-hidden="true"></div><h2>Confirmando seu pagamento…</h2><p>Só um instante.</p></div>','cart-dialog pay-dialog');
+  const ok=()=>{
+    cart=[];persist();
+    const forma=metodo==='pix'?'Pix':metodo==='credit_card'?'cartão de crédito':'';
+    const link=/^https:\/\//.test(receipt)?`<a class="button outline" href="${receipt.replace(/"/g,'&quot;')}" target="_blank" rel="noopener noreferrer">Ver comprovante ↗</a>`:'';
+    show(`<div class="pay-status"><svg class="pay-check" viewBox="0 0 80 80" role="img" aria-label="Pagamento concluído"><circle class="pay-check-circle" cx="40" cy="40" r="36"/><path class="pay-check-mark" d="M23 41l12 12 23-26"/></svg><h2>Pagamento concluído!</h2><p>Recebemos o seu pedido${forma?' pago via '+forma:''}. A atlética entra em contato para combinar a retirada.</p><div class="cart-actions">${link}<button class="button" id="pay-close" type="button">Fechar</button></div></div>`,'cart-dialog pay-dialog');
+    $('#pay-close').onclick=close;
+  };
+  const falha=msg=>{show(`<div class="pay-status"><h2>Não conseguimos confirmar</h2><p>${msg} Se você já pagou, fale com a atlética pelo WhatsApp informando o código <b>${order.replace(/[^\w-]/g,'').slice(0,40)}</b>.</p><div class="cart-actions"><a class="button" href="https://wa.me/${WHATS}" target="_blank" rel="noopener noreferrer">Falar no WhatsApp ↗</a><button class="text-button" id="pay-close" type="button">Fechar</button></div></div>`,'cart-dialog pay-dialog');$('#pay-close').onclick=close};
+  fetch('/api/verificar',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order_nsu:order,slug,transaction_nsu:tx})})
+    .then(r=>r.json().catch(()=>({}))).then(d=>d.paid?ok():falha('O pagamento ainda não consta como aprovado.')).catch(()=>falha('Não foi possível consultar o pagamento agora.'));
+})();
 $('#cart-open').onclick=showCart;
 $('#contact-form')?.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target),t=`Olá! Meu nome é ${f.get('nome')} (${f.get('email')}).\nAssunto: ${f.get('assunto')}\n\n${f.get('mensagem')}`;window.open(`https://wa.me/${WHATS}?text=${encodeURIComponent(t)}`,'_blank','noopener');$('#form-status').textContent='Abrindo o WhatsApp da atlética com a sua mensagem.'});
 /* Avisos de venda: trocam sozinhos quando as vendas abrem (17/10). */

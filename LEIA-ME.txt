@@ -58,3 +58,17 @@ Em cada página, o topo é só <site-header></site-header> e o rodapé <site-foo
 Para mudar um link do menu, o Instagram ou o texto do rodapé, edite UM arquivo e todas as páginas mudam.
 Para criar uma página nova: copie os dois <script> do <head> e as duas tags acima. A página atual é destacada no menu automaticamente.
 Funciona abrindo o index.html direto no navegador, sem servidor.
+
+
+PAGAMENTO COM INFINITEPAY (PIX E CARTÃO)
+Fluxo: sacola > "Pagar" > checkout da InfinitePay (Pix ou cartão em até 12x) > volta para loja.html > o modal confirma o pagamento e mostra o check animado "Pagamento concluído!".
+Arquivos novos (funções da Vercel, pasta api/):
+  api/checkout.js — cria o link de pagamento. Os PREÇOS ficam neste arquivo (lista PRODUTOS, mesma ordem de assets/app.js). Ao mudar preço ou adicionar produto, altere os dois.
+  api/verificar.js — confirma com a InfinitePay se o pagamento foi aprovado antes de mostrar o check.
+  api/webhook.js — recebe o aviso de pagamento da InfinitePay (aparece nos logs da Vercel e em Vendas no app).
+CONFIGURAÇÃO (uma vez):
+  1. No app InfinitePay: Vendas > Checkout > Configurações > Habilitar Checkout Integrado.
+  2. Na Vercel: Settings > Environment Variables > INFINITEPAY_HANDLE = sua InfiniteTag (sem o $). Depois faça um novo deploy.
+  3. Opcional: SITE_URL (padrão https://devoradores.vercel.app).
+O site agora precisa ser publicado na Vercel (as funções não rodam abrindo o index.html direto no computador).
+O botão "combinar pelo WhatsApp" continua como alternativa. O Pix estático antigo e o qrcode.js foram removidos.
