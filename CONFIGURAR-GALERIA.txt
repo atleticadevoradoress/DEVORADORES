@@ -1,0 +1,15 @@
+GALERIA DEVORADORES - VERCEL
+
+1. Google Cloud: habilite Google Drive API e crie chave de API.
+2. Vercel > Project > Settings > Environment Variables:
+   GOOGLE_DRIVE_API_KEY = sua chave privada
+   GOOGLE_DRIVE_FOLDER_ID = 1WWHX-zLwaslZL_vwmiwQNnSLpMdVFaDG
+3. Compartilhe a pasta e arquivos para leitura pública (Qualquer pessoa com o link).
+4. Publique novamente o projeto na Vercel para aplicar as variáveis.
+5. Abra /api/galeria para conferir retorno JSON e depois /galeria.html.
+
+As fotos são ordenadas pelo createdTime (criação do arquivo no Drive), em ordem crescente.
+Isso NÃO garante ordem de adição quando arquivos preexistentes são movidos para a pasta.
+A atualização verifica a API a cada 60 segundos com cache de até 60 segundos.
+O link 'Enviar minhas fotos' abre a pasta; permissões de Leitor não permitem upload.
+Para uploads públicos seguros, use formulário separado ou ferramenta de coleta.

@@ -1,9 +1,3 @@
-/* ============================================================
-   RODAPÉ — usado em todas as páginas.
-   Para usar:   <script src="components/site-footer.js"></script>   (no <head>)
-                <site-footer></site-footer>                         (onde o rodapé deve aparecer)
-   Para mudar o Instagram, o e-mail, o mascote ou o texto, edite só este arquivo.
-   ============================================================ */
 (function () {
   var HTML = '<footer class="site-footer"><div class="footer-inner">' +
     '<div class="social" aria-label="Redes sociais">' +

@@ -1,10 +1,3 @@
-/* ============================================================
-   TOPO (cabeçalho) — usado em todas as páginas.
-   Para usar:   <script src="components/site-header.js"></script>   (no <head>)
-                <site-header></site-header>                         (onde o topo deve aparecer)
-   Para mudar um link ou adicionar uma página, edite só a lista LINKS abaixo.
-   A página atual é destacada automaticamente.
-   ============================================================ */
 (function () {
   var LINKS = [
     ['index.html',    'Início'],
@@ -12,6 +5,7 @@
     ['nutri.html',    'Universo Nutri'],
     ['noticias.html', 'Notícias'],
     ['eventos.html',  'Eventos'],
+    ['galeria.html',  'Galeria'],
     ['loja.html',     'Loja'],
     ['contato.html',  'Contato']
   ];

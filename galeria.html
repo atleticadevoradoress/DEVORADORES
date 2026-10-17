@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Galeria da atlética Devoradores: ações solidárias, eventos e momentos do curso de Nutrição."
+    />
+    <title>Galeria | Devoradores</title>
+    <link rel="icon" href="assets/logo.png" type="image/png" />
+    <link rel="stylesheet" href="assets/layout-final.css?v=23" />
+    <link rel="stylesheet" href="assets/extras.css?v=1" />
+    <script src="components/site-header.js"></script><script src="components/site-footer.js"></script><script defer src="assets/app.js"></script>
+    <style>
+      /* ==========================================================
+         Galeria — usa a identidade das demais páginas (layout-final.css):
+         fundo claro, rótulo com barrinha dourada, título verde com <em>,
+         botões dourados e chips em pílula. Tudo escopado em .gal.
+         As fotos vêm da pasta compartilhada do Google Drive.
+         ========================================================== */
+      .gal {
+        --gal-green: #103f2e;
+        --gal-green-2: #1a5a43;
+        --gal-gold: #ffd13e;
+        --gal-ink: #203b31;
+        --gal-muted: #5b6c64;
+        --gal-line: #dce6de;
+        --gal-pale: #f2f7f0;
+        --gal-gap: 4px;
+        --gal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .gal [hidden] { display: none !important; }
+
+      /* rodapé sempre no fim da tela e colado na galeria (como A Atlética e Eventos) */
+      body.gal { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
+      body.gal > header, body.gal > footer { flex: none; }
+      body.gal > main#main { flex: 1 0 auto; max-width: none; width: 100%; padding: 0; margin: 0; }
+      body.gal > footer.site-footer { margin-top: 0; }
+
+      .gal-wrap { width: min(1120px, 100% - 40px); margin-inline: auto; }
+
+      /* ---------- topo ---------- */
+      .gal-top { margin: 0; padding: clamp(28px, 4vw, 48px) 0 clamp(36px, 5vw, 56px); }
+      .gal-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 16px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        line-height: 1.4;
+        text-transform: uppercase;
+        color: var(--gal-green);
+      }
+      .gal-eyebrow::before { content: ""; flex: none; width: 26px; height: 3px; border-radius: 3px; background: var(--gal-gold); }
+      .gal-top h1 { margin: 0 0 clamp(14px, 2vw, 20px); }
+      .gal-lead { max-width: 52ch; margin: 0; font-size: clamp(1.02rem, 1.6vw, 1.2rem); line-height: 1.6; }
+
+      .gal-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; margin-top: clamp(24px, 3.5vw, 34px); }
+      .gal-chip {
+        display: inline-flex; align-items: center; gap: 8px;
+        margin: 0; padding: 10px 18px;
+        border: 1px solid var(--gal-line); border-radius: 999px;
+        background: var(--gal-pale); color: #3d5248;
+        font: inherit; font-size: 14px; font-weight: 700;
+        cursor: pointer;
+        transition: background 0.25s, color 0.25s, border-color 0.25s;
+      }
+      .gal-chip::before {
+        content: ""; width: 14px; height: 14px; border-radius: 50%;
+        background: conic-gradient(#ffd13e, #e5533d, #7a4bd6, #2f8fe0, #3fb56b, #ffd13e);
+      }
+      .gal-chip:hover { border-color: var(--gal-green); }
+      .gal-chip[aria-pressed="true"] { background: var(--gal-green); border-color: var(--gal-green); color: #fff; }
+      .gal-send {
+        display: inline-flex; align-items: center; gap: 12px;
+        padding: 14px 24px; border-radius: 8px;
+        background: var(--gal-gold); color: #173527;
+        font-size: 14px; font-weight: 700;
+        transition: transform 0.3s var(--gal-ease), background 0.3s, box-shadow 0.3s;
+      }
+      .gal-send svg { width: 18px; height: 18px; transition: transform 0.3s var(--gal-ease); }
+      .gal-send:hover { background: #ffe070; transform: translateY(-2px); box-shadow: 0 12px 24px -12px rgba(189, 145, 18, 0.7); }
+      .gal-send:hover svg { transform: translate(3px, -3px); }
+
+      .gal-total { margin: 18px 0 0; font-size: 0.95rem; color: #5b6b63; }
+      .gal-status { margin: 26px 0 0; font-size: 15px; }
+      .gal-status button {
+        margin-left: 10px; padding: 9px 16px;
+        border: 1px solid var(--gal-green); border-radius: 999px;
+        background: #fff; color: var(--gal-green); font-weight: 700;
+      }
+      .gal-status button:hover { background: var(--gal-pale); }
+
+      /* ---------- faixa do mosaico: verde do site com filete dourado ---------- */
+      .gal-band { background: var(--gal-green); border-top: 4px solid var(--gal-gold); }
+      .gal-mosaic { padding: var(--gal-gap); }
+      .gal-row { display: flex; gap: var(--gal-gap); margin-bottom: var(--gal-gap); }
+      .gal-row:last-child { margin-bottom: 0; }
+      .gal-tile {
+        position: relative;
+        flex: none;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+        background: #0c3123;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .gal-tile img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        /* "apagada": preto e branco e um pouco escura */
+        filter: grayscale(1) contrast(1.08) brightness(0.72);
+        transition: opacity 0.7s var(--gal-ease) var(--d, 0ms), filter 0.8s var(--gal-ease);
+      }
+      .gal-tile.is-in img { opacity: 1; }
+      .gal-tile:hover img { filter: grayscale(1) contrast(1.05) brightness(0.95); }
+
+      /* "acesa": colorida, como as telas iluminadas da referência */
+      .gal-tile.is-color { z-index: 1; box-shadow: 0 0 36px -4px rgba(255, 209, 62, 0.45); }
+      .gal-tile.is-color img,
+      .gal-tile.is-color:hover img { filter: none; }
+      .gal-tile:focus-visible { outline: 3px solid var(--gal-gold); outline-offset: -3px; z-index: 2; }
+
+      /* ---------- visualizador ---------- */
+      .gal-view {
+        width: 100vw; height: 100dvh; max-width: none; max-height: none;
+        margin: 0; padding: 0; border: 0; border-radius: 0; overflow: hidden;
+        background: rgba(5, 24, 17, 0.97);
+        color: #f2f7f0;
+      }
+      .gal-view::backdrop { background: #04170f; }
+      .gal-view[open] { display: grid; grid-template-rows: minmax(0, 1fr) auto; }
+      .gal-stage { position: relative; display: grid; place-items: center; min-height: 0; overflow: hidden; padding: clamp(12px, 3vw, 40px); }
+      .gal-stage img { max-width: 100%; max-height: calc(100dvh - 130px); object-fit: contain; border-radius: 4px; box-shadow: 0 30px 80px -30px #000; }
+      .gal-bar { display: flex; align-items: center; justify-content: center; gap: 18px; padding: 0 16px 18px; font-size: 14px; color: #b7c7bd; }
+      .gal-btn {
+        display: grid; place-items: center;
+        width: 46px; height: 46px; padding: 0;
+        border: 1.5px solid rgba(255, 255, 255, 0.28);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        color: #f2f7f0;
+        font: inherit; font-size: 20px; line-height: 1;
+        cursor: pointer;
+        transition: border-color 0.2s, color 0.2s;
+      }
+      .gal-btn:hover { border-color: var(--gal-gold); color: var(--gal-gold); }
+      .gal-btn:focus-visible { outline: 3px solid var(--gal-gold); outline-offset: 2px; }
+      .gal-close { position: absolute; top: 14px; right: 14px; z-index: 2; }
+      .gal-count { min-width: 6ch; text-align: center; font-variant-numeric: tabular-nums; }
+
+      @media (max-width: 640px) {
+        .gal { --gal-gap: 3px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .gal-tile img, .gal-send, .gal-send svg { transition: none; }
+      }
+    </style>
+  </head>
+  <body class="gal">
+    <a class="skip" href="#main">Pular para o conteúdo</a>
+    <site-header></site-header>
+
+    <main id="main">
+      <section class="gal-top">
+        <div class="gal-wrap">
+          <p class="gal-eyebrow">Galeria Devoradores</p>
+          <h1>Reviva cada <em>momento.</em></h1>
+          <p class="gal-lead">Ações, eventos e bastidores da atlética. Toque numa foto para colorir; toque de novo para ampliar.</p>
+
+          <div class="gal-tools">
+            <button class="gal-chip" id="gal-all" type="button" aria-pressed="false" hidden>Colorir todas</button>
+            <a class="gal-send" href="https://drive.google.com/drive/folders/1WWHX-zLwaslZL_vwmiwQNnSLpMdVFaDG?usp=sharing" target="_blank" rel="noopener noreferrer">Enviar minhas fotos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M7 7h10v10" /></svg></a>
+          </div>
+          <p class="gal-total" id="gal-total" aria-live="polite" hidden></p>
+          <p class="gal-status" id="gal-status" role="status">Carregando as fotos…</p>
+        </div>
+      </section>
+
+      <div class="gal-band" id="gal-band" hidden>
+        <div class="gal-mosaic" id="gal-mosaic" aria-label="Fotos da galeria"></div>
+      </div>
+    </main>
+
+    <dialog class="gal-view" id="gal-view" aria-label="Foto ampliada">
+      <div class="gal-stage">
+        <button class="gal-btn gal-close" id="gal-close" type="button" aria-label="Fechar">✕</button>
+        <img id="gal-big" alt="" />
+      </div>
+      <div class="gal-bar">
+        <button class="gal-btn" id="gal-prev" type="button" aria-label="Foto anterior">‹</button>
+        <span class="gal-count" id="gal-count" aria-live="polite"></span>
+        <button class="gal-btn" id="gal-next" type="button" aria-label="Próxima foto">›</button>
+      </div>
+    </dialog>
+
+    <site-footer></site-footer>
+    <dialog id="detail-dialog">
+      <button class="close" aria-label="Fechar janela">×</button>
+      <div id="detail-content"></div>
+    </dialog>
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      (function () {
+        /* ---------- CONFIGURAÇÃO DO DRIVE ----------
+           As fotos vêm da pasta compartilhada do Google Drive. Quem colocar foto na pasta aparece aqui.
+           1) Cole abaixo a chave de API (Google Cloud > Credenciais; ver instruções).
+           2) A pasta precisa estar como "Qualquer pessoa com o link". */
+        // A chave fica protegida na função /api/galeria da Vercel.
+        var DRIVE_PASTA = "1WWHX-zLwaslZL_vwmiwQNnSLpMdVFaDG";
+
+        /* lista de fotos: cada item é [id do arquivo no Drive, largura, altura] */
+        var FOTOS = [];
+        var RAZAO_PADRAO = 4 / 3; /* foto que o Drive ainda não mediu */
+        function urlFoto(id, largura) { return "https://lh3.googleusercontent.com/d/" + id + "=w" + largura; }
+        function urlFotoReserva(id, largura) { return "https://drive.google.com/thumbnail?id=" + id + "&sz=w" + largura; }
+
+        var mosaic = document.getElementById("gal-mosaic");
+        var faixa = document.getElementById("gal-band");
+        var total = document.getElementById("gal-total");
+        var tiles = [];
+        var larguraAtual = 0;
+        var todasColoridas = false;
+
+        /* sorteio fixo: o encaixe é sempre o mesmo para a mesma largura de tela */
+        function sorteio(seed) {
+          return function () {
+            seed |= 0; seed = (seed + 0x6d2b79f5) | 0;
+            var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+            t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+            return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+          };
+        }
+
+        function razao(i) { var f = FOTOS[i]; return f[1] && f[2] ? f[1] / f[2] : RAZAO_PADRAO; }
+
+        /* ---------- ENCAIXE: linhas justificadas de alturas variadas ---------- */
+        function calcularLinhas(W, gap) {
+          var base = W < 600 ? 120 : W < 1000 ? 175 : W < 1500 ? 215 : 250;
+          var rnd = sorteio(7);
+          var linhas = [];
+          var i = 0;
+          while (i < FOTOS.length) {
+            var alvo = base * (0.82 + rnd() * 0.45);
+            var soma = 0, melhor = null;
+            for (var j = i; j < FOTOS.length; j++) {
+              soma += razao(j);
+              var n = j - i + 1;
+              var h = (W - gap * (n - 1)) / soma;
+              var erro = Math.abs(h - alvo);
+              if (melhor === null || erro < melhor.erro) melhor = { fim: j + 1, h: h, erro: erro };
+              if (h < alvo * 0.7) break;
+            }
+            linhas.push({ ini: i, fim: melhor.fim, h: melhor.h });
+            i = melhor.fim;
+          }
+          /* última linha muito esticada: junta com a anterior para não ficar gigante */
+          var ult = linhas[linhas.length - 1];
+          if (linhas.length > 1 && ult.h > base * 1.5) {
+            var ant = linhas[linhas.length - 2];
+            var s = 0;
+            for (var k = ant.ini; k < ult.fim; k++) s += razao(k);
+            var n2 = ult.fim - ant.ini;
+            linhas.splice(linhas.length - 2, 2, { ini: ant.ini, fim: ult.fim, h: (W - gap * (n2 - 1)) / s });
+          }
+          return linhas;
+        }
+
+        function criarTile(idx) {
+          var f = FOTOS[idx];
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "gal-tile";
+          b.setAttribute("aria-label", "Foto " + (idx + 1) + " de " + FOTOS.length + ", em preto e branco. Ativar para colorir.");
+          var img = document.createElement("img");
+          img.alt = "";
+                    img.decoding = "async";
+          img.loading = idx < 14 ? "eager" : "lazy";
+          var usouReserva = false;
+          img.onerror = function () {
+            /* se o endereço principal falhar, tenta o de reserva do Drive; depois disso, só deixa o quadro escuro */
+            if (!usouReserva) { usouReserva = true; img.src = urlFotoReserva(f[0], 640); }
+          };
+          img.onload = function () {
+            /* entrada em sequência só nas primeiras; o resto aparece ao carregar */
+            b.style.setProperty("--d", (idx < 24 ? idx * 45 : 0) + "ms");
+            b.classList.add("is-in");
+          };
+          img.src = urlFoto(f[0], 640);
+          b.appendChild(img);
+          b.addEventListener("click", function () { aoClicar(idx); });
+          return b;
+        }
+
+        function montar() {
+          var W = mosaic.clientWidth - 2; /* folga contra arredondamento */
+          if (W < 100 || Math.abs(W - larguraAtual) < 2) return;
+          larguraAtual = W;
+          var gap = parseFloat(getComputedStyle(document.body).getPropertyValue("--gal-gap")) || 4;
+          var linhas = calcularLinhas(W, gap);
+          var frag = document.createDocumentFragment();
+          if (!tiles.length) FOTOS.forEach(function (_, i) { tiles.push(criarTile(i)); });
+          linhas.forEach(function (L) {
+            var row = document.createElement("div");
+            row.className = "gal-row";
+            row.style.height = L.h.toFixed(2) + "px";
+            for (var i = L.ini; i < L.fim; i++) {
+              tiles[i].style.width = (razao(i) * L.h).toFixed(2) + "px";
+              row.appendChild(tiles[i]);
+            }
+            frag.appendChild(row);
+          });
+          mosaic.replaceChildren(frag);
+        }
+
+        /* ---------- COR ---------- */
+        function aoClicar(idx) {
+          var t = tiles[idx];
+          if (t.classList.contains("is-color")) { abrir(idx); return; }
+          colorir(idx, true);
+        }
+        function colorir(idx, ligar) {
+          var t = tiles[idx];
+          t.classList.toggle("is-color", ligar);
+          t.setAttribute("aria-label", "Foto " + (idx + 1) + " de " + FOTOS.length + (ligar ? ", colorida. Ativar para ampliar." : ", em preto e branco. Ativar para colorir."));
+        }
+
+        var btnTodas = document.getElementById("gal-all");
+        btnTodas.addEventListener("click", function () {
+          todasColoridas = !todasColoridas;
+          tiles.forEach(function (_, i) { colorir(i, todasColoridas); });
+          btnTodas.setAttribute("aria-pressed", String(todasColoridas));
+        });
+
+        /* ---------- VISUALIZADOR ---------- */
+        var dlg = document.getElementById("gal-view");
+        var big = document.getElementById("gal-big");
+        var cont = document.getElementById("gal-count");
+        var atual = 0;
+
+        function mostrar(i) {
+          atual = (i + FOTOS.length) % FOTOS.length;
+          var f = FOTOS[atual];
+          big.alt = "Foto " + (atual + 1) + " da galeria dos Devoradores";
+          big.src = urlFoto(f[0], 640); /* aparece já com a miniatura (que já está no cache)... */
+          var pesada = new Image();
+          pesada.onload = function () { if (FOTOS[atual] === f) big.src = pesada.src; }; /* ...e troca pela versão grande */
+          pesada.src = urlFoto(f[0], 2000);
+          cont.textContent = (atual + 1) + " / " + FOTOS.length;
+          colorir(atual, true); /* quem foi visto fica colorido na capa */
+        }
+        function abrir(i) { mostrar(i); if (!dlg.open) dlg.showModal(); }
+
+        document.getElementById("gal-close").addEventListener("click", function () { dlg.close(); });
+        document.getElementById("gal-prev").addEventListener("click", function () { mostrar(atual - 1); });
+        document.getElementById("gal-next").addEventListener("click", function () { mostrar(atual + 1); });
+        dlg.addEventListener("keydown", function (e) {
+          if (e.key === "ArrowLeft") mostrar(atual - 1);
+          if (e.key === "ArrowRight") mostrar(atual + 1);
+        });
+        dlg.addEventListener("click", function (e) { if (e.target === dlg || e.target.classList.contains("gal-stage")) dlg.close(); });
+
+        /* ---------- INÍCIO: busca a lista no Drive ---------- */
+        var aviso = document.getElementById("gal-status");
+        /* pergunta ao Drive o que tem na pasta (fotos novas primeiro) */
+        function listarDrive() {
+          return fetch('/api/galeria', { cache: 'no-store' }).then(function (r) {
+            return r.json().then(function (d) {
+              if (!r.ok) throw new Error(d.erro || 'Erro ao consultar a galeria');
+              return (d.fotos || []).map(function (f) { return [f.id, f.w, f.h]; });
+            });
+          });
+        }
+
+        function carregar() {
+          aviso.hidden = false;
+          aviso.textContent = "Carregando as fotos…";
+          listarDrive()
+            .then(function (lista) {
+              FOTOS = lista;
+              if (!FOTOS.length) { aviso.textContent = "Ainda não há fotos na galeria. Seja o primeiro a enviar!"; return; }
+              aviso.hidden = true;
+              btnTodas.hidden = false;
+              total.textContent = FOTOS.length + (FOTOS.length === 1 ? " foto" : " fotos");
+              total.hidden = false;
+              faixa.hidden = false; /* precisa estar visível para medir a largura */
+              larguraAtual = 0;
+              montar();
+            })
+            .catch(function (erro) {
+              console.error("Galeria:", erro);
+              aviso.textContent = "Não foi possível carregar as fotos agora.";
+              var b = document.createElement("button");
+              b.type = "button"; b.textContent = "Tentar de novo";
+              b.addEventListener("click", carregar);
+              aviso.appendChild(b);
+              /* no seu computador (localhost) mostra o motivo; para o público, só a mensagem simples */
+              if (/^(localhost|127\.)/.test(location.hostname)) {
+                var m = document.createElement("small");
+                m.style.cssText = "display:block;margin-top:14px;max-width:70ch;color:#967005";
+                m.textContent = "Detalhe (só aparece em localhost): " + erro.message;
+                aviso.appendChild(m);
+              }
+            });
+        }
+        carregar();
+        // Atualiza a lista a cada minuto, sem reconstruir a galeria se nada mudou.
+        var idsAnteriores = '';
+        var carregarOriginal = carregar;
+        setInterval(function () {
+          if (document.hidden) return;
+          listarDrive().then(function (lista) {
+            var ids = lista.map(function (f) { return f[0]; }).join(',');
+            if (ids === FOTOS.map(function (f) { return f[0]; }).join(',')) return;
+            FOTOS = lista;
+            tiles = [];
+            mosaic.replaceChildren();
+            larguraAtual = 0;
+            if (!FOTOS.length) { faixa.hidden = true; total.hidden = true; aviso.hidden = false; aviso.textContent = 'Ainda não há fotos na galeria.'; return; }
+            aviso.hidden = true;
+            btnTodas.hidden = false;
+            total.textContent = FOTOS.length + (FOTOS.length === 1 ? ' foto' : ' fotos');
+            total.hidden = false;
+            faixa.hidden = false;
+            montar();
+          }).catch(function (e) { console.warn('Atualização da galeria:', e); });
+        }, 60000);
+        var espera;
+        window.addEventListener("resize", function () { clearTimeout(espera); espera = setTimeout(montar, 120); });
+      })();
+    </script>
+  <button class="cart-fab" id="cart-open" type="button" aria-label="Abrir carrinho"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg><span class="cart-badge" id="cart-count" hidden>0</span></button></body>
+</html>
