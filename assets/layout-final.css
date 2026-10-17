@@ -421,27 +421,50 @@ footer.site-footer .social a.footer-mail span{overflow-wrap:anywhere}
   footer.site-footer .social a { flex: 0 0 auto; }
   footer.site-footer .social svg { width: 21px; height: 21px; }
 }
-@media (max-width: 768px) {
-  .site-footer .footer-inner {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+
+/* Ajuste definitivo: redes sociais visiveis ao lado da marca,
+   com area reservada para o botao flutuante do carrinho. */
+@media (max-width: 780px) {
+  footer.site-footer .footer-inner {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px 76px 12px 10px;
+    gap: 5px;
+    flex-wrap: nowrap;
     justify-content: flex-start;
+  }
+  footer.site-footer .footer-brand {
+    order: 0;
+    flex: 0 1 auto;
+    min-width: 0;
+    gap: 5px;
+  }
+  footer.site-footer .footer-brand img {
+    height: 42px;
+    width: auto;
+    max-width: 42px;
+  }
+  footer.site-footer .footer-title {
+    font-size: clamp(8px, 2.1vw, 10px);
+    line-height: 1.15;
+    letter-spacing: -0.2px;
+    overflow-wrap: normal;
+  }
+  footer.site-footer .footer-title span { white-space: normal; }
+  footer.site-footer .social {
+    order: 1;
+    flex: 0 0 auto;
+    gap: 6px;
     flex-wrap: nowrap;
-    gap: 8px;
-    padding-right: 76px;
+    justify-content: flex-start;
   }
-
-  .site-footer .social {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: nowrap;
-    flex-shrink: 0;
-    gap: 8px;
-  }
-
-  .site-footer .social a {
-    flex-shrink: 0;
-  }
+  footer.site-footer .social svg { width: 18px; height: 18px; }
+}
+@media (max-width: 360px) {
+  footer.site-footer .footer-inner { padding-right: 70px; padding-left: 6px; gap: 3px; }
+  footer.site-footer .footer-brand { gap: 3px; }
+  footer.site-footer .footer-brand img { height: 34px; max-width: 34px; }
+  footer.site-footer .footer-title { font-size: 8px; }
+  footer.site-footer .social { gap: 4px; }
+  footer.site-footer .social svg { width: 16px; height: 16px; }
 }
