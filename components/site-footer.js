@@ -17,6 +17,66 @@
       var tpl = document.createElement('template');
       tpl.innerHTML = HTML;
       this.replaceWith(tpl.content);
+
+      // Reposiciona o carrinho acima do rodapé
+      // quando o rodapé aparece na tela.
+      var scheduled = false;
+
+      function updateCartPosition() {
+        scheduled = false;
+
+        var footer = document.querySelector('footer.site-footer');
+        var cart = document.querySelector('.cart-fab');
+
+        if (!footer || !cart) return;
+
+        var gap = 14;
+
+        var viewportHeight = window.visualViewport
+          ? window.visualViewport.height + window.visualViewport.offsetTop
+          : window.innerHeight;
+
+        var top = footer.getBoundingClientRect().top;
+
+        var offset = Math.max(
+          gap,
+          viewportHeight - top + gap
+        );
+
+        cart.style.setProperty(
+          '--cart-footer-offset',
+          offset + 'px'
+        );
+      }
+
+      function scheduleCartPosition() {
+        if (scheduled) return;
+
+        scheduled = true;
+        requestAnimationFrame(updateCartPosition);
+      }
+
+      window.addEventListener(
+        'scroll',
+        scheduleCartPosition,
+        { passive: true }
+      );
+
+      window.addEventListener(
+        'resize',
+        scheduleCartPosition,
+        { passive: true }
+      );
+
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener(
+          'resize',
+          scheduleCartPosition,
+          { passive: true }
+        );
+      }
+
+      scheduleCartPosition();
     }
   }
 
