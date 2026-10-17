@@ -47,8 +47,31 @@
         box-shadow: none;
       }
 
+      .hero-banner .slogan-picture { display: block; }
+
+      /* Celular: slogan em cima (topo-mobile) e o crocodilo em loop embaixo,
+         com os pés rente à faixa verde (divisória). O vídeo tem margens
+         transparentes dos lados, então é recortado para o crocodilo ocupar
+         quase toda a largura da tela. */
       @media (max-width: 640px) {
-        .hero-banner .mascot-animation { inset: 2% 1% 0 52%; }
+        .hero-banner .mascot-animation {
+          inset: auto 4% 0 4%;
+          width: auto;
+          aspect-ratio: 730 / 720;
+          display: block;
+          overflow: hidden;
+        }
+        .hero-banner .mascot-animation video#animated-mascot,
+        .hero-banner .mascot-animation .hero-image {
+          position: absolute;
+          left: 50%;
+          bottom: 0;
+          transform: translateX(-50%);
+          width: auto;
+          height: 100%;
+          max-width: none;
+          max-height: none;
+        }
       }
     
 body>main#main.home-full-width{width:100%;max-width:none;padding:0;margin:0}
@@ -350,3 +373,15 @@ dialog.cart-dialog{padding:34px 30px 28px}
   .cart-fab:hover::after{opacity:1;transform:translate(0,-50%)}
 }
 @media(prefers-reduced-motion:reduce){.cart-fab::before,.cart-fab::after{transition:none}}
+
+/* ---- e-mail no rodapé ---- */
+footer.site-footer .social a.footer-mail{align-items:center;gap:8px;font-size:14px;font-weight:700;letter-spacing:.2px}
+footer.site-footer .social a.footer-mail span{overflow-wrap:anywhere}
+@media(max-width:780px){footer.site-footer .footer-inner{flex-wrap:wrap;padding-top:14px;padding-bottom:14px}footer.site-footer .social{order:2;flex:1 0 100%;justify-content:flex-start;gap:14px;flex-wrap:wrap}footer.site-footer .social a.footer-mail{font-size:12.5px}}
+/* ---- Pix manual (chave e-mail) ---- */
+.pix-box{margin:0 0 16px;padding:14px 16px;border:1px solid #bfd8c7;border-radius:14px;background:linear-gradient(180deg,#f7fcf8,#edf6ef)}
+.pix-box .pix-label{margin:0 0 8px;font-size:11px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:var(--green)}
+.pix-key{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pix-key code{flex:1 1 220px;min-width:0;padding:8px 12px;border-radius:10px;background:#fff;border:1px solid var(--line);font-size:14px;font-weight:bold;color:var(--green);overflow-wrap:anywhere;user-select:all}
+/* ---- botões do formulário de contato ---- */
+.form-actions{display:flex;flex-wrap:wrap;gap:12px}

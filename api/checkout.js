@@ -4,16 +4,37 @@ const { randomUUID } = require('node:crypto');
 
 const HANDLE = process.env.INFINITEPAY_HANDLE; // sua InfiniteTag, sem o $
 const SITE = process.env.SITE_URL || 'https://devoradores.vercel.app';
-const TAXA = 5; // igual ao TAXA do assets/app.js
-const COR = { verde: 'Verde', preto: 'Preto', branco: 'Branco', offwhite: 'Off-white', pretobranco: 'Preto e branco', unico: '' };
+const COR = { verde: "Verde", preto: "Preto", branco: "Branco", verdebranco: "Verde e branco", brancoverde: "Branco e verde", pretoverde: "Preto e verde", brancopreto: "Branco e preto" };
 
 // MESMA ORDEM do array "products" em assets/app.js — [nome, preço em reais]
 const PRODUTOS = [
-  ['Polo Devoradores', 80], ['Camiseta Oversize', 60], ['Camiseta Time', 50],
-  ['Camiseta Esportiva 2', 50], ['Top esportivo', 45], ['Abadá', 45],
-  ['Moletom', 150], ['Moletom Y2K', 165], ['Jaqueta', 180],
-  ['Short esportivo', 50], ['Short feminino esportivo', 50], ['Calça', 65],
-  ['Chaveiro', 6], ['Copo', 45], ['Tirante', 15]
+  ["Abadá Fome de Vitória", 39.9],
+  ["Body Manga Longa Nutri", 69.9],
+  ["Body Assimétrico Devoradores", 64.9],
+  ["Calça Baggy Nutri", 89.9],
+  ["Camiseta Clássica Nutri", 44.9],
+  ["Camisa de Jogo Devoradores", 59.9],
+  ["Jersey Devoradores", 69.9],
+  ["Corta-vento Devoradores", 109.9],
+  ["Cropped Clássico Nutri", 39.9],
+  ["Cropped Frente Única Nutri", 44.9],
+  ["Cropped Manga Única Devoradores", 54.9],
+  ["Cropped Um Ombro Devoradores", 39.9],
+  ["Top Faixa Devoradores", 34.9],
+  ["Jaqueta College Devoradores", 139.9],
+  ["Moletom Mascote Nutri", 99.9],
+  ["Moletom com Zíper Devoradores Y2K", 109.9],
+  ["Camiseta Oversized Devoradores Urban", 59.9],
+  ["Samba-canção Devoradores Tropical", 44.9],
+  ["Short Devoradores Fresh", 34.9],
+  ["Short Ciclista Nutri", 39.9],
+  ["Bermuda Esportiva Devoradores", 44.9],
+  ["Short-saia Nutri College", 49.9],
+  ["Short-saia Devoradores Mascote", 49.9],
+  ["Copo Meu Curso é Nutrição", 19.9],
+  ["Meia Cano Alto Devoradores", 19.9],
+  ["Tirante Nutri Mascote", 14.9],
+  ["Tirante Nutri Quadriculado", 14.9]
 ];
 
 module.exports = async (req, res) => {
@@ -41,7 +62,6 @@ module.exports = async (req, res) => {
       })()
     });
   }
-  items.push({ quantity: 1, price: TAXA * 100, description: 'Taxa do pedido' });
 
   try {
     const r = await fetch('https://api.checkout.infinitepay.io/links', {

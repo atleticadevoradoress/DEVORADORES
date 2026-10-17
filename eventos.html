@@ -9,7 +9,7 @@
     />
     <title>Eventos | Devoradores</title>
     <link rel="icon" href="assets/logo.png" type="image/png" />
-    <link rel="stylesheet" href="assets/layout-final.css?v=22" />
+    <link rel="stylesheet" href="assets/layout-final.css?v=23" />
     <link rel="stylesheet" href="assets/extras.css?v=1" />
     <script src="components/site-header.js"></script><script src="components/site-footer.js"></script><script defer src="assets/app.js"></script>
     <style>
@@ -123,6 +123,9 @@
         border-radius: 24px;
         z-index: -1;
       }
+
+      .evt-hero--title { padding: clamp(40px, 6vw, 72px) 0 clamp(20px, 3vw, 32px); }
+      .evt-hero--title::before { display: none; }
 
       /* ---------- O CURSO ---------- */
       .evt-about {
@@ -299,7 +302,12 @@
       }
       @media (max-width: 760px) {
         .evt-hero-grid, .evt-about { grid-template-columns: 1fr; }
-        .evt-hero-media { order: -1; max-width: 420px; }
+
+        /* Mobile: imagem logo após o texto de apresentação, botão depois */
+        .evt-hero-grid { row-gap: 0; }
+        .evt-hero-grid > div:first-child { display: contents; }
+        .evt-hero-media { order: 1; max-width: 420px; width: 100%; margin: 6px 0 30px; }
+        .evt-hero-grid .evt-btn { order: 2; justify-self: start; }
         .evt-cta { flex-direction: column; align-items: flex-start; }
       }
       @media (max-width: 520px) {
@@ -354,10 +362,10 @@
 
 
       .evt-events > div[hidden] { display: none !important; }
-      .evt-event-cover { display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 16 / 10; background: var(--evt-pale); border-radius: 14px; overflow: hidden; margin-bottom: 20px; }
-      .evt-event-cover img { display: block; width: 100%; height: 100%; object-fit: contain; }
+      .evt-event-cover { display: block; width: 100%; margin-bottom: 20px; border-radius: 14px; overflow: hidden; background: var(--evt-pale); line-height: 0; }
+      .evt-event-cover img { display: block; width: 100%; height: auto; }
       .evt-event-cover img[hidden], .evt-cover-fallback[hidden] { display: none; }
-      .evt-cover-fallback { padding: 24px; text-align: center; color: var(--evt-green); font-weight: 700; }
+      .evt-cover-fallback { display: block; line-height: 1.4; padding: 40px 24px; text-align: center; color: var(--evt-green); font-weight: 700; }
       .evt-card--external h3 { overflow-wrap: anywhere; }
 
       /* ---------- AGENDA: cards ---------- */
@@ -395,6 +403,24 @@
         font-weight: 700;
         color: var(--evt-green);
       }
+      .atl-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 16px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--atl-green);
+      }
+      .atl-eyebrow::before {
+        content: "";
+        width: 26px;
+        height: 3px;
+        border-radius: 3px;
+        background: var(--atl-gold);
+      }
       .evt-more svg { width: 16px; height: 16px; transition: transform 0.3s var(--evt-ease); }
       .evt-card:hover .evt-more svg { transform: translate(3px, -3px); }
       .evt-card--next .evt-more { color: var(--evt-gold); }
@@ -424,181 +450,178 @@
       @media (max-width: 760px) { .evt-steps { grid-template-columns: 1fr; } }
 
     </style>
+      <style id="eyebrow-unificado">
+      /* Rótulos pequenos de seção: todos seguem o layout do .atl-eyebrow */
+      html body .atl-eyebrow,
+      html body .nut-eyebrow,
+      html body .evt-eyebrow,
+      html body .ex-eyebrow,
+      html body .eyebrow,
+      html body .acao-info .eyebrow-line {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 16px;
+        padding: 0;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        line-height: 1.4;
+        text-transform: uppercase;
+        color: #103f2e;
+        background: none;
+        border: 0;
+        border-radius: 0;
+      }
+      html body .atl-eyebrow::before,
+      html body .nut-eyebrow::before,
+      html body .evt-eyebrow::before,
+      html body .ex-eyebrow::before,
+      html body .eyebrow::before,
+      html body .acao-info .eyebrow-line::before {
+        content: "";
+        flex: none;
+        width: 26px;
+        height: 3px;
+        border-radius: 3px;
+        background: #ffd13e;
+      }
+      /* Fundos escuros: texto dourado para manter o contraste */
+      html body .ex-sec--dark .ex-eyebrow,
+      html body .ex-banner .ex-eyebrow,
+      html body .callout .eyebrow { color: #ffd13e; }
+    </style>
+      <style id="margem-topo-unificada">
+      /* Mesma distância entre o cabeçalho e o primeiro conteúdo em todas as páginas internas */
+      html body main#main { margin-top: 0 !important; padding-top: 0 !important; }
+      html body main#main > section:first-child {
+        margin-top: 0 !important;
+        padding-top: 70px !important;
+      }
+      @media (max-width: 780px) {
+        html body main#main > section:first-child { padding-top: 44px !important; }
+      }
+    </style>
   </head>
   <body class="evt">
     <a class="skip" href="#main">Pular para o conteúdo</a>
     <site-header></site-header>
     <main id="main">
-      <!-- HERO -->
-      <section class="evt-hero">
-        <div class="evt-wrap evt-hero-grid">
-          <div>
-            <p class="evt-hero-tag"><i></i>Próximo evento · 07/11</p>
-            <h1>Viva a próxima <em>experiência.</em></h1>
-            <p class="evt-lead">
-              Os melhores rolês da região, com ingressos revendidos pela atlética.
-            </p>
-            <a class="evt-btn" href="#agenda"
-              >Ver agenda
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></a
-            >
-          </div>
-          <div class="evt-hero-media">
-            <img
-              src="assets/eventos.png"
-              alt="Cartaz do Hallowgreen da MEDVOTU, dia 07/11, com venda de ingressos"
-              width="1395"
-              height="1127"
-            />
-          </div>
-        </div>
-      </section>
-
-      <!-- AGENDA -->
-      <section class="evt-section evt-section--tint" id="agenda">
+      <!-- TOPO + AGENDA (mesmo padrão da loja) -->
+      <section class="evt-section evt-top" id="agenda">
         <div class="evt-wrap">
-          <div class="evt-head" data-reveal>
-            <p class="evt-eyebrow">Agenda</p>
-            <h2>Escolha o seu <em>próximo rolê.</em></h2>
-          </div>
-          <div class="evt-tools" data-reveal>
-            <label class="evt-search"
-              >Buscar evento<input
-                id="event-search"
-                type="search"
-                placeholder="Nome do evento..."
-            /></label>
-          </div>
-          <div class="evt-events" id="events">
-          <div data-category="festas" data-title="hallowgreen da medvotu">
-            <article class="evt-card evt-card--next" data-reveal style="--d: 0.0s">
-              <div class="evt-card-top">
-                <span class="evt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.8 11.3 2 22l10.7-3.79"/><path d="M4 3h.01"/><path d="M22 8h.01"/><path d="M15 2h.01"/><path d="M22 20h.01"/><path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"/><path d="m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11c-.11.7-.72 1.22-1.43 1.22H17"/><path d="m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7"/><path d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"/></svg></span>
-                <span class="evt-date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>07/11</span>
+          <p class="atl-eyebrow">Agenda Devoradores</p>
+          <h1>Viva a próxima <em>experiência.</em></h1>
+
+          <div class="evt-filters">
+            <label class="evt-fgroup" for="event-search">
+              <span class="evt-flabel">Buscar</span>
+              <input id="event-search" type="search" placeholder="Nome do evento..." />
+            </label>
+            <div class="evt-fgroup" role="group" aria-labelledby="evt-flabel-status">
+              <span class="evt-flabel" id="evt-flabel-status">Situação</span>
+              <div class="evt-fchips">
+                <button type="button" class="evt-fchip is-on" id="evt-view-next" aria-pressed="true" data-view="next">Próximos <span class="evt-fcount" id="evt-n-next">0</span></button>
+                <button type="button" class="evt-fchip" id="evt-view-past" aria-pressed="false" data-view="past">Encerrados <span class="evt-fcount" id="evt-n-past">0</span></button>
               </div>
-              <h3>Hallowgreen da MEDVOTU</h3>
-              <p data-sales-note data-open="Festa temática de Halloween, com ingressos à venda pela atlética.">Festa temática de Halloween. Vendas de ingressos liberadas em 17/10.</p>
-              <a class="evt-more" data-sale-cta href="https://wa.me/5517997224203?text=Ol%C3%A1%2C%20Raissa%21%20Quero%20comprar%20ingresso%20para%20o%20Hallowgreen%20da%20MEDVOTU." target="_blank" rel="noopener noreferrer">Quero ingresso <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></a>
-            </article>
+            </div>
           </div>
-          <div data-category="festas" data-title="Projeto X Open Bar">
+          <p class="evt-count" id="evt-count" aria-live="polite"></p>
+
+          <div class="evt-events" id="events">
+          <div data-category="festas" data-start="2026-10-17T23:00:00-03:00" data-title="Projeto X Open Bar">
             <article class="evt-card evt-card--external" data-reveal>
-              <a class="evt-event-cover" href="https://zedoingresso.com.br/e/projeto-x-open-bar_2026-10-18/6592" target="_blank" rel="noopener noreferrer" aria-label="Ver Projeto X Open Bar no site oficial">
+              <a class="evt-event-cover" data-open-event href="https://zedoingresso.com.br/e/projeto-x-open-bar_2026-10-18/6592" target="_blank" rel="noopener noreferrer" aria-label="Ver Projeto X Open Bar no site oficial">
                 <img src="https://images.zedoingresso.com.br/zedoingresso/uploads/eventos/6592.webp?t=1791931566965" alt="Capa oficial de Projeto X Open Bar" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
                 <span class="evt-cover-fallback" hidden>Capa indisponível · Ver evento ↗</span>
               </a>
               <div class="evt-card-top"><span class="evt-date">17/10/2026</span></div>
               <h3>Projeto X Open Bar</h3>
               <p>Confira os detalhes do open bar e os ingressos no site oficial.</p>
-              <a class="evt-more" href="https://zedoingresso.com.br/e/projeto-x-open-bar_2026-10-18/6592" target="_blank" rel="noopener noreferrer">Ver valores e ingressos ↗</a>
+              <a class="evt-more" href="https://zedoingresso.com.br/e/projeto-x-open-bar_2026-10-18/6592" data-open-event target="_blank" rel="noopener noreferrer">Mais Informações <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
             </article>
           </div>
-          <div data-category="festas" data-title="Halloween na Bally">
+          <div data-category="festas" data-start="2026-10-23T22:00:00-03:00" data-title="Halloween na Bally">
             <article class="evt-card evt-card--external" data-reveal>
-              <a class="evt-event-cover" href="https://zedoingresso.com.br/e/halloween-na-bally-24-10-2026/6461" target="_blank" rel="noopener noreferrer" aria-label="Ver Halloween na Bally no site oficial">
+              <a class="evt-event-cover" data-open-event href="https://zedoingresso.com.br/e/halloween-na-bally-24-10-2026/6461" target="_blank" rel="noopener noreferrer" aria-label="Ver Halloween na Bally no site oficial">
                 <img src="https://images.zedoingresso.com.br/zedoingresso/uploads/eventos/6461.webp?t=1791414784422" alt="Capa oficial de Halloween na Bally" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
                 <span class="evt-cover-fallback" hidden>Capa indisponível · Ver evento ↗</span>
               </a>
               <div class="evt-card-top"><span class="evt-date">23/10/2026</span></div>
               <h3>Halloween na Bally</h3>
               <p>Festa de Halloween: confira a programação e os ingressos.</p>
-              <a class="evt-more" href="https://zedoingresso.com.br/e/halloween-na-bally-24-10-2026/6461" target="_blank" rel="noopener noreferrer">Ver valores e ingressos ↗</a>
+              <a class="evt-more" href="https://zedoingresso.com.br/e/halloween-na-bally-24-10-2026/6461" data-open-event target="_blank" rel="noopener noreferrer">Mais Informações <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
             </article>
           </div>
-          <div data-category="festas" data-title="Revoada Universitária Halloween — Ed. 4">
+          <div data-category="festas" data-start="2026-10-31T23:00:00-03:00" data-title="Treem Bala Especial de Halloween">
             <article class="evt-card evt-card--external" data-reveal>
-              <a class="evt-event-cover" href="https://zedoingresso.com.br/e/revoada-universitaria-halloween-ed-4-01-11-2026/6420" target="_blank" rel="noopener noreferrer" aria-label="Ver Revoada Universitária Halloween — Ed. 4 no site oficial">
-                <img src="https://images.zedoingresso.com.br/zedoingresso/uploads/eventos/6420.webp?t=1791212413696" alt="Capa oficial de Revoada Universitária Halloween — Ed. 4" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
-                <span class="evt-cover-fallback" hidden>Capa indisponível · Ver evento ↗</span>
-              </a>
-              <div class="evt-card-top"><span class="evt-date">31/10/2026</span></div>
-              <h3>Revoada Universitária Halloween — Ed. 4</h3>
-              <p>Halloween universitário em Fernandópolis.</p>
-              <a class="evt-more" href="https://zedoingresso.com.br/e/revoada-universitaria-halloween-ed-4-01-11-2026/6420" target="_blank" rel="noopener noreferrer">Ver valores e ingressos ↗</a>
-            </article>
-          </div>
-          <div data-category="festas" data-title="Treem Bala Especial de Halloween">
-            <article class="evt-card evt-card--external" data-reveal>
-              <a class="evt-event-cover" href="https://zedoingresso.com.br/e/treem-bala-especial-de-halloween-01-11-2026/6404" target="_blank" rel="noopener noreferrer" aria-label="Ver Treem Bala Especial de Halloween no site oficial">
+              <a class="evt-event-cover" data-open-event href="https://zedoingresso.com.br/e/treem-bala-especial-de-halloween-01-11-2026/6404" target="_blank" rel="noopener noreferrer" aria-label="Ver Treem Bala Especial de Halloween no site oficial">
                 <img src="https://images.zedoingresso.com.br/zedoingresso/uploads/eventos/6404.webp?t=1790871902960" alt="Capa oficial de Treem Bala Especial de Halloween" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
                 <span class="evt-cover-fallback" hidden>Capa indisponível · Ver evento ↗</span>
               </a>
               <div class="evt-card-top"><span class="evt-date">31/10/2026</span></div>
               <h3>Treem Bala Especial de Halloween</h3>
               <p>Edição especial de Halloween do Treem Bala.</p>
-              <a class="evt-more" href="https://zedoingresso.com.br/e/treem-bala-especial-de-halloween-01-11-2026/6404" target="_blank" rel="noopener noreferrer">Ver valores e ingressos ↗</a>
+              <a class="evt-more" href="https://zedoingresso.com.br/e/treem-bala-especial-de-halloween-01-11-2026/6404" data-open-event target="_blank" rel="noopener noreferrer">Mais Informações <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
             </article>
           </div>
-          <div data-category="festas" data-title="Deu Praia — 2ª edição">
+          <div data-category="festas" data-start="2026-11-01T16:00:00-03:00" data-title="Deu Praia — 2ª edição">
             <article class="evt-card evt-card--external" data-reveal>
-              <a class="evt-event-cover" href="https://www.guicheweb.com.br/deu-praia-2-edicao_55789" target="_blank" rel="noopener noreferrer" aria-label="Ver Deu Praia — 2ª edição no site oficial">
+              <a class="evt-event-cover" data-open-event href="https://www.guicheweb.com.br/deu-praia-2-edicao_55789" target="_blank" rel="noopener noreferrer" aria-label="Ver Deu Praia — 2ª edição no site oficial">
                 <img src="https://s3.guicheweb.com.br/imagenseventos/28-09-2026_12-02-49.png" alt="Capa oficial de Deu Praia — 2ª edição" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
                 <span class="evt-cover-fallback" hidden>Capa indisponível · Ver evento ↗</span>
               </a>
               <div class="evt-card-top"><span class="evt-date">01/11/2026</span></div>
               <h3>Deu Praia — 2ª edição</h3>
               <p>Arena Beach Votuporanga · Votuporanga/SP.</p>
-              <a class="evt-more" href="https://www.guicheweb.com.br/deu-praia-2-edicao_55789" target="_blank" rel="noopener noreferrer">Ver valores e ingressos ↗</a>
+              <a class="evt-more" href="https://www.guicheweb.com.br/deu-praia-2-edicao_55789" data-open-event target="_blank" rel="noopener noreferrer">Mais Informações <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
             </article>
           </div>
-          <div data-category="festas" data-title="Amaê Festival">
+          <div data-category="festas" data-start="2026-11-07T15:00:00-03:00" data-title="Churrasco da Ju Balbi">
             <article class="evt-card evt-card--external" data-reveal>
-              <a class="evt-event-cover" href="https://baladapp.com.br/pt-BR/evento/amae-festival/8921" target="_blank" rel="noopener noreferrer" aria-label="Ver Amaê Festival no site oficial">
-                <img src="https://public.baladapp.com.br/evento/22697/foto_2_evento/f99f18c6604629f4f6c68a45c1111918.jpg" alt="Capa oficial de Amaê Festival" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
-                <span class="evt-cover-fallback" hidden>Capa indisponível · Ver evento ↗</span>
-              </a>
-              <div class="evt-card-top"><span class="evt-date">07/11/2026</span></div>
-              <h3>Amaê Festival</h3>
-              <p>Festival em São José do Rio Preto, com dois palcos e diversas atrações.</p>
-              <a class="evt-more" href="https://baladapp.com.br/pt-BR/evento/amae-festival/8921" target="_blank" rel="noopener noreferrer">Ver valores e ingressos ↗</a>
-            </article>
-          </div>
-          <div data-category="festas" data-title="Churrasco da Ju Balbi">
-            <article class="evt-card evt-card--external" data-reveal>
-              <a class="evt-event-cover" href="https://www.guicheweb.com.br/churrasco-da-ju-balbi_54687" target="_blank" rel="noopener noreferrer" aria-label="Ver Churrasco da Ju Balbi no site oficial">
+              <a class="evt-event-cover" data-open-event href="https://www.guicheweb.com.br/churrasco-da-ju-balbi_54687" target="_blank" rel="noopener noreferrer" aria-label="Ver Churrasco da Ju Balbi no site oficial">
                 <img src="https://s3.guicheweb.com.br/imagenseventos/07-10-2026_15-40-35.png" alt="Capa oficial de Churrasco da Ju Balbi" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
                 <span class="evt-cover-fallback" hidden>Capa indisponível · Ver evento ↗</span>
               </a>
               <div class="evt-card-top"><span class="evt-date">07/11/2026</span></div>
               <h3>Churrasco da Ju Balbi</h3>
               <p>Arena Beleza · Votuporanga/SP.</p>
-              <a class="evt-more" href="https://www.guicheweb.com.br/churrasco-da-ju-balbi_54687" target="_blank" rel="noopener noreferrer">Ver valores e ingressos ↗</a>
+              <a class="evt-more" href="https://www.guicheweb.com.br/churrasco-da-ju-balbi_54687" data-open-event target="_blank" rel="noopener noreferrer">Mais Informações <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
             </article>
           </div>
-          <div data-category="festas" data-title="Pagode &amp; Chinelo — 6ª edição">
+          <div data-category="festas" data-start="2026-11-07T23:00:00-03:00" data-title="Hallowgreen da MEDVOTU" data-internal="1">
+            <article class="evt-card" data-reveal>
+              <a class="evt-event-cover" data-open-event href="#" role="button" aria-label="Ver detalhes do Hallowgreen da MEDVOTU">
+                <img src="assets/hallowgreen.jpg" alt="Cartaz do Hallowgreen da MEDVOTU, sábado 07 de novembro" width="1600" height="1600" loading="lazy" decoding="async">
+              </a>
+              <div class="evt-card-top"><span class="evt-date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>07/11</span></div>
+              <h3>Hallowgreen da MEDVOTU</h3>
+              <p data-sales-note data-open="Festa temática de Halloween, com ingressos à venda pela atlética.">Festa temática de Halloween. Vendas de ingressos liberadas em 17/10.</p>
+              <a class="evt-more" data-sale-cta data-open-event href="#" role="button">Mais Informações <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+            </article>
+          </div>
+          <div data-category="festas" data-start="2026-11-14T17:00:00-03:00" data-title="Pagode &amp; Chinelo — 6ª edição">
             <article class="evt-card evt-card--external" data-reveal>
-              <a class="evt-event-cover" href="https://zedoingresso.com.br/e/pagode-chinelo-6-edicao-14-11-2026/6405" target="_blank" rel="noopener noreferrer" aria-label="Ver Pagode &amp; Chinelo — 6ª edição no site oficial">
+              <a class="evt-event-cover" data-open-event href="https://zedoingresso.com.br/e/pagode-chinelo-6-edicao-14-11-2026/6405" target="_blank" rel="noopener noreferrer" aria-label="Ver Pagode &amp; Chinelo — 6ª edição no site oficial">
                 <img src="https://images.zedoingresso.com.br/zedoingresso/uploads/eventos/6405.webp?t=1790889183668" alt="Capa oficial de Pagode &amp; Chinelo — 6ª edição" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
                 <span class="evt-cover-fallback" hidden>Capa indisponível · Ver evento ↗</span>
               </a>
               <div class="evt-card-top"><span class="evt-date">14/11/2026</span></div>
               <h3>Pagode &amp; Chinelo — 6ª edição</h3>
               <p>Sexta edição do Pagode &amp; Chinelo.</p>
-              <a class="evt-more" href="https://zedoingresso.com.br/e/pagode-chinelo-6-edicao-14-11-2026/6405" target="_blank" rel="noopener noreferrer">Ver valores e ingressos ↗</a>
+              <a class="evt-more" href="https://zedoingresso.com.br/e/pagode-chinelo-6-edicao-14-11-2026/6405" data-open-event target="_blank" rel="noopener noreferrer">Mais Informações <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
             </article>
           </div>
-          <div data-category="festas" data-title="Noite do Branco Rio Preto — 15ª edição">
+          <div data-category="festas" data-start="2026-12-12T23:59:00-03:00" data-title="Noite do Branco Rio Preto — 15ª edição">
             <article class="evt-card evt-card--external" data-reveal>
-              <a class="evt-event-cover" href="https://zedoingresso.com.br/e/noite-do-branco-rio-preto-15-edicao-13-12-2026/6459" target="_blank" rel="noopener noreferrer" aria-label="Ver Noite do Branco Rio Preto — 15ª edição no site oficial">
+              <a class="evt-event-cover" data-open-event href="https://zedoingresso.com.br/e/noite-do-branco-rio-preto-15-edicao-13-12-2026/6459" target="_blank" rel="noopener noreferrer" aria-label="Ver Noite do Branco Rio Preto — 15ª edição no site oficial">
                 <img src="https://images.zedoingresso.com.br/zedoingresso/uploads/eventos/6459.webp?t=1791409976780" alt="Capa oficial de Noite do Branco Rio Preto — 15ª edição" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
                 <span class="evt-cover-fallback" hidden>Capa indisponível · Ver evento ↗</span>
               </a>
               <div class="evt-card-top"><span class="evt-date">12/12/2026</span></div>
               <h3>Noite do Branco Rio Preto — 15ª edição</h3>
               <p>Edição especial da Noite do Branco em Rio Preto.</p>
-              <a class="evt-more" href="https://zedoingresso.com.br/e/noite-do-branco-rio-preto-15-edicao-13-12-2026/6459" target="_blank" rel="noopener noreferrer">Ver valores e ingressos ↗</a>
-            </article>
-          </div>
-          <div data-category="festas" data-title="Oba Festival 2027">
-            <article class="evt-card evt-card--external" data-reveal>
-              <a class="evt-event-cover" href="https://www.guicheweb.com.br/oba-festival-2027_53190" target="_blank" rel="noopener noreferrer" aria-label="Ver Oba Festival 2027 no site oficial">
-                <img src="https://s3.guicheweb.com.br/imagenseventos/24-08-2026_10-24-55.jpg" alt="Capa oficial de Oba Festival 2027" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
-                <span class="evt-cover-fallback" hidden>Capa indisponível · Ver evento ↗</span>
-              </a>
-              <div class="evt-card-top"><span class="evt-date">06 a 08/02/2027</span></div>
-              <h3>Oba Festival 2027</h3>
-              <p>Centro de Eventos Helder Galera · Votuporanga/SP.</p>
-              <a class="evt-more" href="https://www.guicheweb.com.br/oba-festival-2027_53190" target="_blank" rel="noopener noreferrer">Ver valores e ingressos ↗</a>
+              <a class="evt-more" href="https://zedoingresso.com.br/e/noite-do-branco-rio-preto-15-edicao-13-12-2026/6459" data-open-event target="_blank" rel="noopener noreferrer">Mais Informações <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
             </article>
           </div>
           </div>
@@ -645,7 +668,7 @@
         <div class="ex-wrap">
           <div class="ex-head" data-reveal><p class="ex-eyebrow">Antes de ir</p><h2>Informações <em>úteis.</em></h2><p class="ex-lead">Para curtir cada evento com tranquilidade, vale conferir estes pontos.</p></div>
           <div class="ex-cards ex-cards--4">
-            <article class="ex-card" data-reveal style="--d: 0s"><span class="ex-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg></span><h3>Ingressos</h3><p>Revendemos ingressos de festas da região. O pagamento é por Pix e o ingresso chega por e-mail. As vendas do Hallowgreen da MEDVOTU são liberadas em 17/10; valores e lotes dos demais ficam no link de cada evento.</p></article>
+            <article class="ex-card" data-reveal style="--d: 0s"><span class="ex-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg></span><h3>Ingressos</h3><p>Revendemos ingressos de festas da região sem a taxa cobrada nos apps oficiais, porque recebemos direto do fornecedor. O pagamento é por Pix e o ingresso chega por e-mail. Clique em “Mais Informações” para ver valores, local e horário de cada evento.</p></article>
             <article class="ex-card" data-reveal style="--d: 0.08s"><span class="ex-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 10h2"/><path d="M16 14h2"/><path d="M6.17 15a3 3 0 0 1 5.66 0"/><circle cx="9" cy="11" r="2"/><rect x="2" y="5" width="20" height="14" rx="2"/></svg></span><h3>Documento</h3><p>Leve um documento oficial com foto. Alguns eventos exigem conferência na entrada.</p></article>
             <article class="ex-card" data-reveal style="--d: 0.16s"><span class="ex-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span><h3>Divirta-se com responsabilidade</h3><p>Cuide de você e dos amigos, beba com moderação e combine a volta para casa com antecedência.</p></article>
             <article class="ex-card" data-reveal style="--d: 0.24s"><span class="ex-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="4" r="1"/><path d="m18 19 1-7-6 1"/><path d="m5 8 3-3 5.5 3-2.21 3.1"/><path d="M4.24 14.5a5 5 0 0 0 6.88 6"/><path d="M13.76 17.5a5 5 0 0 0-6.88-6"/></svg></span><h3>Acessibilidade</h3><p>Precisa de alguma adaptação? Avise a atlética antes do evento para que possamos ajudar.</p></article>
@@ -657,7 +680,7 @@
       <section class="ex-sec" aria-labelledby="faq-title">
         <div class="ex-wrap">
           <div class="ex-head" data-reveal><p class="ex-eyebrow">Dúvidas frequentes</p><h2>Perguntas <em>rápidas.</em></h2></div>
-          <div class="ex-faq" data-reveal><details><summary>Como compro ingresso?</summary><p>As vendas de ingressos do Hallowgreen da MEDVOTU são liberadas em 17/10. O pagamento é por Pix e o ingresso chega por e-mail. Nos cards da agenda, “Ver valores e ingressos” abre a página oficial de cada evento, com valores e lotes.</p></details><details><summary>A atlética organiza as festas?</summary><p>Não. A atlética apenas revende os ingressos. A organização, a programação e as regras de cada evento são do produtor responsável.</p></details><details><summary>Os eventos são abertos a estudantes de outros cursos?</summary><p>Depende de cada evento. A informação aparece na divulgação e pode ser confirmada com a atlética.</p></details><details><summary>Como fico sabendo das datas?</summary><p>Pela agenda desta página e pelas redes da atlética.</p></details><details><summary>Posso sugerir um evento?</summary><p>Claro! Mande sua ideia pela página de contato e a diretoria de eventos avalia.</p></details></div>
+          <div class="ex-faq" data-reveal><details><summary>Como compro ingresso?</summary><p>É rápido e feito aqui mesmo pelo site:</p><ol style="margin:0 0 12px;padding-left:22px;line-height:1.7"><li>Na agenda, clique em “Mais Informações” no evento que você quer.</li><li>Confira data, local, horário e valores e clique em “Comprar ingresso”.</li><li>Escolha o tipo de ingresso (quando houver mais de um), a quantidade e informe o seu e-mail.</li><li>Confirme: o WhatsApp da Raissa, da Diretoria de Eventos, abre com o seu pedido já escrito. É só enviar.</li><li>Pague por Pix e receba o ingresso por e-mail.</li></ol><p>Comprando com a gente você não paga a taxa cobrada no app ou site oficial, porque recebemos o ingresso direto do fornecedor. Se preferir, também dá para comprar pela página oficial, no botão “Ver no site oficial” dentro de cada evento, mas aí a taxa é cobrada. Em eventos com data de abertura de vendas, o botão “Comprar ingresso” libera quando as vendas abrirem.</p></details><details><summary>A atlética organiza as festas?</summary><p>Não. A atlética apenas revende os ingressos. A organização, a programação e as regras de cada evento são do produtor responsável.</p></details><details><summary>Os eventos são abertos a estudantes de outros cursos?</summary><p>Depende de cada evento. A informação aparece na divulgação e pode ser confirmada com a atlética.</p></details><details><summary>Posso sugerir um evento?</summary><p>Claro! Mande sua ideia pela página de contato e a diretoria de eventos avalia.</p></details></div>
         </div>
       </section>
 
@@ -684,36 +707,467 @@
     </dialog>
     <div id="toast" role="status" aria-live="polite"></div>
     
+  <!-- MODAL 1: assunto -->
   <div id="modal-contato-eventos" class="evt-modal-backdrop" hidden>
   <div class="evt-modal" role="dialog" aria-modal="true" aria-labelledby="evt-modal-titulo">
     <button type="button" class="evt-modal-close" aria-label="Fechar" id="fechar-contato-eventos">×</button>
     <h2 id="evt-modal-titulo">Como podemos ajudar?</h2>
     <p>Selecione o assunto para conversar com Raissa, da Diretoria de Eventos.</p>
+    <div class="evt-d-alert" role="note"><strong>Compre com a gente e pague menos</strong><p>Não cobramos a taxa do app ou site oficial, porque recebemos o ingresso direto do fornecedor.</p></div>
+    <button type="button" class="evt-modal-option" id="abrir-compra-ingresso">Quero comprar um ingresso <span aria-hidden="true">→</span></button>
     <a class="evt-modal-option" target="_blank" rel="noopener noreferrer" href="https://wa.me/5517997224203?text=Ol%C3%A1%2C%20Raissa%21%20Tudo%20bem%3F%20Gostaria%20de%20tirar%20uma%20d%C3%BAvida%20sobre%20ingressos%20dos%20eventos%20da%20Atl%C3%A9tica%20Devoradores.%20Voc%C3%AA%20pode%20me%20ajudar%3F">Tenho dúvidas sobre ingressos <span>↗</span></a>
     <a class="evt-modal-option" target="_blank" rel="noopener noreferrer" href="https://wa.me/5517997224203?text=Ol%C3%A1%2C%20Raissa%21%20Tudo%20bem%3F%20Tenho%20interesse%20em%20vender%20os%20ingressos%20da%20minha%20festa%20por%20meio%20da%20Atl%C3%A9tica%20Devoradores.%20Gostaria%20de%20saber%20como%20funciona%20a%20parceria%20e%20a%20divulga%C3%A7%C3%A3o.%20Podemos%20conversar%3F">Quero vender ingressos da minha festa <span>↗</span></a>
+  </div>
+</div>
+
+<!-- MODAL 2: escolha do evento -->
+<div id="modal-escolher-evento" class="evt-modal-backdrop" hidden>
+  <div class="evt-modal evt-modal--events" role="dialog" aria-modal="true" aria-labelledby="evt-pick-titulo">
+    <button type="button" class="evt-modal-close" aria-label="Fechar" id="fechar-escolher-evento">×</button>
+    <h2 id="evt-pick-titulo">Qual evento você quer?</h2>
+    <p>Selecione o evento para o qual deseja comprar o ingresso.</p>
+    <div class="evt-d-alert" role="note"><strong>Compre com a gente e pague menos</strong><p>Não cobramos a taxa do app ou site oficial, porque recebemos o ingresso direto do fornecedor.</p></div>
+    <div class="evt-pick-list" id="evt-pick-list" role="radiogroup" aria-labelledby="evt-pick-titulo"></div>
+    <div class="evt-pick-actions">
+      <button type="button" class="evt-pick-back" id="voltar-escolher-evento">Voltar</button>
+      <button type="button" class="evt-pick-confirm" id="confirmar-evento" disabled>Confirmar e abrir WhatsApp <span aria-hidden="true">↗</span></button>
+    </div>
   </div>
 </div>
 <style>
 .evt-modal-backdrop[hidden]{display:none!important}
 .evt-modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px}
-.evt-modal{position:relative;width:min(100%,490px);background:#103f2e;color:#fff;border:1px solid #d6ba64;border-radius:18px;padding:32px;box-shadow:0 24px 70px #0008}
-.evt-modal h2{margin:0 35px 10px 0;font-size:1.6rem}.evt-modal p{margin:0 0 22px;color:#e0e9df}
+.evt-modal{position:relative;width:min(100%,490px);max-height:calc(100dvh - 40px);overflow-y:auto;background:#103f2e;color:#fff;border:1px solid #d6ba64;border-radius:18px;padding:32px;box-shadow:0 24px 70px #0008}
+/* .evt h2 pinta de verde escuro; aqui o título precisa ser branco para aparecer sobre o fundo verde */
+.evt .evt-modal h2{margin:0 35px 10px 0;font-size:1.6rem;color:#fff}
+.evt-modal p{margin:0 0 22px;color:#e0e9df}
 .evt-modal-close{position:absolute;right:18px;top:12px;background:none;border:0;color:white;font-size:30px;cursor:pointer}
-.evt-modal-option{display:flex;justify-content:space-between;gap:12px;padding:16px;margin-top:12px;border-radius:10px;border:1px solid #d6ba64;color:#fff;text-decoration:none;font-weight:600;transition:background .2s}
+.evt-modal-option{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;padding:16px;margin-top:12px;border-radius:10px;border:1px solid #d6ba64;background:transparent;color:#fff;text-decoration:none;font:inherit;font-weight:600;text-align:left;cursor:pointer;transition:background .2s}
 .evt-modal-option:hover,.evt-modal-option:focus-visible{background:#256449}
+
+/* lista de eventos */
+.evt-modal--events{width:min(100%,540px)}
+.evt-pick-list{display:flex;flex-direction:column;gap:10px;max-height:min(46vh,380px);overflow-y:auto;margin:0 -6px;padding:2px 6px}
+.evt-pick-item{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;padding:14px 16px;border-radius:10px;border:1px solid rgba(214,186,100,.55);background:transparent;color:#fff;font:inherit;text-align:left;cursor:pointer;transition:background .2s,border-color .2s}
+.evt-pick-item:hover,.evt-pick-item:focus-visible{background:#1a5a43;border-color:#d6ba64}
+.evt-pick-item[aria-checked="true"]{background:#ffd13e;border-color:#ffd13e;color:#173527}
+.evt-pick-name{font-weight:700;line-height:1.3}
+.evt-pick-date{flex:none;font-size:12px;font-weight:700;letter-spacing:.5px;opacity:.85;white-space:nowrap}
+.evt-pick-actions{display:flex;gap:12px;margin-top:22px}
+.evt-pick-back,.evt-pick-confirm{padding:14px 18px;border-radius:10px;font:inherit;font-weight:700;cursor:pointer;transition:background .2s,opacity .2s,transform .2s}
+.evt-pick-back{border:1px solid #d6ba64;background:transparent;color:#fff}
+.evt-pick-back:hover,.evt-pick-back:focus-visible{background:#256449}
+.evt-pick-confirm{flex:1;border:0;background:#ffd13e;color:#173527}
+.evt-pick-confirm:hover:not(:disabled),.evt-pick-confirm:focus-visible{background:#ffe070}
+.evt-pick-confirm:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:480px){.evt-modal{padding:26px 20px}.evt-pick-actions{flex-direction:column-reverse}}
 </style>
 <script>
 (function(){
- const modal=document.getElementById('modal-contato-eventos');
- const open=document.getElementById('abrir-contato-eventos');
- const close=document.getElementById('fechar-contato-eventos');
- if(!modal||!open||!close)return;
- const dismiss=()=>{modal.hidden=true;document.body.style.overflow='';open.focus()};
- open.addEventListener('click',e=>{e.preventDefault();modal.hidden=false;document.body.style.overflow='hidden';close.focus()});
- close.addEventListener('click',dismiss);
+ const WA='https://wa.me/5517997224203?text=';
+ const $=id=>document.getElementById(id);
+ const modal=$('modal-contato-eventos'), open=$('abrir-contato-eventos'), close=$('fechar-contato-eventos');
+ const buy=$('abrir-compra-ingresso');
+ const pick=$('modal-escolher-evento'), pickClose=$('fechar-escolher-evento'), back=$('voltar-escolher-evento');
+ const list=$('evt-pick-list'), confirmBtn=$('confirmar-evento');
+ if(!modal||!open||!close||!pick)return;
+ let selected=null;
+
+ const lock=on=>{document.body.style.overflow=on?'hidden':''};
+
+ /* ---- modal 1 ---- */
+ const dismiss=(returnFocus=true)=>{modal.hidden=true;lock(false);if(returnFocus)open.focus()};
+ open.addEventListener('click',e=>{e.preventDefault();modal.hidden=false;lock(true);close.focus()});
+ close.addEventListener('click',()=>dismiss());
  modal.addEventListener('click',e=>{if(e.target===modal)dismiss()});
- document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)dismiss()});
- modal.querySelectorAll('.evt-modal-option').forEach(a=>a.addEventListener('click',dismiss));
+ modal.querySelectorAll('a.evt-modal-option').forEach(a=>a.addEventListener('click',()=>dismiss(false)));
+
+ /* ---- modal 2: lista montada a partir dos cards da agenda ---- */
+ function buildList(){
+   list.innerHTML='';selected=null;confirmBtn.disabled=true;
+   document.querySelectorAll('#events > div[data-title]:not(.is-past)').forEach(card=>{
+     const name=(card.dataset.title||'').trim();
+     if(!name)return;
+     const date=(card.querySelector('.evt-date')?.textContent||'').trim();
+     const b=document.createElement('button');
+     b.type='button';b.className='evt-pick-item';b.setAttribute('role','radio');b.setAttribute('aria-checked','false');
+     const n=document.createElement('span');n.className='evt-pick-name';n.textContent=name;
+     b.appendChild(n);
+     if(date){const d=document.createElement('span');d.className='evt-pick-date';d.textContent=date;b.appendChild(d)}
+     b.addEventListener('click',()=>{
+       list.querySelectorAll('.evt-pick-item').forEach(x=>x.setAttribute('aria-checked','false'));
+       b.setAttribute('aria-checked','true');selected=name;confirmBtn.disabled=false;
+     });
+     list.appendChild(b);
+   });
+ }
+ const openPick=()=>{modal.hidden=true;buildList();pick.hidden=false;lock(true);(list.querySelector('.evt-pick-item')||pickClose).focus()};
+ const closePick=()=>{pick.hidden=true;lock(false)};
+ buy.addEventListener('click',openPick);
+ pickClose.addEventListener('click',()=>{closePick();open.focus()});
+ back.addEventListener('click',()=>{pick.hidden=true;modal.hidden=false;buy.focus()});
+ pick.addEventListener('click',e=>{if(e.target===pick){closePick();open.focus()}});
+ confirmBtn.addEventListener('click',()=>{
+   if(!selected)return;
+   const msg='Oi, Raissa, tudo bem? Desejo realizar a compra do ingresso do evento '+selected;
+   window.open(WA+encodeURIComponent(msg),'_blank','noopener,noreferrer');
+   closePick();
+ });
+
+ document.addEventListener('keydown',e=>{
+   if(e.key!=='Escape')return;
+   if(!pick.hidden){closePick();open.focus()}
+   else if(!modal.hidden)dismiss();
+ });
+})();
+</script>
+
+<style>
+/* ---------- modal de detalhes do evento ---------- */
+.evt-modal--detail{width:min(100%,560px)}
+.evt-d-cover{display:block;width:100%;margin:0 0 20px;text-align:center;line-height:0}
+.evt-d-cover img{display:inline-block;max-width:100%;max-height:50vh;width:auto;height:auto;border-radius:12px}
+.evt-d-cover[hidden]{display:none}
+.evt-d-date{display:inline-block;margin:0 0 10px;padding:5px 12px;border-radius:999px;background:#ffd13e;color:#173527;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.evt .evt-modal #evt-d-title{margin:0 35px 12px 0}
+.evt-d-desc{margin:0 0 18px!important}
+.evt-d-info{margin:0 0 22px;padding:0;list-style:none;display:grid;gap:0;border-top:1px solid rgba(214,186,100,.35)}
+.evt-d-info li{display:flex;gap:14px;padding:11px 0;border-bottom:1px solid rgba(214,186,100,.35);font-size:.92rem;line-height:1.45}
+.evt-d-info b{flex:none;width:112px;color:#ffd13e;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding-top:2px}
+.evt-d-info span{color:#e0e9df}
+.evt-d-actions{display:flex;gap:12px;flex-wrap:wrap}
+.evt-d-buy{flex:1;min-width:190px;padding:14px 18px;border:0;border-radius:10px;background:#ffd13e;color:#173527;font:inherit;font-weight:700;cursor:pointer;transition:background .2s,transform .2s}
+.evt-d-buy:hover,.evt-d-buy:focus-visible{background:#ffe070;transform:translateY(-1px)}
+.evt-d-site{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 18px;border:1px solid #d6ba64;border-radius:10px;color:#fff;text-decoration:none;font-weight:700;transition:background .2s}
+.evt-d-site:hover,.evt-d-site:focus-visible{background:#256449}
+.evt-d-site[hidden]{display:none}
+.evt-d-qty[hidden],.evt-d-view[hidden]{display:none}
+.evt-d-qty-label{display:block;margin:0 0 12px;font-weight:700}
+.evt-d-stepper{display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 8px}
+.evt-d-stepper button{width:48px;height:48px;border-radius:50%;border:1px solid #d6ba64;background:transparent;color:#fff;font-size:24px;line-height:1;cursor:pointer;transition:background .2s}
+.evt-d-stepper button:hover:not(:disabled),.evt-d-stepper button:focus-visible{background:#256449}
+.evt-d-stepper button:disabled{opacity:.35;cursor:not-allowed}
+.evt-d-stepper input{width:84px;padding:12px 8px;border-radius:10px;border:1px solid #d6ba64;background:#0b2e21;color:#fff;font:inherit;font-size:1.4rem;font-weight:700;text-align:center;-moz-appearance:textfield}
+.evt-d-stepper input::-webkit-outer-spin-button,.evt-d-stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.evt-d-hint{margin:0 0 4px!important;text-align:center;font-size:.8rem;opacity:.8}
+.evt-d-summary{margin:14px 0 0!important;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.07);font-size:.92rem}
+.evt-d-email{width:100%;box-sizing:border-box;padding:13px 14px;border-radius:10px;border:1px solid #d6ba64;background:#0b2e21;color:#fff;font:inherit}
+.evt-d-email::placeholder{color:rgba(255,255,255,.45)}
+.evt-d-email[aria-invalid="true"]{border-color:#ff8a7a}
+.evt-d-error{margin:8px 0 0!important;color:#ffb4a8!important;font-size:.85rem}
+.evt-d-error[hidden]{display:none}
+.evt-d-fee{margin:14px 0 0!important;padding:12px 14px;border-radius:10px;background:rgba(255,209,62,.12);border:1px solid rgba(255,209,62,.4);font-size:.85rem;line-height:1.5}
+.evt-d-lotes{margin:0 0 22px}
+.evt .evt-modal .evt-d-lotes h3{margin:0 0 10px;color:#ffd13e;font-size:11px;letter-spacing:1px;text-transform:uppercase}
+.evt-d-lotes ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.evt-d-lotes li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 14px;border:1px solid rgba(214,186,100,.45);border-radius:10px;font-size:.92rem}
+.evt-d-lotes li.is-last{border-color:#ffd13e;background:rgba(255,209,62,.1)}
+.evt-d-lotes li.is-off{opacity:.5}
+.evt-d-lotes li.is-off .evt-d-price{text-decoration:line-through}
+.evt-d-price{font-weight:700;white-space:nowrap}
+.evt-d-tag{margin-left:8px;padding:2px 8px;border-radius:999px;background:#ffd13e;color:#173527;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.evt-d-tag--off{background:rgba(255,255,255,.2);color:#fff}
+.evt-d-lotpick{margin:0 0 18px}
+.evt-d-alert{margin:0 0 20px;padding:12px 14px;border-radius:10px;background:rgba(255,209,62,.12);border:1px solid rgba(255,209,62,.45);line-height:1.5}
+.evt-d-alert strong{display:block;margin:0 0 3px;color:#ffd13e;font-size:.9rem}
+.evt-modal .evt-d-alert p{margin:0;color:#fff;font-size:.86rem}
+#events[data-view="next"] > div.is-past{display:none!important}
+#events[data-view="past"] > div:not(.is-past){display:none!important}
+.evt-top{padding:clamp(28px,4vw,48px) 0 clamp(56px,8vw,96px)}
+.evt-crumb{margin:0 0 6px;font-size:1.05rem;line-height:1.4;color:#5b6b63}
+.evt .evt-top h1{margin:0 0 clamp(26px,4vw,40px)}
+.evt-filters{display:flex;flex-wrap:wrap;align-items:flex-end;gap:22px clamp(28px,5vw,64px)}
+.evt-fgroup{display:flex;flex-direction:column;gap:12px;margin:0}
+.evt-flabel{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#103f2e}
+.evt-fgroup input[type="search"]{box-sizing:border-box;width:min(100%,280px);margin:0;padding:11px 16px;border:1px solid #dce6de;border-radius:999px;background:#fff;font:inherit;font-size:14px;color:#203b31;transition:border-color .3s,box-shadow .3s}
+.evt-fgroup input[type="search"]:focus{outline:none;border-color:#103f2e;box-shadow:0 0 0 4px rgba(16,63,46,.1)}
+.evt-fchips{display:flex;flex-wrap:wrap;gap:8px}
+.evt-fchip{display:inline-flex;align-items:center;gap:8px;margin:0;padding:10px 18px;border:1px solid #dce6de;border-radius:999px;background:#f2f7f0;color:#3d5248;font:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.evt-fchip:hover:not(:disabled){border-color:#103f2e}
+.evt-fchip .evt-fcount{font-size:11px;font-weight:700;color:#7d8d84}
+.evt-fchip.is-on{background:#103f2e;border-color:#103f2e;color:#fff}
+.evt-fchip.is-on .evt-fcount{color:#e0e9df}
+.evt-fchip:disabled{opacity:.5;cursor:not-allowed}
+.evt-count{margin:18px 0 22px;font-size:.95rem;color:#5b6b63}
+@media(max-width:560px){.evt-fgroup input[type="search"]{width:100%}.evt-fgroup:first-child{width:100%}}
+.evt-end-tag{padding:6px 12px;border-radius:999px;background:#e6ece7;color:#5a6b62;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.evt-d-total{margin:14px 0 0!important;text-align:center;font-size:1.1rem;font-weight:700;color:#ffd13e!important}
+.evt-d-buy:disabled{opacity:.55;cursor:not-allowed;transform:none;background:#ffd13e}
+.evt-d-lotpick[hidden],.evt-d-lotes[hidden]{display:none}
+.evt-d-lotpick .evt-pick-list{max-height:none;margin:0;padding:0}
+.evt-d-lotpick .evt-pick-item:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:480px){.evt-d-info li{flex-direction:column;gap:2px}.evt-d-info b{width:auto}}
+</style>
+<div id="modal-evento" class="evt-modal-backdrop" hidden>
+  <div class="evt-modal evt-modal--detail" role="dialog" aria-modal="true" aria-labelledby="evt-d-title">
+    <button type="button" class="evt-modal-close" id="evt-d-close" aria-label="Fechar">×</button>
+    <div class="evt-d-cover" id="evt-d-cover" hidden><img id="evt-d-img" alt="" /></div>
+
+    <!-- etapa 1: informações -->
+    <div class="evt-d-view" id="evt-d-view">
+      <span class="evt-d-date" id="evt-d-date"></span>
+      <h2 id="evt-d-title"></h2>
+      <p class="evt-d-desc" id="evt-d-desc"></p>
+      <ul class="evt-d-info" id="evt-d-info"></ul>
+      <div class="evt-d-lotes" id="evt-d-lotes" hidden><h3>Valores</h3><ul id="evt-d-lotes-list"></ul></div>
+      <div class="evt-d-alert" role="note"><strong></strong><p></p></div>
+      <div class="evt-d-actions">
+        <button type="button" class="evt-d-buy" id="evt-d-buy">Comprar ingresso</button>
+        <a class="evt-d-site" id="evt-d-map" target="_blank" rel="noopener noreferrer" hidden>Como chegar ↗</a>
+        <a class="evt-d-site" id="evt-d-site" target="_blank" rel="noopener noreferrer" hidden>Ver no site oficial ↗</a>
+      </div>
+    </div>
+
+    <!-- etapa 2: quantidade -->
+    <div class="evt-d-qty" id="evt-d-qty" hidden>
+      <h2 id="evt-d-qty-title">Quantos ingressos?</h2>
+      <p class="evt-d-summary" id="evt-d-summary"></p>
+      <div class="evt-d-lotpick" id="evt-d-lotpick" hidden>
+        <span class="evt-d-qty-label" id="evt-d-lotpick-label" style="margin-top:20px">Escolha o tipo de ingresso</span>
+        <div class="evt-pick-list" id="evt-d-lotpick-list" role="radiogroup" aria-labelledby="evt-d-lotpick-label"></div>
+      </div>
+      <label class="evt-d-qty-label" for="evt-d-n" style="margin-top:20px">Quantidade</label>
+      <div class="evt-d-stepper">
+        <button type="button" id="evt-d-minus" aria-label="Diminuir quantidade">−</button>
+        <input id="evt-d-n" type="number" inputmode="numeric" min="1" max="10" value="1" />
+        <button type="button" id="evt-d-plus" aria-label="Aumentar quantidade">+</button>
+      </div>
+      <p class="evt-d-hint">Máximo de 10 por pedido.</p>
+      <p class="evt-d-total" id="evt-d-total"></p>
+      <label class="evt-d-qty-label" for="evt-d-email" style="margin-top:18px">Seu e-mail (para receber o ingresso)</label>
+      <input class="evt-d-email" id="evt-d-email" type="email" inputmode="email" autocomplete="email" placeholder="seuemail@exemplo.com" />
+      <p class="evt-d-error" id="evt-d-error" role="alert" hidden></p>
+      <div class="evt-d-alert" role="note" style="margin-top:14px"><strong></strong><p></p></div>
+      <div class="evt-pick-actions">
+        <button type="button" class="evt-pick-back" id="evt-d-back">Voltar</button>
+        <button type="button" class="evt-pick-confirm" id="evt-d-confirm">Confirmar e abrir WhatsApp <span aria-hidden="true">↗</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+ const WA='https://wa.me/5517997224203?text=';
+ const MAX=10;
+ const $=id=>document.getElementById(id);
+ const modal=$('modal-evento'); if(!modal)return;
+ const el={cover:$('evt-d-cover'),img:$('evt-d-img'),view:$('evt-d-view'),qty:$('evt-d-qty'),date:$('evt-d-date'),title:$('evt-d-title'),desc:$('evt-d-desc'),info:$('evt-d-info'),buy:$('evt-d-buy'),site:$('evt-d-site'),map:$('evt-d-map'),close:$('evt-d-close'),back:$('evt-d-back'),confirm:$('evt-d-confirm'),n:$('evt-d-n'),email:$('evt-d-email'),error:$('evt-d-error'),fee:$('evt-d-fee'),total:$('evt-d-total'),lots:$('evt-d-lotes'),lotsList:$('evt-d-lotes-list'),lotpick:$('evt-d-lotpick'),lotpickList:$('evt-d-lotpick-list'),minus:$('evt-d-minus'),plus:$('evt-d-plus'),summary:$('evt-d-summary')};
+ let current=null, trigger=null;
+
+ /* ============================================================
+    DADOS DOS EVENTOS — a chave é o nome EXATO do evento (data-title do card).
+    opcoes: tipos de ingresso e valores. Se houver mais de uma, a pessoa escolhe ao comprar.
+            Use  esgotado:true  para bloquear uma opção.
+            Use  un:['bistrô','bistrôs']  se a unidade não for "ingresso".
+    abre:   data/hora (ISO, fuso -03:00) em que as vendas começam; antes disso o botão fica bloqueado.
+    ============================================================ */
+ const EVENTOS={
+  'Hallowgreen da MEDVOTU':{
+    local:'Chácara Look',endereco:'Rod. Péricles Bellini, 121 - Parque Industrial II, Votuporanga/SP',horario:'23h',
+    opcoes:[{nome:'Ingresso',valor:60}],venda:'Direto com a atlética (Pix)'},
+  'Projeto X Open Bar':{
+    local:'Royal Music',endereco:'Av. Litério Grecco, 600 - Vila São Fernando, Fernandópolis/SP, 15600-000',horario:'23h',
+    opcoes:[{nome:'Ingresso',valor:40}]},
+  'Halloween na Bally':{
+    local:'Bally Club',endereco:'Av. Dr. Alberto Andaló, 3837 - Centro, São José do Rio Preto/SP, 15015-000',horario:'22h',
+    opcoes:[{nome:'Feminino',valor:20},{nome:'Masculino',valor:30}]},
+  'Treem Bala Especial de Halloween':{
+    local:'New House',endereco:'Av. dos Arnaldos, 3813 - Res. Antonia Franco, Fernandópolis/SP, 15600-000',horario:'23h',
+    opcoes:[{nome:'Pista',valor:15},{nome:'Front',valor:30}]},
+  'Deu Praia — 2ª edição':{
+    local:'Arena Beach',endereco:'Av. Projetada 08, 5882 - Votuporanga/SP, 15507-070',horario:'16h',
+    opcoes:[{nome:'Ingresso',valor:80}]},
+  'Churrasco da Ju Balbi':{
+    local:'Arena Beleza',endereco:'Av. José Marão Filho, 5330 - Polo Comercial e Industrial (perto do Posto Canecão), Votuporanga/SP',horario:'Abertura às 15h · Início às 16h',
+    opcoes:[{nome:'Ingresso',valor:250}]},
+  'Pagode & Chinelo — 6ª edição':{
+    endereco:'Est. Vicinal Vicente Polachini, 171 - Jardim Vitória Régia, São José do Rio Preto/SP, 15075-215',horario:'17h',
+    opcoes:[{nome:'Unissex',valor:30},{nome:'Bistrô (4 ingressos unissex + bistrô)',valor:120,un:['bistrô','bistrôs']}]},
+  'Noite do Branco Rio Preto — 15ª edição':{
+    local:'Recinto de Exposições',endereco:'R. Daniel Antônio de Freitas, 115 - Distrito Industrial, São José do Rio Preto/SP, CEP 15035-540',
+    opcoes:[],abre:'2026-10-25T14:00:00-03:00',abreTxt:'25/10/2026 às 14h'}
+ };
+ const brl=v=>Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+ const PLATFORMS={'zedoingresso.com.br':'Zé do Ingresso','guicheweb.com.br':'Guichê Web','baladapp.com.br':'BaladApp'};
+ const platform=url=>{try{const h=new URL(url).hostname.replace(/^www\./,'');return PLATFORMS[h]||h}catch(e){return ''}};
+ const unit=(o,q)=>o&&o.un?o.un[q>1?1:0]:('ingresso'+(q>1?'s':''));
+ const notYet=ev=>ev&&ev.abre&&Date.now()<new Date(ev.abre).getTime();
+ const isEnded=c=>!!(c&&c.start&&Date.now()>=c.start);
+
+ const lock=on=>{document.body.style.overflow=on?'hidden':''};
+ const clamp=v=>{v=parseInt(v,10);if(isNaN(v))v=1;return Math.min(MAX,Math.max(1,v))};
+ const updTotal=()=>{
+   const o=current&&current.opt;
+   el.total.hidden=!o;
+   if(o)el.total.textContent='Total: '+brl(o.valor*clamp(el.n.value));
+ };
+ const setN=v=>{el.n.value=clamp(v);el.minus.disabled=+el.n.value<=1;el.plus.disabled=+el.n.value>=MAX;updTotal()};
+ const row=(label,value)=>{if(!value)return;const li=document.createElement('li');const b=document.createElement('b');b.textContent=label;const s=document.createElement('span');s.textContent=value;li.append(b,s);el.info.appendChild(li)};
+
+ function showView(){el.qty.hidden=true;el.view.hidden=false;el.cover.hidden=!el.img.getAttribute('src')}
+ function showQty(){
+   if(isEnded(current)||notYet(current.ev))return;
+   el.view.hidden=true;el.qty.hidden=false;el.cover.hidden=true;
+   el.summary.textContent='Evento: '+current.name+' · '+current.date;
+   el.lotpickList.innerHTML='';current.opt=null;
+   const ops=current.ev.opcoes||[];
+   el.lotpick.hidden=ops.length<2;
+   if(ops.length===1)current.opt=ops[0];
+   if(ops.length>1){
+     ops.forEach(o=>{
+       const b=document.createElement('button');
+       b.type='button';b.className='evt-pick-item';b.setAttribute('role','radio');b.setAttribute('aria-checked','false');
+       b.disabled=!!o.esgotado;
+       const n=document.createElement('span');n.className='evt-pick-name';n.textContent=o.nome+(o.esgotado?' · esgotado':'');
+       const d=document.createElement('span');d.className='evt-pick-date';d.textContent=brl(o.valor);
+       b.append(n,d);
+       b.addEventListener('click',()=>{
+         el.lotpickList.querySelectorAll('.evt-pick-item').forEach(x=>x.setAttribute('aria-checked','false'));
+         b.setAttribute('aria-checked','true');current.opt=o;el.error.hidden=true;updTotal();
+       });
+       el.lotpickList.appendChild(b);
+     });
+   }
+   el.error.hidden=true;el.email.removeAttribute('aria-invalid');
+   setN(1);
+   (ops.length>1?el.lotpickList.querySelector('.evt-pick-item:not(:disabled)'):el.n)?.focus();
+ }
+
+ function openFrom(wrapper,btn){
+   const name=(wrapper.dataset.title||'').trim();
+   const date=(wrapper.querySelector('.evt-date')?.textContent||'').trim();
+   const desc=(wrapper.querySelector('article p')?.textContent||'').trim();
+   const isInternal=wrapper.dataset.internal==='1';
+   const link=isInternal?'':(wrapper.querySelector('a.evt-event-cover')?.href||'');
+   const ev=EVENTOS[name]||{opcoes:[]};
+   const ops=ev.opcoes||[];
+   current={name,date,internal:isInternal,ev,opt:null,start:Date.parse(wrapper.dataset.start||'')};trigger=btn;
+
+   let src=wrapper.querySelector('.evt-event-cover img')?.getAttribute('src')||'';
+   if(src){el.img.src=src;el.img.alt='Capa de '+name;el.img.onerror=()=>{el.cover.hidden=true}}else{el.img.removeAttribute('src')}
+
+   el.date.textContent=date;el.title.textContent=name;el.desc.textContent=desc;
+   el.info.innerHTML='';
+   row('Data',date);
+   row('Horário',ev.horario);
+   row('Local',ev.local);
+   row('Endereço',ev.endereco);
+   if(ops.length===1)row('Valor',brl(ops[0].valor));
+   else if(!ops.length)row('Valor','Será divulgado na abertura das vendas.');
+   if(ev.abre)row('Vendas',(notYet(ev)?'Abrem em ':'Abriram em ')+ev.abreTxt);
+   row('Venda oficial',isInternal?ev.venda:platform(link));
+   row('Compra com a atlética',isInternal?'Pagamento por Pix. O ingresso é enviado por e-mail.':'Pelo WhatsApp, sem a taxa cobrada na página original, porque pegamos o ingresso direto com o organizador. Pagamento por Pix e envio do ingresso por e-mail.');
+   row('Documento','Leve um documento oficial com foto.');
+
+   if(link){el.site.href=link;el.site.hidden=false}else{el.site.hidden=true}
+   if(ev.endereco){el.map.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent((ev.local||'')+' '+ev.endereco);el.map.hidden=false}else{el.map.hidden=true}
+
+   // lista de valores (quando há mais de uma opção)
+   el.lotsList.innerHTML='';
+   ops.forEach(o=>{
+     if(ops.length<2)return;
+     const li=document.createElement('li');
+     if(o.esgotado)li.classList.add('is-off');
+     const n=document.createElement('span');n.textContent=o.nome;
+     if(o.esgotado){const t=document.createElement('em');t.className='evt-d-tag evt-d-tag--off';t.textContent='Esgotado';n.appendChild(t)}
+     const v=document.createElement('span');v.className='evt-d-price';v.textContent=brl(o.valor);
+     li.append(n,v);el.lotsList.appendChild(li);
+   });
+   el.lots.hidden=ops.length<2;
+
+   // botão de compra (bloqueado antes da abertura das vendas)
+   if(isEnded(current)){el.buy.disabled=true;el.buy.textContent='Vendas encerradas'}
+   else if(notYet(ev)){el.buy.disabled=true;el.buy.textContent='Vendas abrem em '+ev.abreTxt}
+   else{el.buy.disabled=false;el.buy.textContent='Comprar ingresso'}
+
+   const A=isInternal
+     ?['Ingresso direto com a atlética','Venda feita diretamente por nós. O pagamento é por Pix e o ingresso é enviado por e-mail.']
+     :['Por que comprar com a gente?','No app ou site oficial é cobrada uma taxa de serviço. Aqui você não paga essa taxa, porque recebemos o ingresso direto do fornecedor. Pagamento por Pix e ingresso enviado por e-mail.'];
+   modal.querySelectorAll('.evt-d-alert').forEach(a=>{a.querySelector('strong').textContent=A[0];a.querySelector('p').textContent=A[1]});
+   el.email.value='';showView();modal.hidden=false;lock(true);(el.buy.disabled?el.close:el.buy).focus();
+ }
+ function closeModal(){modal.hidden=true;lock(false);if(trigger&&trigger.focus)trigger.focus()}
+
+ document.addEventListener('click',e=>{
+   const t=e.target.closest('[data-open-event]');
+   if(!t)return;
+   const wrapper=t.closest('#events > div[data-title]');
+   if(!wrapper)return;
+   e.preventDefault();e.stopPropagation();
+   openFrom(wrapper,t);
+ },true);
+
+ el.close.addEventListener('click',closeModal);
+ modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+ el.buy.addEventListener('click',showQty);
+ el.back.addEventListener('click',()=>{showView();el.buy.focus()});
+ el.minus.addEventListener('click',()=>setN(+el.n.value-1));
+ el.plus.addEventListener('click',()=>setN(+el.n.value+1));
+ el.n.addEventListener('change',()=>setN(el.n.value));
+ el.n.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();el.email.focus()}});
+ el.email.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();el.confirm.click()}});
+ el.email.addEventListener('input',()=>{el.error.hidden=true;el.email.removeAttribute('aria-invalid')});
+ el.confirm.addEventListener('click',()=>{
+   if(!current||isEnded(current))return;
+   const ops=current.ev.opcoes||[];
+   if(ops.length>1&&!current.opt){el.error.textContent='Escolha o tipo de ingresso.';el.error.hidden=false;return}
+   const q=clamp(el.n.value);setN(q);
+   const mail=el.email.value.trim();
+   if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail)){
+     el.error.textContent='Informe um e-mail válido para receber o ingresso.';el.error.hidden=false;el.email.setAttribute('aria-invalid','true');el.email.focus();return;
+   }
+   const o=current.opt;
+   let msg='Oi, Raissa, tudo bem? Desejo realizar a compra de '+q+' '+unit(o,q)+' do evento '+current.name+'.';
+   if(o){
+     if(ops.length>1)msg+='\nTipo: '+o.nome;
+     msg+='\nValor: '+brl(o.valor)+' cada · Total: '+brl(o.valor*q);
+   }
+   msg+='\nE-mail para envio do ingresso: '+mail;
+   window.open(WA+encodeURIComponent(msg),'_blank','noopener,noreferrer');
+   closeModal();
+ });
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)closeModal()});
+})();
+</script>
+<script>
+(function(){
+ const box=document.getElementById('events'); if(!box)return;
+ const now=Date.now();
+ const items=[...box.children].filter(c=>c.dataset&&c.dataset.title).map(c=>({c,t:Date.parse(c.dataset.start||'')}));
+ items.forEach(o=>{o.past=!isNaN(o.t)&&now>=o.t});
+ const up=items.filter(o=>!o.past).sort((a,b)=>a.t-b.t);
+ const past=items.filter(o=>o.past).sort((a,b)=>b.t-a.t);
+ [...up,...past].forEach(o=>box.appendChild(o.c));
+ past.forEach(o=>{
+   o.c.classList.add('is-past');
+   const top=o.c.querySelector('.evt-card-top');
+   if(top){const b=document.createElement('span');b.className='evt-end-tag';b.textContent='Encerrado';top.appendChild(b)}
+ });
+
+ const $=id=>document.getElementById(id);
+ const bNext=$('evt-view-next'), bPast=$('evt-view-past'), count=$('evt-count'), empty=$('empty-events'), search=$('event-search');
+ $('evt-n-next').textContent=up.length; $('evt-n-past').textContent=past.length;
+ if(!past.length){bPast.disabled=true}
+ const emptyDefault=empty?empty.textContent.trim():'';
+ let view='next';
+
+ const refresh=()=>{
+   box.dataset.view=view;
+   bNext.classList.toggle('is-on',view==='next');bNext.setAttribute('aria-pressed',view==='next');
+   bPast.classList.toggle('is-on',view==='past');bPast.setAttribute('aria-pressed',view==='past');
+   const vis=[...box.children].filter(c=>!c.hidden&&c.classList.contains('is-past')===(view==='past'));
+   const n=vis.length;
+   count.textContent=n+(n===1?' evento':' eventos');
+   if(empty){
+     const q=search&&search.value.trim();
+     empty.textContent=q?emptyDefault:(view==='past'?'Nenhum evento encerrado.':'Nenhum evento disponível no momento.');
+     empty.hidden=n>0;
+   }
+ };
+ bNext.addEventListener('click',()=>{view='next';refresh()});
+ bPast.addEventListener('click',()=>{if(bPast.disabled)return;view='past';refresh()});
+ if(search)search.addEventListener('input',()=>setTimeout(refresh,0));
+ refresh();
 })();
 </script>
 <button class="cart-fab" id="cart-open" type="button" aria-label="Abrir carrinho"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg><span class="cart-badge" id="cart-count" hidden>0</span></button></body>

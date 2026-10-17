@@ -1,1 +1,356 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Fale com a atlética Devoradores pelo WhatsApp ou pelo Instagram."><title>Contato | Devoradores</title><link rel="icon" href="assets/logo.png" type="image/png"><link rel="stylesheet" href="assets/layout-final.css?v=22"><script src="components/site-header.js"></script><script src="components/site-footer.js"></script><script defer src="assets/app.js"></script></head><body class="ctt"><a class="skip" href="#main">Pular para o conteúdo</a><site-header></site-header><main id="main"><section class="shop-intro"><p class="eyebrow">Fale com a gente</p><h1>Vamos <em>conversar?</em></h1><p class="lead">Dúvidas, parcerias ou vontade de fazer parte? Este é o seu espaço.</p></section><section class="grid two contact"><form id="contact-form" class="panel"><label>Nome<input name="nome" autocomplete="name" placeholder="Seu nome" required maxlength="100"></label><label>E-mail<input name="email" autocomplete="email" type="email" placeholder="voce@exemplo.com" required></label><label>Assunto<select name="assunto"><option>Quero fazer parte</option><option>Eventos</option><option>Loja</option><option>Parcerias</option><option>Outros</option></select></label><label>Mensagem<textarea name="mensagem" rows="5" placeholder="Conte para nós..." required maxlength="2000"></textarea></label><button class="button" type="submit">Enviar pelo WhatsApp ↗</button><p class="small">Ao enviar, abrimos o WhatsApp da atlética com a sua mensagem pronta.</p><p id="form-status" role="status"></p></form><div><div class="panel"><h2>Fale com os Devoradores.</h2><p>Escolha o canal que preferir.</p><div class="contact-row"><b><svg class="ci" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><g transform="translate(7.3 7.3) scale(.4)" stroke-width="4.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></g></svg><span class="contact-label">WhatsApp</span></b><span><a href="https://wa.me/5517996454466" target="_blank" rel="noopener">(17) 99645-4466</a></span></div><div class="contact-row"><b><svg class="ci" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span class="contact-label">Instagram</span></b><span><a href="https://www.instagram.com/atleticadevoradores_votu" target="_blank" rel="noopener">@atleticadevoradores_votu</a></span></div><div class="contact-row"><b><svg class="ci" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 11v2"/><path d="M13 17v2"/></svg><span class="contact-label">Ingressos (Raissa, Diretoria de Eventos)</span></b><span><a href="https://wa.me/5517997224203" target="_blank" rel="noopener">(17) 99722-4203</a></span></div></div><img class="contact-mascot" src="assets/mascote.jpg" alt="Mascote Devoradores" loading="lazy"></div></section></main><site-footer></site-footer><dialog id="detail-dialog"><button class="close" aria-label="Fechar janela">×</button><div id="detail-content"></div></dialog><div id="toast" role="status" aria-live="polite"></div><button class="cart-fab" id="cart-open" type="button" aria-label="Abrir carrinho"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg><span class="cart-badge" id="cart-count" hidden>0</span></button></body></html>
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Fale com a atlética Devoradores pelo WhatsApp, e-mail ou Instagram."
+    />
+
+    <title>Contato | Devoradores</title>
+
+    <link rel="icon" href="assets/logo.png" type="image/png" />
+    <link rel="stylesheet" href="assets/layout-final.css?v=23" />
+
+    <script src="components/site-header.js"></script>
+    <script src="components/site-footer.js"></script>
+    <script defer src="assets/app.js"></script>
+      <style id="eyebrow-unificado">
+      /* Rótulos pequenos de seção: todos seguem o layout do .atl-eyebrow */
+      html body .atl-eyebrow,
+      html body .nut-eyebrow,
+      html body .evt-eyebrow,
+      html body .ex-eyebrow,
+      html body .eyebrow,
+      html body .acao-info .eyebrow-line {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 16px;
+        padding: 0;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        line-height: 1.4;
+        text-transform: uppercase;
+        color: #103f2e;
+        background: none;
+        border: 0;
+        border-radius: 0;
+      }
+      html body .atl-eyebrow::before,
+      html body .nut-eyebrow::before,
+      html body .evt-eyebrow::before,
+      html body .ex-eyebrow::before,
+      html body .eyebrow::before,
+      html body .acao-info .eyebrow-line::before {
+        content: "";
+        flex: none;
+        width: 26px;
+        height: 3px;
+        border-radius: 3px;
+        background: #ffd13e;
+      }
+      /* Fundos escuros: texto dourado para manter o contraste */
+      html body .ex-sec--dark .ex-eyebrow,
+      html body .ex-banner .ex-eyebrow,
+      html body .callout .eyebrow { color: #ffd13e; }
+    </style>
+      <style id="margem-topo-unificada">
+      /* Mesma distância entre o cabeçalho e o primeiro conteúdo em todas as páginas internas */
+      html body main#main { margin-top: 0 !important; padding-top: 0 !important; }
+      html body main#main > section:first-child {
+        margin-top: 0 !important;
+        padding-top: 70px !important;
+      }
+      @media (max-width: 780px) {
+        html body main#main > section:first-child { padding-top: 44px !important; }
+      }
+    </style>
+  </head>
+
+  <body class="ctt">
+    <a class="skip" href="#main">Pular para o conteúdo</a>
+
+    <site-header></site-header>
+
+    <main id="main">
+      <section class="shop-intro">
+        <p class="atl-eyebrow">Fale com a gente</p>
+
+        <h1>Vamos <em>conversar?</em></h1>
+
+        <p class="lead">
+          Dúvidas, parcerias ou vontade de fazer parte? Este é o seu espaço.
+        </p>
+      </section>
+
+      <section class="grid two contact">
+        <form id="contact-form" class="panel">
+          <label>
+            Nome
+            <input
+              name="nome"
+              autocomplete="name"
+              placeholder="Seu nome"
+              required
+              maxlength="100"
+            />
+          </label>
+
+          <label>
+            E-mail
+            <input
+              name="email"
+              autocomplete="email"
+              type="email"
+              placeholder="voce@exemplo.com"
+              required
+            />
+          </label>
+
+          <label>
+            Assunto
+            <select name="assunto">
+              <option>Quero fazer parte</option>
+              <option>Eventos</option>
+              <option>Loja</option>
+              <option>Parcerias</option>
+              <option>Outros</option>
+            </select>
+          </label>
+
+          <label>
+            Mensagem
+            <textarea
+              name="mensagem"
+              rows="5"
+              placeholder="Conte para nós..."
+              required
+              maxlength="2000"
+            ></textarea>
+          </label>
+
+          <div class="form-actions">
+            <button class="button" type="submit">
+              Enviar pelo WhatsApp ↗
+            </button>
+
+            <button class="button outline" type="button" id="mail-send">
+              Enviar por e-mail ↗
+            </button>
+          </div>
+
+          <p class="small">
+            Ao clicar, abrimos o WhatsApp ou o Gmail com a mensagem pronta
+            para você revisar e enviar.
+          </p>
+
+          <p id="form-status" role="status"></p>
+        </form>
+
+        <div>
+          <div class="panel">
+            <h2>Fale com os Devoradores.</h2>
+            <p>Escolha o canal que preferir.</p>
+
+            <div class="contact-row">
+              <b>
+                <svg
+                  class="ci"
+                  viewBox="0 0 24 24"
+                  width="22"
+                  height="22"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                  <g
+                    transform="translate(7.3 7.3) scale(.4)"
+                    stroke-width="4.6"
+                  >
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                    />
+                  </g>
+                </svg>
+
+                <span class="contact-label">WhatsApp</span>
+              </b>
+
+              <span>
+                <a
+                  href="https://wa.me/5517996454466"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  (17) 99645-4466
+                </a>
+              </span>
+            </div>
+
+            <div class="contact-row">
+              <b>
+                <svg
+                  class="ci"
+                  viewBox="0 0 24 24"
+                  width="22"
+                  height="22"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect width="20" height="16" x="2" y="4" rx="2" />
+                  <path
+                    d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
+                  />
+                </svg>
+
+                <span class="contact-label">E-mail</span>
+              </b>
+
+              <span>
+                <a
+                  href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=atletica.demolidoress%40gmail.com"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  atletica.demolidoress@gmail.com
+                </a>
+              </span>
+            </div>
+
+            <div class="contact-row">
+              <b>
+                <svg
+                  class="ci"
+                  viewBox="0 0 24 24"
+                  width="22"
+                  height="22"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle
+                    cx="17.5"
+                    cy="6.5"
+                    r="1"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                </svg>
+
+                <span class="contact-label">Instagram</span>
+              </b>
+
+              <span>
+                <a
+                  href="https://www.instagram.com/atletica_nutricao"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  @atletica_nutricao
+                </a>
+              </span>
+            </div>
+
+            <div class="contact-row">
+              <b>
+                <svg
+                  class="ci"
+                  viewBox="0 0 24 24"
+                  width="22"
+                  height="22"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"
+                  />
+                  <path d="M13 5v2" />
+                  <path d="M13 11v2" />
+                  <path d="M13 17v2" />
+                </svg>
+
+                <span class="contact-label">Ingressos</span>
+              </b>
+
+              <span>
+                <a
+                  href="https://wa.me/5517997224203"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  (17) 99722-4203
+                </a>
+              </span>
+            </div>
+          </div>
+
+          <img
+            class="contact-mascot"
+            src="assets/mascote.jpg"
+            alt="Mascote Devoradores"
+            loading="lazy"
+          />
+        </div>
+      </section>
+    </main>
+
+    <site-footer></site-footer>
+
+    <dialog id="detail-dialog">
+      <button class="close" type="button" aria-label="Fechar janela">
+        ×
+      </button>
+
+      <div id="detail-content"></div>
+    </dialog>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <button
+      class="cart-fab"
+      id="cart-open"
+      type="button"
+      aria-label="Abrir carrinho"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        width="26"
+        height="26"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="8" cy="21" r="1" />
+        <circle cx="19" cy="21" r="1" />
+        <path
+          d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"
+        />
+      </svg>
+
+      <span class="cart-badge" id="cart-count" hidden>0</span>
+    </button>
+  </body>
+</html>

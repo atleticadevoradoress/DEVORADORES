@@ -9,7 +9,7 @@
     />
     <title>Universo Nutri | Devoradores</title>
     <link rel="icon" href="assets/logo.png" type="image/png" />
-    <link rel="stylesheet" href="assets/layout-final.css?v=22" />
+    <link rel="stylesheet" href="assets/layout-final.css?v=23" />
     <link rel="stylesheet" href="assets/extras.css?v=1" />
     <script src="components/site-header.js"></script><script src="components/site-footer.js"></script><script defer src="assets/app.js"></script>
     <style>
@@ -165,17 +165,7 @@
         display: block;
         width: 100%;
         height: auto;
-        border-radius: 24px;
-        box-shadow: 0 30px 60px -32px rgba(16, 63, 46, 0.5);
         animation: nut-float 7s ease-in-out infinite;
-      }
-      .nut-hero-media::after {
-        content: "";
-        position: absolute;
-        inset: 16px -14px -14px 16px;
-        border: 2px solid var(--nut-gold);
-        border-radius: 24px;
-        z-index: -1;
       }
 
       /* ---------- O CURSO ---------- */
@@ -627,10 +617,12 @@
         .nut-about {
           grid-template-columns: 1fr;
         }
-        .nut-hero-media {
-          order: -1;
-          max-width: 420px;
-        }
+
+        /* Mobile: imagem logo após o texto de apresentação, botão depois */
+        .nut-hero-grid { row-gap: 0; }
+        .nut-hero-grid > div:first-child { display: contents; }
+        .nut-hero-media { order: 1; max-width: 420px; width: 100%; margin: 6px 0 30px; }
+        .nut-hero-grid .nut-btn { order: 2; justify-self: start; }
         .nut-cta {
           flex-direction: column;
           align-items: flex-start;
@@ -701,6 +693,58 @@
       .nut-ingresso .nut-cards{margin-top:28px}
       .nut-ingresso .nut-clinic-contact{margin-top:28px}
     </style>
+      <style id="eyebrow-unificado">
+      /* Rótulos pequenos de seção: todos seguem o layout do .atl-eyebrow */
+      html body .atl-eyebrow,
+      html body .nut-eyebrow,
+      html body .evt-eyebrow,
+      html body .ex-eyebrow,
+      html body .eyebrow,
+      html body .acao-info .eyebrow-line {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 16px;
+        padding: 0;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        line-height: 1.4;
+        text-transform: uppercase;
+        color: #103f2e;
+        background: none;
+        border: 0;
+        border-radius: 0;
+      }
+      html body .atl-eyebrow::before,
+      html body .nut-eyebrow::before,
+      html body .evt-eyebrow::before,
+      html body .ex-eyebrow::before,
+      html body .eyebrow::before,
+      html body .acao-info .eyebrow-line::before {
+        content: "";
+        flex: none;
+        width: 26px;
+        height: 3px;
+        border-radius: 3px;
+        background: #ffd13e;
+      }
+      /* Fundos escuros: texto dourado para manter o contraste */
+      html body .ex-sec--dark .ex-eyebrow,
+      html body .ex-banner .ex-eyebrow,
+      html body .callout .eyebrow { color: #ffd13e; }
+    </style>
+      <style id="margem-topo-unificada">
+      /* Mesma distância entre o cabeçalho e o primeiro conteúdo em todas as páginas internas */
+      html body main#main { margin-top: 0 !important; padding-top: 0 !important; }
+      html body main#main > section:first-child {
+        margin-top: 0 !important;
+        padding-top: 70px !important;
+      }
+      @media (max-width: 780px) {
+        html body main#main > section:first-child { padding-top: 44px !important; }
+      }
+    </style>
   </head>
   <body class="nut">
     <a class="skip" href="#main">Pular para o conteúdo</a>
@@ -732,10 +776,10 @@
           </div>
           <div class="nut-hero-media">
             <img
-              src="assets/nutricao.png"
-              alt="Estudantes de Nutrição de jaleco e touca reunidas em um laboratório"
-              width="1395"
-              height="1127"
+              src="assets/nutri.png"
+              alt="Escudo do curso de Nutrição com balança, serpente e ramos de louro"
+              width="1254"
+              height="1254"
             />
           </div>
         </div>

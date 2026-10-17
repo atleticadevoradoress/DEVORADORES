@@ -77,3 +77,25 @@ O botão "combinar pelo WhatsApp" continua como alternativa. O Pix estático ant
 CARRINHO
 O carrinho começa VAZIO toda vez que uma página é carregada ou recarregada. Para o carrinho ficar salvo entre páginas, troque LIMPAR_AO_CARREGAR para false no início do bloco CARRINHO em assets/app.js.
 No carrinho: itens em cartões, resumo, selo "Pagamento seguro com a InfinitePay / Checkout oficial", botões Finalizar compra, Continuar comprando e Limpar carrinho (pede confirmação).
+
+
+LOJA: CATÁLOGO ATUALIZADO (27 PRODUTOS)
+Todo o conteúdo de assets/loja foi substituído. Os produtos aparecem em loja.html, assets/app.js e api/checkout.js, sempre na MESMA ORDEM e com os mesmos preços (o servidor usa o preço de api/checkout.js, então ao mudar um preço altere nos três lugares).
+Cada produto agora tem também "material" (exibido no modal) e, opcionalmente, "sufixo" (ex.: "o par" na meia).
+Cores combinadas (corta-vento e jaqueta): o nome do arquivo é a cor das mangas + a cor do corpo (ex.: verde_branco.png = mangas verdes, corpo branco).
+Acessórios: copo, meia, tirante e tirante2. Os demais são roupas. O chaveiro, a polo, o top esportivo, a camiseta esportiva 2 e o short esportivo antigos foram removidos.
+
+
+FILTROS DA LOJA (PEÇA, CLIMA, ESTILO)
+A loja tem 3 grupos de filtro: Peça (parte de cima, parte de baixo, acessórios), Clima (calor, frio) e Estilo (esportivo, dia a dia). Escolhe-se uma opção por grupo e os grupos se combinam. Cada opção mostra quantos produtos sobram, e as combinações sem produto ficam desativadas.
+A classificação de cada produto fica no catálogo do assets/app.js: tipo ("cima", "baixo" ou "acessorio"), clima ("calor", "frio" ou vazio) e uso (lista com "esportivo" e/ou "casual"). Ao adicionar um produto, preencha esses 3 campos e repita os valores nos atributos data-tipo, data-clima e data-uso do card em loja.html.
+Peças de manga longa, capuz e jaquetas foram marcadas como "frio"; peças curtas, regatas e shorts como "calor". Acessórios não têm clima. Ajuste como preferir.
+
+E-MAIL DA ATLÉTICA E PIX MANUAL
+E-mail atletica.demolidoress@gmail.com: aparece no rodapé de todas as páginas (components/site-footer.js), na aba Contato e no formulário (botão "Enviar por e-mail"). Constante EMAIL no início da seção de vendas do assets/app.js.
+Pix manual: em "Combinar pelo WhatsApp", a chave Pix (o e-mail) aparece com botão "Copiar chave", e o pedido vai para o WhatsApp com a forma de pagamento já preenchida.
+IMPORTANTE: o checkout automático da InfinitePay (Pix ou cartão) usa a InfiniteTag em INFINITEPAY_HANDLE na Vercel, não o e-mail. O e-mail não substitui essa variável.
+
+
+TAXA REMOVIDA
+A taxa fixa de R$ 5,00 por pedido foi retirada do carrinho, da mensagem do WhatsApp e da cobrança (api/checkout.js). O total agora é só a soma dos itens.

@@ -9,7 +9,7 @@
     />
     <title>A Atlética | Devoradores</title>
     <link rel="icon" href="assets/logo.png" type="image/png" />
-    <link rel="stylesheet" href="assets/layout-final.css?v=22" />
+    <link rel="stylesheet" href="assets/layout-final.css?v=23" />
     <link rel="stylesheet" href="assets/extras.css?v=1" />
     <script src="components/site-header.js"></script><script src="components/site-footer.js"></script><script defer src="assets/app.js"></script>
     <style>
@@ -574,7 +574,12 @@
       }
       @media (max-width: 760px) {
         .atl-hero-grid, .atl-about { grid-template-columns: 1fr; }
-        .atl-hero-media { order: -1; max-width: 420px; }
+
+        /* Mobile: imagem logo após o texto de apresentação, botão depois */
+        .atl-hero-grid { row-gap: 0; }
+        .atl-hero-grid > div:first-child { display: contents; }
+        .atl-hero-media { order: 1; max-width: 420px; width: 100%; margin: 6px 0 30px; }
+        .atl-hero-grid .atl-btn { order: 2; justify-self: start; }
         .atl-cta { flex-direction: column; align-items: flex-start; }
       }
       @media (max-width: 460px) {
@@ -592,6 +597,58 @@
       }
     </style>
     <link rel="stylesheet" href="assets/historico.css?v=20261014-4" />
+      <style id="eyebrow-unificado">
+      /* Rótulos pequenos de seção: todos seguem o layout do .atl-eyebrow */
+      html body .atl-eyebrow,
+      html body .nut-eyebrow,
+      html body .evt-eyebrow,
+      html body .ex-eyebrow,
+      html body .eyebrow,
+      html body .acao-info .eyebrow-line {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 16px;
+        padding: 0;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        line-height: 1.4;
+        text-transform: uppercase;
+        color: #103f2e;
+        background: none;
+        border: 0;
+        border-radius: 0;
+      }
+      html body .atl-eyebrow::before,
+      html body .nut-eyebrow::before,
+      html body .evt-eyebrow::before,
+      html body .ex-eyebrow::before,
+      html body .eyebrow::before,
+      html body .acao-info .eyebrow-line::before {
+        content: "";
+        flex: none;
+        width: 26px;
+        height: 3px;
+        border-radius: 3px;
+        background: #ffd13e;
+      }
+      /* Fundos escuros: texto dourado para manter o contraste */
+      html body .ex-sec--dark .ex-eyebrow,
+      html body .ex-banner .ex-eyebrow,
+      html body .callout .eyebrow { color: #ffd13e; }
+    </style>
+      <style id="margem-topo-unificada">
+      /* Mesma distância entre o cabeçalho e o primeiro conteúdo em todas as páginas internas */
+      html body main#main { margin-top: 0 !important; padding-top: 0 !important; }
+      html body main#main > section:first-child {
+        margin-top: 0 !important;
+        padding-top: 70px !important;
+      }
+      @media (max-width: 780px) {
+        html body main#main > section:first-child { padding-top: 44px !important; }
+      }
+    </style>
   </head>
   <body class="atl">
     <a class="skip" href="#main">Pular para o conteúdo</a>
@@ -729,17 +786,6 @@
             <div class="ex-item" data-reveal style="--d: 0.05s"><span class="ex-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/><path d="M4.5 15.5h15"/><path d="m5 11 4-7"/><path d="m9 11 1 9"/></svg></span><div><h3>Arrecadação de alimentos</h3><p>Campanhas com pontos de coleta no campus e nos eventos, com entrega a instituições.</p></div></div>
             <div class="ex-item" data-reveal style="--d: 0.12s"><span class="ex-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg></span><div><h3>Campanha do agasalho</h3><p>Mobilização para reunir roupas e cobertores em bom estado antes e durante o inverno.</p></div></div>
             <div class="ex-item" data-reveal style="--d: 0.26s"><span class="ex-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/></svg></span><div><h3>Educação alimentar</h3><p>Ações de orientação sobre alimentação saudável conduzidas por estudantes de Nutrição.</p></div></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="ex-sec ex-sec--tint" aria-labelledby="news-link-title">
-        <div class="ex-wrap">
-          <div class="ex-head">
-            <p class="ex-eyebrow">Nosso histórico</p>
-            <h2 id="news-link-title">Histórias que <em>compartilhamos.</em></h2>
-            <p class="ex-lead">Conheça nossas ações sociais e as vivências dos estudantes de Nutrição.</p>
-            <a class="ex-btn" href="noticias.html">Ver todas as notícias ↗</a>
           </div>
         </div>
       </section>

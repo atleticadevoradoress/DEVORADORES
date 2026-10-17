@@ -9,7 +9,7 @@
     />
     <title>Início | Devoradores</title>
     <link rel="icon" href="assets/logo.png" type="image/png" />
-    <link rel="stylesheet" href="assets/layout-final.css?v=22" />
+    <link rel="stylesheet" href="assets/layout-final.css?v=23" />
     <link rel="stylesheet" href="assets/extras.css?v=1" />
     <style>
       /* Keep the character at full banner height; the WebM has transparent side margins. */
@@ -24,6 +24,47 @@
       }
     </style>
     <script src="components/site-header.js"></script><script src="components/site-footer.js"></script><script defer src="assets/app.js"></script>
+      <style id="eyebrow-unificado">
+      /* Rótulos pequenos de seção: todos seguem o layout do .atl-eyebrow */
+      html body .atl-eyebrow,
+      html body .nut-eyebrow,
+      html body .evt-eyebrow,
+      html body .ex-eyebrow,
+      html body .eyebrow,
+      html body .acao-info .eyebrow-line {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 16px;
+        padding: 0;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        line-height: 1.4;
+        text-transform: uppercase;
+        color: #103f2e;
+        background: none;
+        border: 0;
+        border-radius: 0;
+      }
+      html body .atl-eyebrow::before,
+      html body .nut-eyebrow::before,
+      html body .evt-eyebrow::before,
+      html body .ex-eyebrow::before,
+      html body .eyebrow::before,
+      html body .acao-info .eyebrow-line::before {
+        content: "";
+        flex: none;
+        width: 26px;
+        height: 3px;
+        border-radius: 3px;
+        background: #ffd13e;
+      }
+      /* Fundos escuros: texto dourado para manter o contraste */
+      html body .ex-sec--dark .ex-eyebrow,
+      html body .ex-banner .ex-eyebrow,
+      html body .callout .eyebrow { color: #ffd13e; }
+    </style>
   </head>
   <body>
     <a class="skip" href="#main">Pular para o conteúdo</a>
@@ -33,14 +74,26 @@
         class="hero hero-banner"
         aria-label="Alimentamos sonhos, devoramos limites."
       >
-        <img
-          class="slogan-banner"
-          src="assets/background/topo.png"
-          alt="Alimentamos sonhos, devoramos limites. — slogan em verde e amarelo, com rachados verdes à direita"
-          width="2021"
-          height="778"
-          fetchpriority="high"
-        />
+        <picture class="slogan-picture">
+          <source
+            media="(max-width: 640px)"
+            srcset="assets/background/topo-mobile.webp"
+            type="image/webp"
+          />
+          <source
+            media="(max-width: 640px)"
+            srcset="assets/background/topo-mobile.png"
+            type="image/png"
+          />
+          <img
+            class="slogan-banner"
+            src="assets/background/topo.png"
+            alt="Alimentamos sonhos, devoramos limites. — slogan em verde e amarelo, com rachados verdes"
+            width="2021"
+            height="778"
+            fetchpriority="high"
+          />
+        </picture>
         <div class="mascot-animation">
           <video
             id="animated-mascot"

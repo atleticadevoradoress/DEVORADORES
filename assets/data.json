@@ -1,1 +1,545 @@
-{"articles":[["curso.svg","O curso","Conheça a graduação","Uma formação que conecta alimentação, ciência e cuidado.","O curso de Nutrição reúne estudos sobre alimentos, metabolismo, avaliação nutricional e alimentação coletiva. A matriz curricular e as atividades variam conforme a instituição. Este espaço pode receber informações oficiais do curso e links para a faculdade."],["nutri.svg","Carreira","Onde o nutricionista pode atuar?","Conheça diferentes caminhos da profissão.","Entre os campos de atuação estão nutrição clínica, esportiva, saúde coletiva, alimentação coletiva, indústria de alimentos, ensino e pesquisa. Inclua aqui entrevistas com profissionais e materiais institucionais sobre cada área."],["comunidade.svg","Vida acadêmica","Projetos e experiências","Descubra possibilidades para viver a graduação.","Projetos de extensão, iniciação científica, visitas técnicas, eventos e atividades de integração podem ampliar as experiências dos estudantes. Publique aqui relatos e registros autorizados das atividades do curso."]],"events":[["festa.svg","festas","Integração dos calouros","Um encontro para receber quem está chegando e criar novas conexões."],["esportes.svg","esportes","Jogos universitários","Espírito de equipe, torcida e momentos dentro das quadras."],["nutri.svg","academicos","Encontro da Nutrição","Um espaço para conversar sobre formação, experiências e profissão."]],"products":[{"nome":"Polo Devoradores","preco":80,"pasta":"polo","capa":"verde","tamanhos":["P","M","G","GG"],"desc":"Polo da atlética com brasão e a assinatura “Nutrição” em letra cursiva.","cores":{"verde":"verde.png","preto":"preto.png","branco":"branco.png"}},{"nome":"Camiseta Oversize","preco":60,"pasta":"oversize","capa":"verde","tamanhos":["P","M","G","GG"],"desc":"Camiseta oversize de caimento largo, com estampa de serpente e o nome “Nutrição” nas costas.","cores":{"verde":"verde.png","preto":"preto.png","offwhite":"off_white.png"}},{"nome":"Camiseta Time","preco":50,"pasta":"camiseta_time","capa":"verde","tamanhos":["P","M","G","GG"],"desc":"Camiseta de time com recortes gráficos, mascote no peito e espaço para nome e número nas costas.","cores":{"verde":"verde.png","preto":"preto.png","branco":"branco.png"}},{"nome":"Camiseta Esportiva 2","preco":50,"pasta":"camiseta_esportiva","capa":"verde","tamanhos":["P","M","G","GG"],"desc":"Camiseta com “Nutrição A.A.A.N.U.V” na frente e o mascote musculoso nas costas.","cores":{"verde":"cam_esportiva2.png","preto":"preto.png","branco":"branco.png"}},{"nome":"Top esportivo","preco":45,"pasta":"top","capa":"verde","tamanhos":["P","M","G","GG"],"desc":"Top esportivo com “Nutrição A.A.A.N.U.V” na frente e “Devoradores” nas costas.","cores":{"verde":"top.png","preto":"preto.png","branco":"branco.png"}},{"nome":"Abadá","preco":45,"pasta":"abada","capa":"verde","tamanhos":["P","M","G","GG"],"desc":"Abadá com estampa em verde e amarelo, mascote, número 01 e o lema “Fome de vitória”.","cores":{"verde":"verde.png","branco":"branco.png"}},{"nome":"Moletom","preco":150,"pasta":"moletom","capa":"verde","tamanhos":["P","M","G","GG"],"desc":"Moletom com capuz, “Nutrição” na frente e grande estampa do mascote nas costas.","cores":{"verde":"verde.png","preto":"preto.png","branco":"branco.png"}},{"nome":"Moletom Y2K","preco":165,"pasta":"moletom_y2k","capa":"verde","tamanhos":["P","M","G","GG"],"desc":"Moletom com zíper e capuz em estilo Y2K, com emblema “Devoradores” e mascote.","cores":{"verde":"verde.png","preto":"preto.png","branco":"branc.png"}},{"nome":"Jaqueta","preco":180,"pasta":"jaqueta","capa":"verde","tamanhos":["P","M","G","GG"],"desc":"Jaqueta estilo college com a inicial “D”, brasão e mascote nas costas.","cores":{"verde":"verde.png","preto":"preto.png","pretobranco":"preto2.png","branco":"branca.png"}},{"nome":"Short esportivo","preco":50,"pasta":"short","capa":"verde","tamanhos":["P","M","G","GG"],"desc":"Short esportivo com recortes laterais e “Devoradores” na barra.","cores":{"verde":"verde.png","preto":"short.png","branco":"branco.png"}},{"nome":"Short feminino esportivo","preco":50,"pasta":"short_feminino","capa":"verde","tamanhos":["P","M","G","GG"],"desc":"Short feminino esportivo com mascote e “Nutrição” na parte de trás.","cores":{"verde":"verde.png","preto":"preto.png","branco":"branco.png"}},{"nome":"Calça","preco":65,"pasta":"calca","capa":"verde","tamanhos":["P","M","G","GG"],"desc":"Calça com punho nos tornozelos e o mascote estampado na perna.","cores":{"verde":"verde.png","preto":"preto.png","branco":"branco.png"}},{"nome":"Chaveiro","preco":6,"pasta":"","capa":"unico","tamanhos":["Único"],"desc":"Chaveiro do mascote Devoradores.","cores":{"unico":"chaveiro.png"}},{"nome":"Copo","preco":45,"pasta":"copo","capa":"verde","tamanhos":["Único"],"desc":"Copo com alça, estampa do mascote e o nome “Nutrição”.","cores":{"verde":"verde.png","preto":"preto.png","branco":"branco.png"}},{"nome":"Tirante","preco":15,"pasta":"tirante","capa":"verde","tamanhos":["Único"],"desc":"Tirante com a estampa “Nutrição” nas cores da atlética.","cores":{"verde":"verde.png","preto":"preto.png","branco":"branco.png"}}]}
+{
+  "articles": [
+    [
+      "curso.svg",
+      "O curso",
+      "Conheça a graduação",
+      "Uma formação que conecta alimentação, ciência e cuidado.",
+      "O curso de Nutrição reúne estudos sobre alimentos, metabolismo, avaliação nutricional e alimentação coletiva. A matriz curricular e as atividades variam conforme a instituição. Este espaço pode receber informações oficiais do curso e links para a faculdade."
+    ],
+    [
+      "nutri.svg",
+      "Carreira",
+      "Onde o nutricionista pode atuar?",
+      "Conheça diferentes caminhos da profissão.",
+      "Entre os campos de atuação estão nutrição clínica, esportiva, saúde coletiva, alimentação coletiva, indústria de alimentos, ensino e pesquisa. Inclua aqui entrevistas com profissionais e materiais institucionais sobre cada área."
+    ],
+    [
+      "comunidade.svg",
+      "Vida acadêmica",
+      "Projetos e experiências",
+      "Descubra possibilidades para viver a graduação.",
+      "Projetos de extensão, iniciação científica, visitas técnicas, eventos e atividades de integração podem ampliar as experiências dos estudantes. Publique aqui relatos e registros autorizados das atividades do curso."
+    ]
+  ],
+  "events": [
+    [
+      "festa.svg",
+      "festas",
+      "Integração dos calouros",
+      "Um encontro para receber quem está chegando e criar novas conexões."
+    ],
+    [
+      "esportes.svg",
+      "esportes",
+      "Jogos universitários",
+      "Espírito de equipe, torcida e momentos dentro das quadras."
+    ],
+    [
+      "nutri.svg",
+      "academicos",
+      "Encontro da Nutrição",
+      "Um espaço para conversar sobre formação, experiências e profissão."
+    ]
+  ],
+  "products": [
+    {
+      "nome": "Abadá Fome de Vitória",
+      "preco": 39.9,
+      "pasta": "abada",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Crocodilo em destaque, grafismos e muita personalidade para representar a Devoradores nos jogos e festas universitárias.",
+      "material": "Helanca Light",
+      "cores": {
+        "verde": "verde.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Body Manga Longa Nutri",
+      "preco": 69.9,
+      "pasta": "body_manga_longa",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Manga longa, decote amplo nas costas e identidade da Nutrição em um visual marcante.",
+      "material": "Poliamida com elastano",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Body Assimétrico Devoradores",
+      "preco": 64.9,
+      "pasta": "body_mula_manca",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Modelo de um ombro só, com recortes laterais e estampa de crocodilo que valoriza o desenho da peça.",
+      "material": "Poliamida com elastano",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Calça Baggy Nutri",
+      "preco": 89.9,
+      "pasta": "calca",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Modelagem ampla, barras ajustadas e estampas da Nutrição para compor seu visual universitário.",
+      "material": "50% algodão e 50% poliéster",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Camiseta Clássica Nutri",
+      "preco": 44.9,
+      "pasta": "camiseta",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Nutrição no peito e nosso crocodilo nas costas: uma combinação para acompanhar sua rotina na faculdade.",
+      "material": "Micro Dry",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Camisa de Jogo Devoradores",
+      "preco": 59.9,
+      "pasta": "camiseta_time",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Grafismos em movimento, mascote em destaque e numeração nas costas para vestir o espírito do time.",
+      "material": "Micro Dry",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Jersey Devoradores",
+      "preco": 69.9,
+      "pasta": "cam_fut_americano",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Inspirada no futebol americano, com mangas contrastantes e numeração em destaque na frente e nas costas.",
+      "material": "Micro Dry",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Corta-vento Devoradores",
+      "preco": 109.9,
+      "pasta": "corta_vento",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Capuz, fechamento frontal e recortes contrastantes em uma peça com a identidade da nossa atlética.",
+      "material": "Poliamida",
+      "cores": {
+        "verde": "verde.png",
+        "verdebranco": "verde_branco.png",
+        "brancoverde": "branco_verde.png",
+        "pretoverde": "preto_verde.png"
+      }
+    },
+    {
+      "nome": "Cropped Clássico Nutri",
+      "preco": 39.9,
+      "pasta": "cropped",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Camiseta de comprimento curto com Nutrição na frente e o mascote em destaque nas costas.",
+      "material": "Algodão",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Cropped Frente Única Nutri",
+      "preco": 44.9,
+      "pasta": "cropped_amarracao",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Decote em V, amarração no pescoço e costas abertas para compor um visual cheio de personalidade.",
+      "material": "Algodão",
+      "cores": {
+        "verde": "verde.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Cropped Manga Única Devoradores",
+      "preco": 54.9,
+      "pasta": "cropped_manga_longa_mula_manca",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Uma manga longa e um ombro à mostra em um desenho assimétrico com a presença do nosso mascote.",
+      "material": "Algodão",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Cropped Um Ombro Devoradores",
+      "preco": 39.9,
+      "pasta": "cropped_mula_manca",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Recorte de um ombro só, acabamento contrastante e mascote no peito para representar a atlética do seu jeito.",
+      "material": "Algodão",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Top Faixa Devoradores",
+      "preco": 34.9,
+      "pasta": "cropped_tube",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Modelo sem alças com acabamento contrastante e crocodilo em destaque na parte da frente.",
+      "material": "Algodão",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Jaqueta College Devoradores",
+      "preco": 139.9,
+      "pasta": "jaqueta",
+      "capa": "verdebranco",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Estilo universitário com mangas contrastantes, letra no peito e uma grande estampa do mascote nas costas.",
+      "material": "Moletom flanelado",
+      "cores": {
+        "verdebranco": "verde_branco.png",
+        "brancoverde": "branco_verde.png",
+        "pretoverde": "preto_verde.png",
+        "brancopreto": "branco_preto.png"
+      }
+    },
+    {
+      "nome": "Moletom Mascote Nutri",
+      "preco": 99.9,
+      "pasta": "moletom",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Modelo com capuz, bolso frontal e uma grande estampa do crocodilo nas costas.",
+      "material": "Algodão",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Moletom com Zíper Devoradores Y2K",
+      "preco": 109.9,
+      "pasta": "moletom_y2k",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Fechamento frontal, capuz e estampas de inspiração retrô para levar a Devoradores ao seu visual urbano.",
+      "material": "Algodão",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Camiseta Oversized Devoradores Urban",
+      "preco": 59.9,
+      "pasta": "oversize",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Modelagem ampla com arte em estilo grafite e mascote nas costas para quem gosta de estampas marcantes.",
+      "material": "Algodão",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Samba-canção Devoradores Tropical",
+      "preco": 44.9,
+      "pasta": "samba_cancao",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Folhagens discretas, nome na lateral e crocodilo em uma estampa que continua entre a frente e o verso.",
+      "material": "Algodão",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Short Devoradores Fresh",
+      "preco": 34.9,
+      "pasta": "short_doll_feminino",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Modelo curto com laterais arredondadas, cós franzido e estampas que celebram a Nutrição.",
+      "material": "Micro Dry",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Short Ciclista Nutri",
+      "preco": 39.9,
+      "pasta": "short_feminino",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Modelagem ajustada, cós alto e detalhes da atlética na frente e nas costas.",
+      "material": "Poliamida com elastano",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Bermuda Esportiva Devoradores",
+      "preco": 44.9,
+      "pasta": "short_masculino",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Visual esportivo com cordão no cós, grafismos laterais e o mascote próximo à barra.",
+      "material": "Poliéster com tecnologia dry fit",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Short-saia Nutri College",
+      "preco": 49.9,
+      "pasta": "short_saia",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Frente transpassada com faixas contrastantes, sigla A.A.A.N.U.V e Nutrição na parte de trás.",
+      "material": "Poliamida com elastano",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Short-saia Devoradores Mascote",
+      "preco": 49.9,
+      "pasta": "short_saia2",
+      "capa": "verde",
+      "tamanhos": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "desc": "Frente transpassada com crocodilo em destaque e faixas contrastantes que acompanham o desenho da peça.",
+      "material": "Poliamida com elastano",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Copo Meu Curso é Nutrição",
+      "preco": 19.9,
+      "pasta": "copo",
+      "capa": "preto",
+      "tamanhos": [
+        "Único"
+      ],
+      "desc": "Nosso crocodilo de um lado e uma frase cheia de atitude do outro para acompanhar os encontros da atlética.",
+      "material": "Alumínio",
+      "cores": {
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Meia Cano Alto Devoradores",
+      "preco": 19.9,
+      "pasta": "meia",
+      "capa": "verde",
+      "tamanhos": [
+        "Único"
+      ],
+      "desc": "Cano alto com crocodilo na lateral e duas listras para completar seu visual com a identidade da atlética.",
+      "material": "Algodão penteado",
+      "cores": {
+        "verde": "verde.png",
+        "preto": "preto.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Tirante Nutri Mascote",
+      "preco": 14.9,
+      "pasta": "tirante",
+      "capa": "verde",
+      "tamanhos": [
+        "Único"
+      ],
+      "desc": "Estampa de crocodilos e Nutrição, com arte de fita métrica no verso e mosquetão na ponta.",
+      "material": "Poliéster acetinado",
+      "cores": {
+        "verde": "verde.png",
+        "branco": "branco.png"
+      }
+    },
+    {
+      "nome": "Tirante Nutri Quadriculado",
+      "preco": 14.9,
+      "pasta": "tirante2",
+      "capa": "verde",
+      "tamanhos": [
+        "Único"
+      ],
+      "desc": "Estampa quadriculada com crocodilos e Nutrição, combinada com arte de fita métrica no verso.",
+      "material": "Poliéster acetinado",
+      "cores": {
+        "verde": "verde.png",
+        "branco": "branco.png"
+      }
+    }
+  ]
+}

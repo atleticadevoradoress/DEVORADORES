@@ -9,7 +9,7 @@
     />
     <title>Notícias | Devoradores</title>
     <link rel="icon" href="assets/logo.png" type="image/png" />
-    <link rel="stylesheet" href="assets/layout-final.css?v=22" />
+    <link rel="stylesheet" href="assets/layout-final.css?v=23" />
     <link rel="stylesheet" href="assets/extras.css?v=1" />
     <script src="components/site-header.js"></script><script src="components/site-footer.js"></script><script defer src="assets/app.js"></script>
     <style>
@@ -1003,6 +1003,58 @@
         body.noticias #acoes-realizadas {
           margin: 44px 0;
         }
+      }
+    </style>
+      <style id="eyebrow-unificado">
+      /* Rótulos pequenos de seção: todos seguem o layout do .atl-eyebrow */
+      html body .atl-eyebrow,
+      html body .nut-eyebrow,
+      html body .evt-eyebrow,
+      html body .ex-eyebrow,
+      html body .eyebrow,
+      html body .acao-info .eyebrow-line {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 16px;
+        padding: 0;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        line-height: 1.4;
+        text-transform: uppercase;
+        color: #103f2e;
+        background: none;
+        border: 0;
+        border-radius: 0;
+      }
+      html body .atl-eyebrow::before,
+      html body .nut-eyebrow::before,
+      html body .evt-eyebrow::before,
+      html body .ex-eyebrow::before,
+      html body .eyebrow::before,
+      html body .acao-info .eyebrow-line::before {
+        content: "";
+        flex: none;
+        width: 26px;
+        height: 3px;
+        border-radius: 3px;
+        background: #ffd13e;
+      }
+      /* Fundos escuros: texto dourado para manter o contraste */
+      html body .ex-sec--dark .ex-eyebrow,
+      html body .ex-banner .ex-eyebrow,
+      html body .callout .eyebrow { color: #ffd13e; }
+    </style>
+      <style id="margem-topo-unificada">
+      /* Mesma distância entre o cabeçalho e o primeiro conteúdo em todas as páginas internas */
+      html body main#main { margin-top: 0 !important; padding-top: 0 !important; }
+      html body main#main > section:first-child {
+        margin-top: 0 !important;
+        padding-top: 70px !important;
+      }
+      @media (max-width: 780px) {
+        html body main#main > section:first-child { padding-top: 44px !important; }
       }
     </style>
   </head>

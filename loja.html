@@ -5,22 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Loja Devoradores: camisetas, moletons, jaquetas e acessórios da atlética de Nutrição."
+      content="Loja Devoradores: roupas, moletons, jaquetas e acessórios da atlética de Nutrição. Filtre por peça, clima e estilo."
     />
     <title>Loja | Devoradores</title>
     <link rel="icon" href="assets/logo.png" type="image/png" />
-    <link rel="stylesheet" href="assets/layout-final.css?v=22" />
+    <link rel="stylesheet" href="assets/layout-final.css?v=23" />
     <script src="components/site-header.js"></script><script src="components/site-footer.js"></script><script defer src="assets/app.js"></script>
     <style>
       /* Filtros no topo da loja */
       .shop-layout{display:block}
-      .shop-toolbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+      .shop-toolbar{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:18px 40px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+      .filter-group{display:flex;flex-direction:column;gap:8px;min-width:0}
       .toolbar-label{font-size:11px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;color:var(--green)}
-      .shop-toolbar .chips{margin:0}
+      .shop-toolbar .chips{margin:0;display:flex;flex-wrap:wrap;gap:8px}
+      .shop-toolbar .chip{cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:6px 14px;font-size:13px;font-family:inherit}
+      .chip-n{font-size:11px;font-weight:bold;opacity:.65}
+      .shop-toolbar .chip.selected .chip-n{opacity:.85}
+      .shop-toolbar .chip:disabled{opacity:.4;cursor:not-allowed;text-decoration:line-through}
+      .filter-status{grid-column:1/-1;display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+      .filter-status .text-button{font-size:13px;font-weight:bold;color:var(--green);text-decoration:underline;text-underline-offset:3px;background:none;border:0;padding:0;cursor:pointer}
+      .empty-products{padding:32px 0;text-align:center;color:var(--muted)}
       .shop-intro .small{margin:0}
       /* Área da imagem do produto: 360 x 240 (proporção 3:2), imagem inteira sem cortes */
       .shop-layout .product>img{width:100%;height:auto;aspect-ratio:360/240;object-fit:contain;object-position:center;background:#f3f6f2}
-      @media(max-width:780px){.shop-toolbar{gap:10px;margin-bottom:20px;padding-bottom:16px}}
+      @media(max-width:900px){.shop-toolbar{grid-template-columns:1fr;gap:16px}}
+      @media(max-width:780px){.shop-toolbar{margin-bottom:20px;padding-bottom:16px}}
+    </style>
+      <style id="eyebrow-unificado">
+      /* Rótulos pequenos de seção: todos seguem o layout do .atl-eyebrow */
+      html body .atl-eyebrow,
+      html body .nut-eyebrow,
+      html body .evt-eyebrow,
+      html body .ex-eyebrow,
+      html body .eyebrow,
+      html body .acao-info .eyebrow-line {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 16px;
+        padding: 0;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        line-height: 1.4;
+        text-transform: uppercase;
+        color: #103f2e;
+        background: none;
+        border: 0;
+        border-radius: 0;
+      }
+      html body .atl-eyebrow::before,
+      html body .nut-eyebrow::before,
+      html body .evt-eyebrow::before,
+      html body .ex-eyebrow::before,
+      html body .eyebrow::before,
+      html body .acao-info .eyebrow-line::before {
+        content: "";
+        flex: none;
+        width: 26px;
+        height: 3px;
+        border-radius: 3px;
+        background: #ffd13e;
+      }
+      /* Fundos escuros: texto dourado para manter o contraste */
+      html body .ex-sec--dark .ex-eyebrow,
+      html body .ex-banner .ex-eyebrow,
+      html body .callout .eyebrow { color: #ffd13e; }
+    </style>
+      <style id="margem-topo-unificada">
+      /* Mesma distância entre o cabeçalho e o primeiro conteúdo em todas as páginas internas */
+      html body main#main { margin-top: 0 !important; padding-top: 0 !important; }
+      html body main#main > section:first-child {
+        margin-top: 0 !important;
+        padding-top: 70px !important;
+      }
+      @media (max-width: 780px) {
+        html body main#main > section:first-child { padding-top: 44px !important; }
+      }
     </style>
   </head>
   <body>
@@ -32,226 +93,411 @@
         <h1>Vista o orgulho de ser <em>Devoradores.</em></h1>
       </section>
       <section class="shop-layout">
-        <div class="shop-toolbar" role="group" aria-label="Filtrar produtos por categoria">
-          <span class="toolbar-label">Categoria</span>
-          <div class="chips">
-            <button class="chip selected" data-product-filter="todos" aria-pressed="true">Todos</button>
-            <button class="chip" data-product-filter="roupas" aria-pressed="false">Roupas</button>
-            <button class="chip" data-product-filter="acessorios" aria-pressed="false">Acessórios</button>
+        <div class="shop-toolbar" aria-label="Filtros da loja">
+          <div class="filter-group" role="group" aria-label="Peça">
+            <span class="toolbar-label">Peça</span>
+            <div class="chips">
+              <button class="chip selected" type="button" data-fg="tipo" data-fv="todos" aria-pressed="true">Todos<span class="chip-n"></span></button><button class="chip" type="button" data-fg="tipo" data-fv="cima" aria-pressed="false">Parte de cima<span class="chip-n"></span></button><button class="chip" type="button" data-fg="tipo" data-fv="baixo" aria-pressed="false">Parte de baixo<span class="chip-n"></span></button><button class="chip" type="button" data-fg="tipo" data-fv="acessorio" aria-pressed="false">Acessórios<span class="chip-n"></span></button>
+            </div>
+          </div>
+          <div class="filter-group" role="group" aria-label="Clima">
+            <span class="toolbar-label">Clima</span>
+            <div class="chips">
+              <button class="chip selected" type="button" data-fg="clima" data-fv="todos" aria-pressed="true">Todos<span class="chip-n"></span></button><button class="chip" type="button" data-fg="clima" data-fv="calor" aria-pressed="false">Calor<span class="chip-n"></span></button><button class="chip" type="button" data-fg="clima" data-fv="frio" aria-pressed="false">Frio<span class="chip-n"></span></button>
+            </div>
+          </div>
+          <div class="filter-group" role="group" aria-label="Estilo">
+            <span class="toolbar-label">Estilo</span>
+            <div class="chips">
+              <button class="chip selected" type="button" data-fg="uso" data-fv="todos" aria-pressed="true">Todos<span class="chip-n"></span></button><button class="chip" type="button" data-fg="uso" data-fv="esportivo" aria-pressed="false">Esportivo<span class="chip-n"></span></button><button class="chip" type="button" data-fg="uso" data-fv="casual" aria-pressed="false">Dia a dia<span class="chip-n"></span></button>
+            </div>
+          </div>
+          <div class="filter-status">
+            <span id="shop-count" role="status" aria-live="polite"></span>
+            <button class="text-button" id="clear-filters" type="button" hidden>Limpar filtros</button>
           </div>
         </div>
         <div class="grid three" id="products">
-          <article class="card product" data-category="roupas">
-            <img
-              class=""
-              src="assets/loja/polo/verde.png"
-              alt="Polo Devoradores"
-              loading="lazy"
-            />
-            <div class="card-body">
-              <span class="tag">Roupas</span>
-              <h3>Polo Devoradores</h3>
-              <p class="price">R$ 80,00</p>
-              <button class="button" data-product="0">Ver produto ↗</button>
-            </div>
-          </article>
-          <article class="card product" data-category="roupas">
-            <img
-              class=""
-              src="assets/loja/oversize/verde.png"
-              alt="Camiseta Oversize"
-              loading="lazy"
-            />
-            <div class="card-body">
-              <span class="tag">Roupas</span>
-              <h3>Camiseta Oversize</h3>
-              <p class="price">R$ 60,00</p>
-              <button class="button" data-product="1">Ver produto ↗</button>
-            </div>
-          </article>
-          <article class="card product" data-category="roupas">
-            <img
-              class=""
-              src="assets/loja/camiseta_time/verde.png"
-              alt="Camiseta Time"
-              loading="lazy"
-            />
-            <div class="card-body">
-              <span class="tag">Roupas</span>
-              <h3>Camiseta Time</h3>
-              <p class="price">R$ 50,00</p>
-              <button class="button" data-product="2">Ver produto ↗</button>
-            </div>
-          </article>
-          <article class="card product" data-category="roupas">
-            <img
-              class=""
-              src="assets/loja/camiseta_esportiva/cam_esportiva2.png"
-              alt="Camiseta Esportiva 2"
-              loading="lazy"
-            />
-            <div class="card-body">
-              <span class="tag">Roupas</span>
-              <h3>Camiseta Esportiva 2</h3>
-              <p class="price">R$ 50,00</p>
-              <button class="button" data-product="3">Ver produto ↗</button>
-            </div>
-          </article>
-          <article class="card product" data-category="roupas">
-            <img
-              class=""
-              src="assets/loja/top/top.png"
-              alt="Top esportivo"
-              loading="lazy"
-            />
-            <div class="card-body">
-              <span class="tag">Roupas</span>
-              <h3>Top esportivo</h3>
-              <p class="price">R$ 45,00</p>
-              <button class="button" data-product="4">Ver produto ↗</button>
-            </div>
-          </article>
-          <article class="card product" data-category="roupas">
+          <article class="card product" data-tipo="cima" data-clima="calor" data-uso="esportivo">
             <img
               class=""
               src="assets/loja/abada/verde.png"
-              alt="Abadá"
+              alt="Abadá Fome de Vitória"
               loading="lazy"
             />
             <div class="card-body">
-              <span class="tag">Roupas</span>
-              <h3>Abadá</h3>
-              <p class="price">R$ 45,00</p>
-              <button class="button" data-product="5">Ver produto ↗</button>
+              <span class="tag">Parte de cima</span>
+              <h3>Abadá Fome de Vitória</h3>
+              <p class="price">R$ 39,90</p>
+              <button class="button" data-product="0">Ver produto ↗</button>
             </div>
           </article>
-          <article class="card product" data-category="roupas">
+          <article class="card product" data-tipo="cima" data-clima="frio" data-uso="casual">
             <img
               class=""
-              src="assets/loja/moletom/verde.png"
-              alt="Moletom"
+              src="assets/loja/body_manga_longa/verde.png"
+              alt="Body Manga Longa Nutri"
               loading="lazy"
             />
             <div class="card-body">
-              <span class="tag">Roupas</span>
-              <h3>Moletom</h3>
-              <p class="price">R$ 150,00</p>
-              <button class="button" data-product="6">Ver produto ↗</button>
+              <span class="tag">Parte de cima</span>
+              <h3>Body Manga Longa Nutri</h3>
+              <p class="price">R$ 69,90</p>
+              <button class="button" data-product="1">Ver produto ↗</button>
             </div>
           </article>
-          <article class="card product" data-category="roupas">
+          <article class="card product" data-tipo="cima" data-clima="calor" data-uso="casual">
             <img
               class=""
-              src="assets/loja/moletom_y2k/verde.png"
-              alt="Moletom Y2K"
+              src="assets/loja/body_mula_manca/verde.png"
+              alt="Body Assimétrico Devoradores"
               loading="lazy"
             />
             <div class="card-body">
-              <span class="tag">Roupas</span>
-              <h3>Moletom Y2K</h3>
-              <p class="price">R$ 165,00</p>
-              <button class="button" data-product="7">Ver produto ↗</button>
+              <span class="tag">Parte de cima</span>
+              <h3>Body Assimétrico Devoradores</h3>
+              <p class="price">R$ 64,90</p>
+              <button class="button" data-product="2">Ver produto ↗</button>
             </div>
           </article>
-          <article class="card product" data-category="roupas">
-            <img
-              class=""
-              src="assets/loja/jaqueta/verde.png"
-              alt="Jaqueta"
-              loading="lazy"
-            />
-            <div class="card-body">
-              <span class="tag">Roupas</span>
-              <h3>Jaqueta</h3>
-              <p class="price">R$ 180,00</p>
-              <button class="button" data-product="8">Ver produto ↗</button>
-            </div>
-          </article>
-          <article class="card product" data-category="roupas">
-            <img
-              class=""
-              src="assets/loja/short/verde.png"
-              alt="Short esportivo"
-              loading="lazy"
-            />
-            <div class="card-body">
-              <span class="tag">Roupas</span>
-              <h3>Short esportivo</h3>
-              <p class="price">R$ 50,00</p>
-              <button class="button" data-product="9">Ver produto ↗</button>
-            </div>
-          </article>
-          <article class="card product" data-category="roupas">
-            <img
-              class=""
-              src="assets/loja/short_feminino/verde.png"
-              alt="Short feminino esportivo"
-              loading="lazy"
-            />
-            <div class="card-body">
-              <span class="tag">Roupas</span>
-              <h3>Short feminino esportivo</h3>
-              <p class="price">R$ 50,00</p>
-              <button class="button" data-product="10">Ver produto ↗</button>
-            </div>
-          </article>
-          <article class="card product" data-category="roupas">
+          <article class="card product" data-tipo="baixo" data-clima="frio" data-uso="casual">
             <img
               class=""
               src="assets/loja/calca/verde.png"
-              alt="Calça"
+              alt="Calça Baggy Nutri"
               loading="lazy"
             />
             <div class="card-body">
-              <span class="tag">Roupas</span>
-              <h3>Calça</h3>
-              <p class="price">R$ 65,00</p>
+              <span class="tag">Parte de baixo</span>
+              <h3>Calça Baggy Nutri</h3>
+              <p class="price">R$ 89,90</p>
+              <button class="button" data-product="3">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="cima" data-clima="calor" data-uso="esportivo casual">
+            <img
+              class=""
+              src="assets/loja/camiseta/verde.png"
+              alt="Camiseta Clássica Nutri"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de cima</span>
+              <h3>Camiseta Clássica Nutri</h3>
+              <p class="price">R$ 44,90</p>
+              <button class="button" data-product="4">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="cima" data-clima="calor" data-uso="esportivo">
+            <img
+              class=""
+              src="assets/loja/camiseta_time/verde.png"
+              alt="Camisa de Jogo Devoradores"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de cima</span>
+              <h3>Camisa de Jogo Devoradores</h3>
+              <p class="price">R$ 59,90</p>
+              <button class="button" data-product="5">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="cima" data-clima="calor" data-uso="esportivo">
+            <img
+              class=""
+              src="assets/loja/cam_fut_americano/verde.png"
+              alt="Jersey Devoradores"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de cima</span>
+              <h3>Jersey Devoradores</h3>
+              <p class="price">R$ 69,90</p>
+              <button class="button" data-product="6">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="cima" data-clima="frio" data-uso="esportivo">
+            <img
+              class=""
+              src="assets/loja/corta_vento/verde.png"
+              alt="Corta-vento Devoradores"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de cima</span>
+              <h3>Corta-vento Devoradores</h3>
+              <p class="price">R$ 109,90</p>
+              <button class="button" data-product="7">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="cima" data-clima="calor" data-uso="casual">
+            <img
+              class=""
+              src="assets/loja/cropped/verde.png"
+              alt="Cropped Clássico Nutri"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de cima</span>
+              <h3>Cropped Clássico Nutri</h3>
+              <p class="price">R$ 39,90</p>
+              <button class="button" data-product="8">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="cima" data-clima="calor" data-uso="casual">
+            <img
+              class=""
+              src="assets/loja/cropped_amarracao/verde.png"
+              alt="Cropped Frente Única Nutri"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de cima</span>
+              <h3>Cropped Frente Única Nutri</h3>
+              <p class="price">R$ 44,90</p>
+              <button class="button" data-product="9">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="cima" data-clima="frio" data-uso="casual">
+            <img
+              class=""
+              src="assets/loja/cropped_manga_longa_mula_manca/verde.png"
+              alt="Cropped Manga Única Devoradores"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de cima</span>
+              <h3>Cropped Manga Única Devoradores</h3>
+              <p class="price">R$ 54,90</p>
+              <button class="button" data-product="10">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="cima" data-clima="calor" data-uso="casual">
+            <img
+              class=""
+              src="assets/loja/cropped_mula_manca/verde.png"
+              alt="Cropped Um Ombro Devoradores"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de cima</span>
+              <h3>Cropped Um Ombro Devoradores</h3>
+              <p class="price">R$ 39,90</p>
               <button class="button" data-product="11">Ver produto ↗</button>
             </div>
           </article>
-          <article class="card product" data-category="acessorios">
+          <article class="card product" data-tipo="cima" data-clima="calor" data-uso="casual">
             <img
               class=""
-              src="assets/loja/chaveiro.png"
-              alt="Chaveiro"
+              src="assets/loja/cropped_tube/verde.png"
+              alt="Top Faixa Devoradores"
               loading="lazy"
             />
             <div class="card-body">
-              <span class="tag">Acessórios</span>
-              <h3>Chaveiro</h3>
-              <p class="price">R$ 6,00</p>
+              <span class="tag">Parte de cima</span>
+              <h3>Top Faixa Devoradores</h3>
+              <p class="price">R$ 34,90</p>
               <button class="button" data-product="12">Ver produto ↗</button>
             </div>
           </article>
-          <article class="card product" data-category="acessorios">
+          <article class="card product" data-tipo="cima" data-clima="frio" data-uso="casual">
             <img
               class=""
-              src="assets/loja/copo/verde.png"
-              alt="Copo"
+              src="assets/loja/jaqueta/verde_branco.png"
+              alt="Jaqueta College Devoradores"
               loading="lazy"
             />
             <div class="card-body">
-              <span class="tag">Acessórios</span>
-              <h3>Copo</h3>
-              <p class="price">R$ 45,00</p>
+              <span class="tag">Parte de cima</span>
+              <h3>Jaqueta College Devoradores</h3>
+              <p class="price">R$ 139,90</p>
               <button class="button" data-product="13">Ver produto ↗</button>
             </div>
           </article>
-          <article class="card product" data-category="acessorios">
+          <article class="card product" data-tipo="cima" data-clima="frio" data-uso="casual">
             <img
               class=""
-              src="assets/loja/tirante/verde.png"
-              alt="Tirante"
+              src="assets/loja/moletom/verde.png"
+              alt="Moletom Mascote Nutri"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de cima</span>
+              <h3>Moletom Mascote Nutri</h3>
+              <p class="price">R$ 99,90</p>
+              <button class="button" data-product="14">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="cima" data-clima="frio" data-uso="casual">
+            <img
+              class=""
+              src="assets/loja/moletom_y2k/verde.png"
+              alt="Moletom com Zíper Devoradores Y2K"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de cima</span>
+              <h3>Moletom com Zíper Devoradores Y2K</h3>
+              <p class="price">R$ 109,90</p>
+              <button class="button" data-product="15">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="cima" data-clima="calor" data-uso="casual">
+            <img
+              class=""
+              src="assets/loja/oversize/verde.png"
+              alt="Camiseta Oversized Devoradores Urban"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de cima</span>
+              <h3>Camiseta Oversized Devoradores Urban</h3>
+              <p class="price">R$ 59,90</p>
+              <button class="button" data-product="16">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="baixo" data-clima="calor" data-uso="casual">
+            <img
+              class=""
+              src="assets/loja/samba_cancao/verde.png"
+              alt="Samba-canção Devoradores Tropical"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de baixo</span>
+              <h3>Samba-canção Devoradores Tropical</h3>
+              <p class="price">R$ 44,90</p>
+              <button class="button" data-product="17">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="baixo" data-clima="calor" data-uso="esportivo casual">
+            <img
+              class=""
+              src="assets/loja/short_doll_feminino/verde.png"
+              alt="Short Devoradores Fresh"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de baixo</span>
+              <h3>Short Devoradores Fresh</h3>
+              <p class="price">R$ 34,90</p>
+              <button class="button" data-product="18">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="baixo" data-clima="calor" data-uso="esportivo">
+            <img
+              class=""
+              src="assets/loja/short_feminino/verde.png"
+              alt="Short Ciclista Nutri"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de baixo</span>
+              <h3>Short Ciclista Nutri</h3>
+              <p class="price">R$ 39,90</p>
+              <button class="button" data-product="19">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="baixo" data-clima="calor" data-uso="esportivo">
+            <img
+              class=""
+              src="assets/loja/short_masculino/verde.png"
+              alt="Bermuda Esportiva Devoradores"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de baixo</span>
+              <h3>Bermuda Esportiva Devoradores</h3>
+              <p class="price">R$ 44,90</p>
+              <button class="button" data-product="20">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="baixo" data-clima="calor" data-uso="esportivo">
+            <img
+              class=""
+              src="assets/loja/short_saia/verde.png"
+              alt="Short-saia Nutri College"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de baixo</span>
+              <h3>Short-saia Nutri College</h3>
+              <p class="price">R$ 49,90</p>
+              <button class="button" data-product="21">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="baixo" data-clima="calor" data-uso="esportivo">
+            <img
+              class=""
+              src="assets/loja/short_saia2/verde.png"
+              alt="Short-saia Devoradores Mascote"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Parte de baixo</span>
+              <h3>Short-saia Devoradores Mascote</h3>
+              <p class="price">R$ 49,90</p>
+              <button class="button" data-product="22">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="acessorio" data-clima="" data-uso="">
+            <img
+              class=""
+              src="assets/loja/copo/preto.png"
+              alt="Copo Meu Curso é Nutrição"
               loading="lazy"
             />
             <div class="card-body">
               <span class="tag">Acessórios</span>
-              <h3>Tirante</h3>
-              <p class="price">R$ 15,00</p>
-              <button class="button" data-product="14">Ver produto ↗</button>
+              <h3>Copo Meu Curso é Nutrição</h3>
+              <p class="price">R$ 19,90</p>
+              <button class="button" data-product="23">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="acessorio" data-clima="" data-uso="esportivo casual">
+            <img
+              class=""
+              src="assets/loja/meia/verde.png"
+              alt="Meia Cano Alto Devoradores"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Acessórios</span>
+              <h3>Meia Cano Alto Devoradores</h3>
+              <p class="price">R$ 19,90 o par</p>
+              <button class="button" data-product="24">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="acessorio" data-clima="" data-uso="">
+            <img
+              class=""
+              src="assets/loja/tirante/verde.png"
+              alt="Tirante Nutri Mascote"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Acessórios</span>
+              <h3>Tirante Nutri Mascote</h3>
+              <p class="price">R$ 14,90</p>
+              <button class="button" data-product="25">Ver produto ↗</button>
+            </div>
+          </article>
+          <article class="card product" data-tipo="acessorio" data-clima="" data-uso="">
+            <img
+              class=""
+              src="assets/loja/tirante2/verde.png"
+              alt="Tirante Nutri Quadriculado"
+              loading="lazy"
+            />
+            <div class="card-body">
+              <span class="tag">Acessórios</span>
+              <h3>Tirante Nutri Quadriculado</h3>
+              <p class="price">R$ 14,90</p>
+              <button class="button" data-product="26">Ver produto ↗</button>
             </div>
           </article>
         </div>
+        <p class="empty-products" id="empty-products" hidden>Nenhum produto com essa combinação de filtros. Use “Limpar filtros” para ver tudo.</p>
       </section>
     </main>
     <site-footer></site-footer>
