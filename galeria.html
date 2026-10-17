@@ -246,7 +246,7 @@
 
         /* ---------- ENCAIXE: linhas justificadas de alturas variadas ---------- */
         function calcularLinhas(W, gap) {
-          var base = W < 600 ? 120 : W < 1000 ? 175 : W < 1500 ? 215 : 250;
+          var base = W < 600 ? 220 : W < 1000 ? 175 : W < 1500 ? 215 : 250;
           var rnd = sorteio(7);
           var linhas = [];
           var i = 0;
@@ -281,22 +281,23 @@
           var b = document.createElement("button");
           b.type = "button";
           b.className = "gal-tile";
-          b.setAttribute("aria-label", "Foto " + (idx + 1) + " de " + FOTOS.length + ", em preto e branco. Ativar para colorir.");
+          b.setAttribute("aria-label", "Foto " + (idx + 1) + " de " + FOTOS.length + ", em preto e branco. Ativar para ampliar.");
           var img = document.createElement("img");
           img.alt = "";
                     img.decoding = "async";
-          img.loading = idx < 14 ? "eager" : "lazy";
+          img.loading = idx < 4 ? "eager" : "lazy";
+          img.fetchPriority = idx < 4 ? "high" : "low";
           var usouReserva = false;
           img.onerror = function () {
             /* se o endereço principal falhar, tenta o de reserva do Drive; depois disso, só deixa o quadro escuro */
-            if (!usouReserva) { usouReserva = true; img.src = urlFotoReserva(f[0], 640); }
+            if (!usouReserva) { usouReserva = true; img.src = urlFotoReserva(f[0], 400); }
           };
           img.onload = function () {
             /* entrada em sequência só nas primeiras; o resto aparece ao carregar */
             b.style.setProperty("--d", (idx < 24 ? idx * 45 : 0) + "ms");
             b.classList.add("is-in");
           };
-          img.src = urlFoto(f[0], 640);
+          img.src = urlFoto(f[0], 400);
           b.appendChild(img);
           b.addEventListener("click", function () { aoClicar(idx); });
           return b;
@@ -325,14 +326,12 @@
 
         /* ---------- COR ---------- */
         function aoClicar(idx) {
-          var t = tiles[idx];
-          if (t.classList.contains("is-color")) { abrir(idx); return; }
-          colorir(idx, true);
+          abrir(idx);
         }
         function colorir(idx, ligar) {
           var t = tiles[idx];
           t.classList.toggle("is-color", ligar);
-          t.setAttribute("aria-label", "Foto " + (idx + 1) + " de " + FOTOS.length + (ligar ? ", colorida. Ativar para ampliar." : ", em preto e branco. Ativar para colorir."));
+          t.setAttribute("aria-label", "Foto " + (idx + 1) + " de " + FOTOS.length + (ligar ? ", colorida. Ativar para ampliar." : ", em preto e branco. Ativar para ampliar."));
         }
 
         var btnTodas = document.getElementById("gal-all");
