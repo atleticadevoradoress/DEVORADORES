@@ -135,7 +135,7 @@ $$('[data-product]').forEach(b=>b.onclick=()=>openProduct(Number(b.dataset.produ
 const SALES_OPEN_AT=new Date('2026-10-17T00:00:00-03:00');
 const salesOpen=()=>Date.now()>=SALES_OPEN_AT.getTime();
 const WHATS='5517996454466';
-const EMAIL='atletica.demolidoress@gmail.com'; /* e-mail da atlética: contato e chave Pix manual */
+const EMAIL='atletica.devoradoress@gmail.com'; /* e-mail da atlética: contato e chave Pix manual */
 const cartSubtotal=()=>cart.reduce((n,x)=>n+products[x.id].preco*x.qty,0);
 const cartTotal=()=>cartSubtotal();
 const totalsHtml=()=>`<div class="cart-sum"><div class="cart-total"><span>Total</span><b>${money(cartTotal())}</b></div></div>`;
