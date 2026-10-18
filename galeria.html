@@ -13,12 +13,6 @@
     <link rel="stylesheet" href="assets/extras.css?v=1" />
     <script src="components/site-header.js"></script><script src="components/site-footer.js"></script><script defer src="assets/app.js"></script>
     <style>
-      /* ==========================================================
-         Galeria — usa a identidade das demais páginas (layout-final.css):
-         fundo claro, rótulo com barrinha dourada, título verde com <em>,
-         botões dourados e chips em pílula. Tudo escopado em .gal.
-         As fotos vêm da pasta compartilhada do Google Drive.
-         ========================================================== */
       .gal {
         --gal-green: #103f2e;
         --gal-green-2: #1a5a43;
@@ -175,11 +169,11 @@
         <div class="gal-wrap">
           <p class="gal-eyebrow">Galeria Devoradores</p>
           <h1>Reviva cada <em>momento.</em></h1>
-          <p class="gal-lead">Ações, eventos e bastidores da atlética. Toque numa foto para colorir; toque de novo para ampliar.</p>
+          <p class="gal-lead">Ações, eventos e bastidores da atlética. Toque numa foto para ampliar.</p>
 
           <div class="gal-tools">
             <button class="gal-chip" id="gal-all" type="button" aria-pressed="false" hidden>Colorir todas</button>
-            <a class="gal-send" href="https://drive.google.com/drive/folders/1WWHX-zLwaslZL_vwmiwQNnSLpMdVFaDG?usp=sharing" target="_blank" rel="noopener noreferrer">Enviar minhas fotos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M7 7h10v10" /></svg></a>
+            <button class="gal-send" id="gal-send" type="button">Enviar minhas fotos ↗</button>
           </div>
           <p class="gal-total" id="gal-total" aria-live="polite" hidden></p>
           <p class="gal-status" id="gal-status" role="status">Carregando as fotos…</p>
@@ -190,6 +184,22 @@
         <div class="gal-mosaic" id="gal-mosaic" aria-label="Fotos da galeria"></div>
       </div>
     </main>
+
+
+    <dialog id="gal-upload" aria-label="Enviar fotos" style="width:min(540px,95vw);max-height:90dvh;border:0;border-radius:18px;padding:0;overflow:hidden;box-shadow:0 16px 70px #0005">
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#103f2e;color:white;padding:12px 18px;font-weight:700">Enviar fotos <button id="gal-upload-close" type="button" aria-label="Fechar" style="background:transparent;color:white;border:0;font-size:26px;cursor:pointer">×</button></div>
+      <iframe id="gal-upload-frame" title="Formulário de envio de fotos" style="display:block;width:100%;height:440px;border:0" loading="lazy"></iframe>
+    </dialog>
+    <script>
+      // Após publicar o Apps Script, cole a URL /exec abaixo.
+      const GALERIA_UPLOAD_URL = 'https://script.google.com/macros/s/AKfycbz_JvuieWTm1aIp92fjX69ZPH0NwS0Ms93UrU0JLYuDtOtgNgWtEYnbNY3e-6O4MvVf/exec';
+      document.getElementById('gal-send').addEventListener('click', () => {
+        if (!GALERIA_UPLOAD_URL.startsWith('https://script.google.com/')) { alert('O envio de fotos ainda precisa ser configurado.'); return; }
+        document.getElementById('gal-upload-frame').src = GALERIA_UPLOAD_URL;
+        document.getElementById('gal-upload').showModal();
+      });
+      document.getElementById('gal-upload-close').addEventListener('click', () => document.getElementById('gal-upload').close());
+    </script>
 
     <dialog class="gal-view" id="gal-view" aria-label="Foto ampliada">
       <div class="gal-stage">
